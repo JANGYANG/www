@@ -9,6 +9,6 @@
 <body>
 	HELLO WORLD
 	<br>THIS IS SOCCER INDEX
-	<br>박희융 수정하라spsp
+	<br>박희융 수정하라s
 </body>
 </html>
