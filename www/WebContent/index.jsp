@@ -12,5 +12,8 @@
 	THIS IS MAIN INDEX PAGE
 	<br>
 	박희융 수정하라
+	
+	<br>
+	<a href="./soccer">to SOCCER</a>
 </body>
 </html>
