@@ -42,7 +42,8 @@
 		      </ul>
 		    </div>
 		  </nav>
-	  <header class="intro">
+	<div class="parallax-container">	  
+	  <div class="intro">
         <div class="intro-body">
             <div class="container">
                 <div class="row">
@@ -70,8 +71,8 @@
                 </div>
             </div>
         </div>
-    </header>
-
+      </div>
+  </div>
     <!-- About Section -->
     <section id="about" class="container content-section text-center blue-text text-lighten-4">
       <!-- <img src="./img/ci.png" style="margin-bottom:30px;" height="100px"> -->
@@ -129,7 +130,7 @@
     <section id="contact" class="container content-section text-center">
         <div class="row center">
             <div class="col m8 offset-m2">
-              <img src="/img/logo_CI.png" alt="" style="width:150px;">
+              <img src="./img/logo_CI.png" alt="" style="width:150px;">
                 <h2>Contact BROKEN-GLASSES</h2>
                 <p>Feel free to email us to provide some feedback on our services, give us suggestions for new services and ideas, or to just say hello!</p>
                 <p><a href="mailto:radiata03@broken-glasses.com">radiata03@broken-glasses.com</a>
@@ -148,9 +149,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Map Section -->
-    <div id="map"></div>
 
     <!-- Footer -->
     <footer>
