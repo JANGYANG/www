@@ -8,5 +8,9 @@
 </head>
 <body>
 	Hello world
+	<br>
+	THIS IS MAIN INDEX PAGE
+	<br>
+	박희융 수정하라
 </body>
 </html>
