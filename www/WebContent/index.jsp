@@ -43,35 +43,37 @@
 		    </div>
 		  </nav>
 	<div class="parallax-container">	  
-	  <div class="intro">
-        <div class="intro-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col m8 offset-m2">
-                        <h2 class="brand-heading">부러진 안경</h2>
-                        <h2>BROKEN-GLASSES</h2>
-
-                        <p class="intro-text">365일, 어디서나 스마트한 축구 리그</p>
-
-                        <!-- <button type="button" class="btn btn-circle page-scroll" aria-label="Left Align">
-                          <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                        </button> -->
-                        <!-- 눈깔 버튼 -->
-
-                        <a href="#about" class="btn btn-circle page-scroll">
-                            <i class="fa fa-angle-double-down animated"></i>
-                        </a>
-
-                        <!-- <button type="button" class="btn btn-circle page-scroll" aria-label="Center Align">
-                          <span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
-                        </button> -->
-
-                        <!-- 표적 버튼 -->
-                    </div>
-                </div>
-            </div>
-        </div>
-      </div>
+	  <div class="parallax">
+		  <div class="intro ">
+	        <div class="intro-body">
+	            <div class="container">
+	                <div class="row">
+	                    <div class="col m8 offset-m2">
+	                        <h2 class="brand-heading">부러진 안경</h2>
+	                        <h2>BROKEN-GLASSES</h2>
+	
+	                        <p class="intro-text">365일, 어디서나 스마트한 축구 리그</p>
+	
+	                        <!-- <button type="button" class="btn btn-circle page-scroll" aria-label="Left Align">
+	                          <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+	                        </button> -->
+	                        <!-- 눈깔 버튼 -->
+	
+	                        <a href="#about" class="btn btn-circle page-scroll">
+	                            <i class="fa fa-angle-double-down animated"></i>
+	                        </a>
+	
+	                        <!-- <button type="button" class="btn btn-circle page-scroll" aria-label="Center Align">
+	                          <span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
+	                        </button> -->
+	
+	                        <!-- 표적 버튼 -->
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	      </div>
+	   </div>
   </div>
     <!-- About Section -->
     <section id="about" class="container content-section text-center blue-text text-lighten-4">
