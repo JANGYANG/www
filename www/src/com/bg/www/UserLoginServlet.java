@@ -1,7 +1,6 @@
-package login;
+package com.bg.www;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import teamSearch.TeamDAO;
-import teamSearch.Teams;
+import com.google.gson.Gson;
+
 
 /**
  * Servlet implementation class UsreLoginServlet
@@ -24,17 +23,20 @@ public class UserLoginServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		
-		response.getWriter().write(getJSON(email,password));
+		Gson gson = new Gson();
+		String json = login(email, password);
+		UserJson loginJson = gson.fromJson(json, UserJson.class);
+		if (loginJson.getError() == false) {
+			response.sendRedirect("/soccer");
+		}else {
+			response.getWriter().write(json);
+		}
 	}
 	
 	
-	public String getJSON(String email, String password) {
-		if (email == null) email = "";
-		StringBuffer result = new StringBuffer("");
+	public String login(String email, String password) {
 		UserDAO userDAO = new UserDAO();
-		
-		return result.toString();
+		return userDAO.login(email, password);
 	}
 
 }

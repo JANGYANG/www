@@ -23,7 +23,7 @@
 	   <script type="text/javascript" src="../../js/materialize.min.js"></script>
 	   
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>BROKEN-GLASSES LOGIN<</title>
+<title>BROKEN-GLASSES LOGIN</title>
 </head>
 <body>
 	  <div class="container">
