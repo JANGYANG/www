@@ -42,8 +42,7 @@
 		      </ul>
 		    </div>
 		  </nav>
-	<div class="parallax-container">	  
-	  <div class="parallax">
+
 		  <div class="intro ">
 	        <div class="intro-body">
 	            <div class="container">
@@ -73,39 +72,46 @@
 	            </div>
 	        </div>
 	      </div>
-	   </div>
-  </div>
+
     <!-- About Section -->
-    <section id="about" class="container content-section text-center blue-text text-lighten-4">
+    <section id="about" class="text-center black">
       <!-- <img src="./img/ci.png" style="margin-bottom:30px;" height="100px"> -->
-        <div class="row center">
-            <div class="col m8 offset-m2">
-                <!-- <img src="./img/ci.png" height="100px" margin="50px"> -->
-                <h2>About BROKEN-GLASSES</h2>
-                <p>왜 우린 경기를 기다려야 할까요?<br>우리가 참가할 대회와 리그는 왜이렇게 없는걸까요?</p>
-                <p>이런 고충을 겪는 모든 아마추어 축구 선수들에게 부러진 안경의 솔루션을 제시합니다.<br>이제 여러분들은 <b class="light-blue">원하는 시간</b>에, <b class="light-blue">원하는 장소</b>에서, <b class="light-blue">원하는 리그 경기</b>를 가질 수 있습니다.<br>저희는 가장 스마트한 리그 아마추어 플렛폼을 제공합니다.</p>
-                <!-- <button class="btn btn-info" onclick='location="/soccer.php"'>자세히</button> -->
-            </div>
-        </div>
+      <div class="container">
+	        <div class="row center">
+	            <div class="col m8 offset-m2 white-text">
+	                <!-- <img src="./img/ci.png" height="100px" margin="50px"> -->
+	                <h2 class="shadowlight">About BROKEN-GLASSES</h2>
+	                <p class="shadowlight">왜 우린 경기를 기다려야 할까요?<br>우리가 참가할 대회와 리그는 왜이렇게 없는걸까요?</p>
+	                <p class="shadowlight">이런 고충을 겪는 모든 아마추어 축구 선수들에게 부러진 안경의 솔루션을 제시합니다.<br>이제 여러분들은 <b class="light-blue">원하는 시간</b>에, <b class="light-blue">원하는 장소</b>에서, <b class="light-blue">원하는 리그 경기</b>를 가질 수 있습니다.<br>저희는 가장 스마트한 리그 아마추어 플렛폼을 제공합니다.</p>
+	                <!-- <button class="btn btn-info" onclick='location="/soccer.php"'>자세히</button> -->
+	            </div>
+	        </div>
+      </div>
     </section>
     <!-- Download Section -->
     <section id="download" class="content-section text-center">
-        <div class="where-section">
-            <div class="container">
-                <div class="col m8 offset-m2">
-                    <h2 class="shadowlight">EVERY WHERE</h2>
-                    <p class="shadowlight">원하는 장소 어디서나 경기를 치를 수 있습니다. 이제 굳이 경기장 때문에 곤욕 치를 일이 없습니다. 자신이 원하는 가까운 장소에서 경기가 가능합니다.</p>
-                    <!-- <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a> -->
-                </div>
+    	<div class="parallax-container">
+		  <div class="parallax">
+		  	<img src="./img/where.jpg">
+		  </div>
+		</div>
+	</section>
+	<section>
+        <div class="container">
+            <div class="col m8 offset-m2 white-text">
+                <h2 class="shadowlight">EVERY WHERE</h2>
+                <p class="shadowlight">원하는 장소 어디서나 경기를 치를 수 있습니다. 이제 굳이 경기장 때문에 곤욕 치를 일이 없습니다. 자신이 원하는 가까운 장소에서 경기가 가능합니다.</p>
+                <!-- <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a> -->
             </div>
         </div>
-    </section>
+    </section>    
+    
 
     <!-- Contact Section -->
     <section class="content-section text-center">
         <div class="time-section">
             <div class="container">
-                <div class="col m8 offset-m2">
+                <div class="col m8 offset-m2 white-text">
                     <h2 class="shadowlight">EVERY TIME</h2>
                     <p class="shadowlight">가능한 시간에 경기를 치를 수 있습니다. 시간이 안맞아서 축구를 못했던 과거의 불편함이 사라집니다. 자신이 원하는 시간에 축구를 즐기세요.</p>
                     <!-- <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a> -->

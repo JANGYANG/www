@@ -75,7 +75,7 @@
         <a href="register.html.php"><button class="btn waves-effect waves-yellow" style="width:100%;">register<i class="material-icons right">person_add</i></button></a>
       </div>
       <div class="col m3 offset-m6 s8 offset-s2" style="margin-top:10px">
-        <a href="../soccer.php"><button class="btn waves-effect waves-light" style="width:100%">BACK<i class="material-icons right">subdirectory_arrow_left</i></button></a>
+        <a href="../index.jsp"><button class="btn waves-effect waves-light" style="width:100%">BACK<i class="material-icons right">subdirectory_arrow_left</i></button></a>
       </div>
     </div>
   </div>

@@ -1,3 +1,15 @@
+.start{
+	margin-top:100px;
+}
+
+
+
+
+
+
+
+
+/* graysacle에서 따온거 */
 @media (min-width: 768px) {
   .navbar-custom {
     padding: 20px 0;
@@ -214,3 +226,4 @@ footer {
 footer p {
   margin: 0;
 }
+
