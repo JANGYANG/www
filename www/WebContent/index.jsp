@@ -176,5 +176,9 @@
 	}
 	$(window).scroll(collapseNavbar);
 	$(document).ready(collapseNavbar);
+	
+	$(document).ready(function(){
+	      $('.carousel').carousel();
+	    });
 	</script>
 </html>

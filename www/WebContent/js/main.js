@@ -16,7 +16,5 @@ $(document).ready(function(){
       $('.parallax').parallax();
     });
 });
-
-
 $(window).scroll(collapseNavbar);
 $(document).ready(collapseNavbar);

@@ -20,12 +20,13 @@
 	  <!-- Compiled and minified JavaScript -->
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 	  
+	  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	  <script type="text/javascript" src="../js/main.js"></script>
       
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body class="navbar-fixed">
+<body class="navbar-fixed  blue lighten-5">
 	<nav class="navbar navbar-custom navbar-fixed-top  blue darken-3">
 	    <div class="nav-wrapper ">
 	      <a href="./index.jsp" class="brand-logo">BROKEN-GLASSES</a>
@@ -46,40 +47,41 @@
 	      </ul>
 	    </div>
 	</nav>
-	
+<div id="change-body">
+	<div class="carousel carousel-slider">
+	    <a class="carousel-item" href="#one!"><img src="../img/time.jpg"></a>
+	    <a class="carousel-item" href="#two!"><img src="../img/where.jpg"></a>
+	    <a class="carousel-item" href="#three!"><img src="../img/stadium.jpg"></a>
+	    <a class="carousel-item" href="#four!"><img src="../img/league.jpg"></a>
+	 </div>
 	<section class="container start">
-		<div class="carousel carousel-slider">
-	    <a class="carousel-item" href="#one!"><img src="https://lorempixel.com/800/400/food/1"></a>
-	    <a class="carousel-item" href="#two!"><img src="https://lorempixel.com/800/400/food/2"></a>
-	    <a class="carousel-item" href="#three!"><img src="https://lorempixel.com/800/400/food/3"></a>
-	    <a class="carousel-item" href="#four!"><img src="https://lorempixel.com/800/400/food/4"></a>
-	  	</div>
+		
 		<div class="row center">
 			<h3> 메인 사진 자리</h3>
 		</div>
 		<div>
 			<p>메인 페이지 내용</p>
 		</div>
+		<div class="row">
+			<div class="col m8  ">
+				<div class="z-depth-3 blue lighten-4">
+					1
+				</div>
+			
+			
+			</div>
+			
+			<div class="col m4 ">
+				<div class="z-depth-3  blue lighten-4">
+					2
+				</div>
+			
+			
+			</div>
+		</div>
 	</section>	
 	
-	
-	
-	  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script>
-      <script> $(document).ready(function(){$(".button-collapse").sideNav();}); </script>
-      <script>
-		function collapseNavbar() {
-		    if ($(".navbar").offset().top > 50) {
-		        $(".navbar-fixed-top").addClass("top-nav-collapse");
-		    } else {
-		        $(".navbar-fixed-top").removeClass("top-nav-collapse");
-		    }
-		}
-		$(window).scroll(collapseNavbar);
-		$(document).ready(collapseNavbar);
-		
-		$(window).scroll(collapseNavbar);
-		$(document).ready(collapseNavbar);
-	  </script>
+</div>	
+
 </body>
 </html>
