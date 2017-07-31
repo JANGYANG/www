@@ -7,6 +7,7 @@
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
       <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
+      
       <link type="text/css" rel="stylesheet" href="../css/main.css"  media="screen,projection"/>
 		
       <!--Let browser know website is optimized for mobile-->
@@ -26,23 +27,63 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<nav class=" container navbar navbar-custom navbar-fixed-top   blue darken-4">
+	<!-- Dropdown Structure -->
+<ul id="Community" class="dropdown-content">
+  <li><a href="#!">공지사항</a></li>
+  <li><a href="#!">축구게시판</a></li>
+  <li><a href="#!">리그게시판</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">MY팀게시판</a></li>
+</ul>
+<!-- Dropdown Structure -->
+<ul id="Team" class="dropdown-content">
+  <li><a href="#!">MY팀관리</a></li>
+  <li><a href="#!">팀찾기 </a></li>
+</ul>
+<!-- Dropdown Structure -->
+<ul id="Login" class="dropdown-content ">
+  <li><a href="#!">나의정보</a></li>
+  <li class="divider"></li>
+  <li><a href="./logout.jsp">로그아웃</a></li>
+  <li class="divider"></li>
+  <li><a href="./register/signUp.jsp">회원가입</a></li>
+  <li class="divider"></li>
+  <li><a href="./login.jsp">로그인</a></li>
+</ul>
+<!-- Dropdown Structure -->
+<ul id="League" class="dropdown-content">
+  <li><a href="#!">경기기록</a></li>
+  <li><a href="#!">리그신청</a></li>
+  <li><a href="#!">경기장정보</a></li>
+   <li class="divider"></li>
+  <li><a href="#!">MY리그</a></li>
+</ul>
+
+	<!-- Dropdown Structure -->
+<ul id="Menu" class="dropdown-content">
+  <li><a href="./main.jsp">MAIN</a></li>
+  <li><a class="dropdown-button" data-activates="Team" href="#!">TEAM</a></li>
+  <li><a href="./player.jsp">PLAYER</a></li>
+  <li><a class="dropdown-button" data-activates="League" href="#!">LEAGUE</a></li>
+  <li><a class="dropdown-button" data-activates="Community" href="#!">COMMUNITY</a></li>
+  <li><a href="./test.jsp">TEST</a></li>
+  <li><a class="dropdown-button" data-activates="Login" href="#!">LOGIN</a></li>
+
+</ul>
+
+
+	<nav class=" container navbar navbar-fixed-top blue darken-4" style="padding-right:10px; padding-left:10px">
 	    <div class="nav-wrapper ">
-	      <a href="./index.jsp" class="brand-logo">BROKEN-GLASSES</a>
-	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+	      <a href="./main.jsp" class="brand-logo">BROKEN-GLASSES</a>
+	      <a href="#" data-activates="Menu" class="right dropdown-button hide-on-med-and-up"><i class="material-icons">menu</i></a>
 	      <ul class="right hide-on-med-and-down">
 	        <li><a href="./main.jsp">MAIN</a></li>
-	        <li><a href="./team.jsp">TEAM</a></li>
+	        <li><a class="dropdown-button"  data-activates="Team" href="#!">TEAM<i class="tiny material-icons right">arrow_drop_down</i></a></li>
 	        <li><a href="./player.jsp">PLAYER</a></li>
+	        <li><a class="dropdown-button" data-activates="League" href="#!">LEAGUE<i class="tiny material-icons right">arrow_drop_down</i></a></li>
+	        <li><a class="dropdown-button" data-activates="Community" href="#!">COMMUNITY<i class="tiny material-icons right">arrow_drop_down</i></a></li>
 	        <li><a href="./test.jsp">TEST</a></li>
-	        <li><a href="./login/index.jsp">LOGIN</a></li>
-	      </ul>
-	      <ul class="side-nav" id="mobile-demo">
-	        <li><a href="#about">MAIN</a></li>
-	        <li><a href="#download">TEAM</a></li>
-	        <li><a href="#contact">PLAYER</a></li>
-	        <li><a href="#contact">TEST</a></li>
-	        <li><a href="#contact">LOGIN</a></li>
+	        <li><a class="dropdown-button"  data-activates="Login" href="#!">LOGIN<i class="tiny material-icons right">arrow_drop_down</i></a></li>
 	      </ul>
 	    </div>
 	</nav>
@@ -64,8 +105,10 @@
 			<p>메인 페이지 내용</p>
 		</div>
 		<div class="row">
-			<div class="col m8  ">
-				<div class="z-depth-3  blue darken-4 white-text">
+			<div class="col s12 m12 l12">
+				
+				<div class="z-depth-3 ">
+				 <div>진행중인 리그</div>
 				  <table class="centered">
 			        <thead>
 			          <tr>
@@ -74,7 +117,6 @@
 			              <th>소속팀</th>
 			          </tr>
 			        </thead>
-			
 			        <tbody>
 			          <tr>
 			            <td>1</td>
@@ -94,35 +136,48 @@
 			        </tbody>
 			      </table>
 				</div>
-			
-			
-			</div>
-			
-			<div class="col m4 ">
-				<div class="z-depth-3  blue darken-4">
-					  <form action="/users/login.php" method="POST" id="form" onsubmit="return checkSubmit();">  
-					  	<div style="padding:10px" class="center">
-					        <input style="margin-bottom:0px;"type="email" name="email" id="email" class="validate" placeholder="아이디">
-					        <input style="margin-bottom:0px;"type="password" name="password" id="password" class="validate"placeholder="비밀번호">
-					      <p style="text-align:center;">
-					        <input type="checkbox" id="test5" />
-					        <label for="test5">REMEMVER ME!</label>
-					      </p>
-					      <button class="btn waves-effect waves-light" type="submit" name="login_button" id="btnLogin" style="width:50%;">
-					        LOGIN<i class="material-icons right">send</i>
-					      </button>
-					    </div>
-					  
-					
-					  </form>
+				<section style="height: 30px;"></section>
+				<div class="z-depth-3 ">
+				  <table class="centered">
+			        <thead>
+			          <tr>
+			              <th>득점순위</th>
+			              <th>선수이름</th>
+			              <th>소속팀</th>
+			          </tr>
+			        </thead>
+			        <tbody>
+			          <tr class="hoverable">
+			            <td>1</td>
+			            <td>박희융</td>
+			            <td>프론티어</td>
+			          </tr>
+			          <tr>
+			            <td>2</td>
+			            <td>이우경</td>
+			            <td>부러진안경</td>
+			          </tr>
+			          <tr>
+			            <td>3</td>
+			            <td>이민규</td>
+			            <td>붙여진안경</td>
+			          </tr>
+			        </tbody>
+			      </table>
 				</div>
-			
-			
+				
+				
+				
 			</div>
 		</div>
 	</section>	
 	
-	
+	<script>
+		$(document).ready(function(){
+			$(".dropdown-button").dropdown({belowOrigin: true});
+			 
+		})
+	</script>
 	  
 </body>
 </html>

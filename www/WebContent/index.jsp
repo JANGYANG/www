@@ -26,7 +26,7 @@
 <title>BROKEN GLASSES</title>
 </head>
 	<body class="navbar-fixed black">
-		<nav class="navbar navbar-custom navbar-fixed-top">
+		<nav class="navbar  navbar-fixed-top">
 		    <div class="nav-wrapper black">
 		      <a href="./index.jsp" class="brand-logo" style="margin-left:30px"><img style="height:50px;width:auto"src="./img/ci.png"></a>
 		      <a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="material-icons">menu</i></a>
@@ -47,7 +47,7 @@
 	        <div class="intro-body">
 	            <div class="container">
 	                <div class="row">
-	                    <div class="col m8 offset-m2">
+	                    <div style="margin-top: 200px;"class="col m8 offset-m2 ">
 	                        <h2 class="brand-heading">부러진 안경</h2>
 	                        
 							<div>
@@ -185,7 +185,7 @@
 	</body>
 	
 	<script>
-	function collapseNavbar() {
+	/* function collapseNavbar() {
 	    if ($(".navbar").offset().top > 50) {
 	        $(".navbar-fixed-top").addClass("top-nav-collapse");
 	    } else {
@@ -193,7 +193,7 @@
 	    }
 	}
 	$(window).scroll(collapseNavbar);
-	$(document).ready(collapseNavbar);
+	$(document).ready(collapseNavbar); */
 	
 	$(document).ready(function(){
 	      $('.carousel').carousel();
