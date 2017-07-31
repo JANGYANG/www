@@ -26,7 +26,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<nav class="navbar navbar-custom navbar-fixed-top   blue lighten-4">
+	<nav class=" container navbar navbar-custom navbar-fixed-top   blue darken-4">
 	    <div class="nav-wrapper ">
 	      <a href="./index.jsp" class="brand-logo">BROKEN-GLASSES</a>
 	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -47,7 +47,7 @@
 	    </div>
 	</nav>
 		<div class="container">
-			<div class="carousel carousel-slider">
+			<div class="carousel carousel-slider center" data-indicators="true">
 			    <a class="carousel-item" href="#one!"><img height=400px; style="border-radius: 8px;
 	opacity: 0.8;"src="../img/time.jpg"></a>
 			    <a class="carousel-item" href="#two!"><img height=400px; src="../img/where.jpg"></a>
@@ -65,7 +65,7 @@
 		</div>
 		<div class="row">
 			<div class="col m8  ">
-				<div class="z-depth-3  blue lighten-4 white-text">
+				<div class="z-depth-3  blue darken-4 white-text">
 				  <table class="centered">
 			        <thead>
 			          <tr>
@@ -99,10 +99,11 @@
 			</div>
 			
 			<div class="col m4 ">
-				<div class="z-depth-3  blue lighten-4">
+				<div class="z-depth-3  blue darken-4">
 					  <form action="/users/login.php" method="POST" id="form" onsubmit="return checkSubmit();">  
-					        <input type="email" name="email" id="email" class="validate">
-					        <input type="password" name="password" id="password" class="validate">
+					  	<div style="padding:10px" class="center">
+					        <input style="margin-bottom:0px;"type="email" name="email" id="email" class="validate" placeholder="아이디">
+					        <input style="margin-bottom:0px;"type="password" name="password" id="password" class="validate"placeholder="비밀번호">
 					      <p style="text-align:center;">
 					        <input type="checkbox" id="test5" />
 					        <label for="test5">REMEMVER ME!</label>
@@ -110,7 +111,7 @@
 					      <button class="btn waves-effect waves-light" type="submit" name="login_button" id="btnLogin" style="width:50%;">
 					        LOGIN<i class="material-icons right">send</i>
 					      </button>
-					    
+					    </div>
 					  
 					
 					  </form>

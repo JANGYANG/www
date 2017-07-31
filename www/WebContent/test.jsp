@@ -26,13 +26,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
-	<div class="carousel carousel-slider">
-	    <a class="carousel-item" href="#one!"><img src="./img/time.jpg"></a>
-	    <a class="carousel-item" href="#two!"><img src="./img/where.jpg"></a>
-	    <a class="carousel-item" href="#three!"><img src="./img/stadium.jpg"></a>
-	    <a class="carousel-item" href="#four!"><img src="./img/league.jpg"></a>
-	  	</div>
+<style>
+.wrap { position:relative;}
+.over { position:absolute; top:100px; left:100px;}
+</style>
+
+<div class="black">
+	<img src="./img/ci.png">
+</div>
+
+<div class="wrap">아래에 있는 레이어
+ <div class="over">위에 있는 레이어</div>
+
+
 	
 	
 	  

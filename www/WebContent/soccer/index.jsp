@@ -26,8 +26,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body class="navbar-fixed  blue lighten-5">
-	<nav class="navbar navbar-custom navbar-fixed-top  blue darken-3">
+<body class="navbar-fixed-top">
+	<nav class="container navbar navbar-custom navbar-fixed-top  blue darken-3">
 	    <div class="nav-wrapper ">
 	      <a href="./index.jsp" class="brand-logo">BROKEN-GLASSES</a>
 	      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
