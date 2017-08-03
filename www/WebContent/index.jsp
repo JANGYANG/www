@@ -60,7 +60,7 @@
 	                        </button> -->
 	                        <!-- 눈깔 버튼 -->
 	
-	                        <a href="./soccer/index.jsp">
+	                        <a href="./soccer/main.jsp">
 	                            <i class="large material-icons">directions_run</i>
 	                            <div style="over">시작하기-></div>
 	                        </a>

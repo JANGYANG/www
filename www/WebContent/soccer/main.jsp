@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,12 +25,12 @@
 	   <script type="text/javascript" src="../js/materialize.min.js"></script>
 	   <script type="text/javascript" src="../js/main.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Broken-glasses</title>
 </head>
 <body>
 	<!-- Dropdown Structure -->
 <ul id="Community" class="dropdown-content">
-  <li><a href="#!">공지사항</a></li>
+  <li><a href="">공지사항</a></li>
   <li><a href="#!">축구게시판</a></li>
   <li><a href="#!">리그게시판</a></li>
   <li class="divider"></li>
@@ -46,9 +47,9 @@
   <li class="divider"></li>
   <li><a href="./logout.jsp">로그아웃</a></li>
   <li class="divider"></li>
-  <li><a href="./register/signUp.jsp">회원가입</a></li>
+  <li><a href="./register/signup.jsp">회원가입</a></li>
   <li class="divider"></li>
-  <li><a href="./login.jsp">로그인</a></li>
+  <li><a href="./login/login.jsp">로그인</a></li>
 </ul>
 <!-- Dropdown Structure -->
 <ul id="League" class="dropdown-content">

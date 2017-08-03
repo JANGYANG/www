@@ -35,7 +35,7 @@
 	<img src="./img/ci.png">
 </div>
 
-<div class="wrap">아래에 있는 레이어
+<div class="wrap">아래에 있는 레이어</div>
  <div class="over">위에 있는 레이어</div>
 
 <ul id="dropdown1" class="dropdown-content">
