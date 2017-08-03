@@ -26,10 +26,12 @@ public class UserLoginServlet extends HttpServlet {
 		Gson gson = new Gson();
 		String json = login(email, password);
 		UserJson loginJson = gson.fromJson(json, UserJson.class);
-		if (loginJson.getError() == false) {
-			response.sendRedirect("/soccer");
+		
+		if (loginJson.getError()) {
+			response.getWriter().write(json);
 		}else {
 			response.getWriter().write(json);
+//			response.sendRedirect("./soccer");
 		}
 	}
 	

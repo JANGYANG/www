@@ -87,11 +87,7 @@
     </div>
 
   </form>
-	<!-- 이건 무슨버튼이죠? -->
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-   
+  
 
   <!-- 뒤로가기 -->
   <div class="container">

@@ -34,7 +34,7 @@
     </div>
   </div>
 
-  <form action="/users/login.php" method="POST" id="form" onsubmit="return checkSubmit();">
+  <form action="../../UserLoginServlet" method="POST" id="form">
 
   <div class="container">
     <div class="row">

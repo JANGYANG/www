@@ -35,11 +35,18 @@ public class UserRegisterServlet extends HttpServlet {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		UserJson registerJson = gson.fromJson(json, UserJson.class);
-		if (registerJson.getError() == false) {
-			response.sendRedirect("/soccer");
-		}else {
+		UserJson registerJson = new UserJson();
+		registerJson = gson.fromJson(json, UserJson.class);
+		
+		response.getWriter().write(json);
+		
+		
+		
+		boolean error = registerJson.getError();
+		if (error) {
 			response.getWriter().write(json);
+		}else {
+			response.sendRedirect("./soccer");
 		}
 	}
 	
