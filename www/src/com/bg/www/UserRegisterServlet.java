@@ -45,6 +45,7 @@ public class UserRegisterServlet extends HttpServlet {
 	
 	
 	public String register(String email, String password,String name) throws Exception {
+		System.out.println("register servlet register function is runed");
 		UserDAO userDAO = new UserDAO();
 		return userDAO.register(email, password, name);
 	}

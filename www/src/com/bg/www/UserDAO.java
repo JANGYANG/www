@@ -1,30 +1,28 @@
 package com.bg.www;
 
-import java.security.Key;
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.UUID;
-
-import javax.crypto.KeyGenerator;
 
 import com.google.gson.Gson;
 
 public class UserDAO {
-	private Connection conn;
-	private PreparedStatement pstmt;
-	private Statement stmt;
-	private ResultSet rs;
-	private String sql;
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+	private Statement stmt = null;
+	private ResultSet rs = null;
+	private String sql = null;
 	Gson gson = new Gson();
     
 	SecureRandom sr = new SecureRandom();
     byte[] ab = sr.generateSeed(256);
 	
-	public void userDAO(){
+	public UserDAO(){
+		System.out.println("UserDAO is called!");
 		try {
 			  final String driverName= "com.mysql.jdbc.Driver";
 			  final String dbDatabase = "jdbc:mysql://db.broken-glasses.com/dbradiata03";
@@ -32,9 +30,10 @@ public class UserDAO {
 			  final String dbPassword ="20160815!@";
 			  Class.forName(driverName);
 			  conn = DriverManager.getConnection(dbDatabase,dbUser,dbPassword);
-
+			  System.out.println("DB Connection Success!");
 		}catch(Exception e) {
 			e.printStackTrace();
+			System.out.println("DB Connection FAIL!");
 		}
 	}
 	
@@ -72,7 +71,7 @@ public class UserDAO {
 		return json;
 	}
 	
-	public String register(String email, String password, String name) throws Exception{
+	public String register(String email, String password, String name){
 		UserJson registerJson = new UserJson();
 		registerJson.setError(true);
 		
@@ -87,26 +86,33 @@ public class UserDAO {
 //		System.out.println(aes256.aesEncode(password));
 //		System.out.println(aes256.aesDecode(password));
 		
-//		sql = String.format("INSERT INTO users (unique_id, name, email, encrypted_password, salt) "
-//				+ "VALUES ('%s', '%s', '%s', '%s', '%s')", "1234", "1234", "1234", "1234", "1234");
-		
-		sql = "INSERT INTO users (unique_id, name, email, encrypted_password, salt) VALUES (12534, 12534, 12534, 12534, 12534)";
+		sql = String.format("INSERT INTO users (unique_id, name, email, encrypted_password, salt) "
+				+ "VALUES ('%s', '%s', '%s', '%s', '%s')", "test", "test", "test", "test", "test");
 		
 		try {
+			System.out.println("before");
 			stmt = conn.createStatement();
+			System.out.println("after");
 		    boolean r = stmt.execute(sql);
+			System.out.println("afterafter");
 		    if (r == true) {
 				registerJson.setError(false);
 		    }else {
 		    		registerJson.setError_msg("Mysql Error");
 		    }
-		}catch(Exception e) {
+		}catch(SQLException e) {
 			e.printStackTrace();
 			System.out.println("WHATTHEFUCK");
 		}
 		
-		
-		
+		try {
+			stmt.close();
+			conn.close();
+			pstmt.close();
+			rs.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 		
 		String json = gson.toJson(registerJson);
 		return json;
