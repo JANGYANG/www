@@ -37,7 +37,7 @@
   </div>
 
 
-  <form action="register.php" method="POST" onsubmit='return checkSubmit();'>
+  <form action="../../UserRegisterServlet" method="POST">
   <!-- 이메일 -->
   <div class="container">
     <div class="row">
