@@ -77,6 +77,31 @@ public class UserDAO {
 		return json;
 	}
 	
+	
+	public String register(String email) {
+		UserJson isUserExistJson = new UserJson();
+		isUserExistJson.setError(true);
+		sql = "SELECT * FROM users WHERE email = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			if(rs.first()) {
+				isUserExistJson.setEmail(rs.getString(1));
+				isUserExistJson.setError_msg(rs.getString(1) + " is Exist");
+			}else {
+				isUserExistJson.setError(false);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		String json = gson.toJson(isUserExistJson);
+		System.out.println(json);
+		return json;
+	}
+	
+	
 	public String register(String email, String password, String name){
 		UserJson registerJson = new UserJson();
 		registerJson.setError(true);

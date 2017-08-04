@@ -30,8 +30,13 @@ public class UserRegisterServlet extends HttpServlet {
 		Gson gson = new Gson();
 		String json = "";
 		
+		
 		try {
-			json = register(email, password, name);
+			if(password == null && name == null) {
+				json = register(email);
+			}else {
+				json = register(email, password, name);
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -55,6 +60,12 @@ public class UserRegisterServlet extends HttpServlet {
 		System.out.println("register servlet register function is runed");
 		UserDAO userDAO = new UserDAO();
 		return userDAO.register(email, password, name);
+	}
+	
+	public String register(String email) throws Exception {
+		System.out.println("register servlet register function is runed");
+		UserDAO userDAO = new UserDAO();
+		return userDAO.register(email);
 	}
 
 
