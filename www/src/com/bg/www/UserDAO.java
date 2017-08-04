@@ -89,6 +89,7 @@ public class UserDAO {
 			if(rs.first()) {
 				isUserExistJson.setEmail(rs.getString(1));
 				isUserExistJson.setError_msg(rs.getString(1) + " is Exist");
+				System.out.println(isUserExistJson.getError_msg());
 			}else {
 				isUserExistJson.setError(false);
 			}
