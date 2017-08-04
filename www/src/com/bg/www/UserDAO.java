@@ -93,6 +93,8 @@ public class UserDAO {
 			}else {
 				isUserExistJson.setError(false);
 			}
+			rs.close();
+			pstmt.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

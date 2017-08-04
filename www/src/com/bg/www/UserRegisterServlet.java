@@ -25,34 +25,34 @@ public class UserRegisterServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 		String email = request.getParameter("email");
+		System.out.println("email" + email);
 		String password = request.getParameter("password");
+		System.out.println("password " + password);
 		String name = request.getParameter("name");
+		System.out.println("name " + name);
 		Gson gson = new Gson();
 		String json = "";
 		
-		
-		try {
-			if(password == null && name == null) {
+		if (password == null) {
+			try{
 				json = register(email);
-			}else {
-				json = register(email, password, name);
+			}catch(Exception e) {
+				e.printStackTrace();
 			}
-		}catch(Exception e) {
-			e.printStackTrace();
+		}else {
+			try {
+				json = register(email, password, name);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
+		
 		UserJson registerJson = new UserJson();
 		registerJson = gson.fromJson(json, UserJson.class);
 		
 		response.getWriter().write(json);
 		
 		
-		
-		boolean error = registerJson.getError();
-		if (error) {
-			response.getWriter().write(json);
-		}else {
-			response.sendRedirect("./soccer");
-		}
 	}
 	
 	
