@@ -6,8 +6,8 @@
 <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="../../css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="../../css/main.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="./../css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="./../css/main.css"  media="screen,projection"/>
 		
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -20,7 +20,8 @@
 	  
 	   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	   
-	   <script type="text/javascript" src="../../js/materialize.min.js"></script>
+	   <script type="text/javascript" src="./../js/materialize.min.js"></script>
+	   <script type="text/javascript" src="./../js/register.js"></script>
 	   
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BROKEN-GLASSES LOGIN</title>
@@ -72,7 +73,7 @@
   <div class="container">
     <div class="row">
       <div class="col m3 offset-m3 s8 offset-s2">
-        <a href="register.html.php"><button class="btn waves-effect waves-yellow" style="width:100%;">register<i class="material-icons right">person_add</i></button></a>
+        <a href="../../register/signup.jsp"><button class="btn waves-effect waves-yellow" style="width:100%;">register<i class="material-icons right">person_add</i></button></a>
       </div>
       <div class="col m3 offset-m6 s8 offset-s2" style="margin-top:10px">
         <a href="../index.jsp"><button class="btn waves-effect waves-light" style="width:100%">BACK<i class="material-icons right">subdirectory_arrow_left</i></button></a>
