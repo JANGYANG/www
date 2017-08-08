@@ -84,16 +84,12 @@
           <h5>Region</h5>
         
         	<br>
-        	<label>
         	1지망 선호지역
 			<select name="sido1" id="sido1"></select>
-			</label>
 			<select name="gugun1" id="gugun1"></select>
 			<br>
-			<label>
 			2지망 선호지역
 			<select name="sido2" id="sido2"></select>
-			</label>
 			<select name="gugun2" id="gugun2"></select>
 		</div>
       </div>
