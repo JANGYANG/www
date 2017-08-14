@@ -106,27 +106,17 @@
         </div>
         <input type="hidden" name="position" id="position">
       </div>
-      <!-- 팀여부 -->
-      <!-- <div class="row">
-        <div class="col m6 offset-m3 s10 offset-s1" style="text-align:center;">
-          <h6>DO you Have TEAM?</h6>
-          <textbox class="btn mteam" id="team_yes">YES</textbox>
-          <textbox class="btn mteam" id="team_no">NO</textbox>
-          <input type="hidden" name="team" id="team" value="">
-        </div>
-      </div> -->
 		
-		      <hr class="dashed_gray">
+	      <hr class="dashed_gray">
+	
+	      <div class="row">
+	        <div class="col m6 offset-m3 s10 offset-s1" style="text-align:center;">
+	          <button type="submit" class="btn"name="button">NEXT</button>
+	        </div>
+	      </div>
+	   </div>
+</form>
 		
-		      <div class="row">
-		        <div class="col m6 offset-m3 s10 offset-s1" style="text-align:center;">
-		          <button type="submit" class="btn"name="button">NEXT</button>
-		        </div>
-		      </div>
-		
-		
-		    </div>
-		</form>
 <script type="text/javascript">
  
 $('document').ready(function() {
@@ -150,7 +140,6 @@ $('document').ready(function() {
  
  // 시/도 선택 박스 초기화
  $("select[name^=sido]").each(function() {
-	 console.log("hi");
   $selsido = $(this);
   $.each(eval(area0), function() {
    $selsido.append("<option value='"+this+"'>"+this+"</option>");
@@ -161,14 +150,14 @@ $('document').ready(function() {
  // 시/도 선택시 구/군 설정
  $("select[name^=sido]").change(function() {
   var area = "area"+$("option",$(this)).index($("option:selected",$(this)));// 선택지역의 구군 Array
-  console.log(area);
+  
   var $gugun = $(this).next(); // 선택영역 군구 객체
   $("option",$gugun).remove(); // 구군 초기화
   if(area == "area0")
    $gugun.append("<option value=''>구/군 선택</option>");
   else {
    $.each(eval(area), function() {
-	   console.log(area);
+	
     $gugun.append("<option value='"+this+"'>"+this+"</option>");
    });
   }
