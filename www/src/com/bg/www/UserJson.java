@@ -7,6 +7,69 @@ public class UserJson {
 	String password;
 	String salt;
 	
+	String birth;
+	String region_a;
+	String region_b;
+	Integer height;
+	Integer weight;
+	String position;
+	String team_uid;
+	
+	public UserJson() {
+		
+	}
+	
+	public UserJson(String paramEmail, String paramName, String paramBirth, String paramRegion_a, String paramRegion_b, Integer paramHeight, Integer paramWeight, String paramPosition, String paramTeam_uid){
+		email = paramEmail;
+		name = paramName;
+		birth = paramBirth;
+		region_a = paramRegion_a;
+		region_b = paramRegion_b;
+		height = paramHeight;
+		weight = paramWeight;
+		position = paramPosition;
+		team_uid = paramTeam_uid;
+	}
+	
+	
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
+
+	public void setWeight(Integer weight) {
+		this.weight = weight;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
+	public String getRegion_a() {
+		return region_a;
+	}
+	public void setRegion_a(String region_a) {
+		this.region_a = region_a;
+	}
+	public String getRegion_b() {
+		return region_b;
+	}
+	public void setRegion_b(String region_b) {
+		this.region_b = region_b;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public String getTeam_uid() {
+		return team_uid;
+	}
+	public void setTeam_uid(String team_uid) {
+		this.team_uid = team_uid;
+	}
 	boolean error;
 	String error_msg;
 

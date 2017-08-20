@@ -1,3 +1,6 @@
+<%@ page import="com.bg.www.*"%>
+<%@ page import="java.util.*" %>
+
 <%@ page contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,8 +9,8 @@
 <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="../../css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="../../css/main.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="./css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="./css/main.css"  media="screen,projection"/>
 		
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -20,12 +23,12 @@
 	  
 	   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	   
-	   <script type="text/javascript" src="../../js/materialize.min.js"></script>
-	   <script type="text/javascript" src="../../js/main.js"></script>
+	   <script type="text/javascript" src="./js/materialize.min.js"></script>
+	   <script type="text/javascript" src="./js/main.js"></script>
 	   
 	   <!-- select2 -->
 
-	  <script type="text/javascript" src="../../js/registerUserInfo.js"></script>
+	  <script type="text/javascript" src="./js/registerUserInfo.js"></script>
 	  <style>
 	  select{
 	  display: inherit;
@@ -40,7 +43,7 @@
   <div class="container">
     <div class="row">
       <div class="col m6 offset-m3 s8 offset-s2">
-        <img src="../../img/logo_CI.png" alt="LOGIN" title="BG" style="width:100%;padding:30px">
+        <img src="./img/logo_CI.png" alt="LOGIN" title="BG" style="width:100%;padding:30px">
       </div>
     </div>
   </div>
@@ -50,17 +53,16 @@
       <div class="col m6 offset-m3">
         <h6 style="text-align:center;">선수이름</h6>
         <h3 style="text-align:center;">
-          <?php
-          echo $user['name'];
-          session_destroy();
-           ?>
+        		<% 
+        		out.println((String)request.getAttribute("userName"));
+        		%>
         </h3>
       </div>
     </div>
   </div>
 
-  <form name="" action="registerUserInfo.jsp" method="POST" onsubmit="return checkSubmit();">
-    <input type="hidden" name="user_uid" value="<?php echo $user['unique_id'] ?>">
+  <form name="" action="./UserRegisterServlet" method="POST" onsubmit="return checkSubmit();">
+    <input type="hidden" name="user_uid" value="<% request.getAttribute("user_uid"); %>">
     <div class="container">
       <div class="row">
         <div class="col m6 offset-m3 s10 offset-s1" style="text-align:center;">

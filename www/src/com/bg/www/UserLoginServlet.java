@@ -23,6 +23,8 @@ public class UserLoginServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		
+		
 		Gson gson = new Gson();
 		String json = login(email, password);
 		UserJson loginJson = gson.fromJson(json, UserJson.class);

@@ -78,7 +78,7 @@ public class UserDAO {
 		return json;
 	}
 	
-	
+//	아이디 중복체크
 	public String register(String email) {
 		UserJson isUserExistJson = new UserJson();
 		isUserExistJson.setError(true);
@@ -88,11 +88,12 @@ public class UserDAO {
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
 			if(rs.first()) {
-				isUserExistJson.setEmail(rs.getString(1));
-				isUserExistJson.setError_msg(rs.getString(1) + " is Exist");
+				isUserExistJson.setEmail(rs.getString("email"));
+				isUserExistJson.setError_msg(rs.getString("email") + " is Exist!@!@!@!@");
 				System.out.println(isUserExistJson.getError_msg());
 			}else {
 				isUserExistJson.setError(false);
+				isUserExistJson.setError_msg(email + "can USE!!");
 			}
 			rs.close();
 			pstmt.close();
@@ -110,7 +111,7 @@ public class UserDAO {
 		UserJson registerJson = new UserJson();
 		registerJson.setError(true);
 		
-		UUID uid = UUID.randomUUID();
+		String uid = UUID.randomUUID().toString();
 		String encrypted_password = null;
 		String salt = uid.toString();
 	    String created_at = new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
@@ -130,15 +131,12 @@ public class UserDAO {
 				+ "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", uid.toString(), name.toString(), email.toString(), encrypted_password, salt, created_at);
 		
 		try {
-			System.out.println("before");
 			stmt = conn.createStatement();
-			System.out.println("after");
 		    int r = stmt.executeUpdate(sql);
-			System.out.println("afterafter");
 		    if (r > 0) {
 				registerJson.setError(false);
 				registerJson.setEmail(email);
-				registerJson.setUnique_id(uid.toString());
+				registerJson.setUnique_id(uid);
 		    }else {
 		    		registerJson.setError_msg("Mysql Error");
 		    }
@@ -154,9 +152,43 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		
+		
 		String json = gson.toJson(registerJson);
 		System.out.println(json);
 		return json;
 	}
-
+//	user 추가정보 입력
+	public String register(String user_uid, String birth, String region_a, String region_b, int height, int weight, String position){
+		UserJson registerUserInfoJson = new UserJson();
+		registerUserInfoJson.setError(true);
+	    String created_at = new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
+	    
+		sql = String.format("INSERT INTO users_info (user_uid, birth, region_a, region_b, height, we"
+				+ "ight, position, created_at)" 
+				+ "VALUES ('%s', '%s', '%s', '%s', '%d', '%d', '%s', '%s')", user_uid, birth, region_a, region_b, height, weight, position, created_at);
+		try {
+			stmt = conn.createStatement();
+		    int r = stmt.executeUpdate(sql);
+		    if (r > 0) {
+				registerUserInfoJson.setError(false);
+		    }else {
+		    		registerUserInfoJson.setError_msg("Mysql Error");
+		    }
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("WHATTHEFUCK");
+		}
+		
+		try {
+			stmt.close();
+			conn.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		
+		String json = gson.toJson(registerUserInfoJson);
+		System.out.println(json);
+		return json;
+	}
 }
