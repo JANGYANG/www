@@ -30,12 +30,14 @@ public class UserRegisterServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		
 		String birth = request.getParameter("birth");
-		String region_a = request.getParameter("region_a");
-		String region_b = request.getParameter("region_b");
+		String region_a = request.getParameter("region1");
+		String region_b = request.getParameter("region2");
 		String height = request.getParameter("height");
 		String weight = request.getParameter("weight");
 		String position = request.getParameter("position");
 //		String team_uid = request.getParameter("team_uid");
+		
+//		String user_uid = request.getParameter("user_uid");
 		
 		
 		String json = "";
@@ -59,18 +61,20 @@ public class UserRegisterServlet extends HttpServlet {
 				response.getWriter().write(json);
 				Gson gson = new Gson();
 				userJson = gson.fromJson(json, UserJson.class);
-				if (!userJson.getError())
-				{
-					response.sendRedirect("./soccer/login");
-				}
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}else if(birth != null) {
 			try {
 				System.out.println("UserInfo Process is Runned");
-				json = register((String)request.getAttribute("user_uid"), birth, region_a, region_b, Integer.parseInt(height), Integer.parseInt(weight), position);
+				json = register((String)request.getParameter("user_uid"), birth, region_a, region_b, Integer.parseInt(height), Integer.parseInt(weight), position);
 				response.getWriter().write(json);
+				Gson gson = new Gson();
+				userJson = gson.fromJson(json, UserJson.class);
+				if (!userJson.getError())
+				{
+					response.sendRedirect("./soccer/login/");
+				}
 			}catch(Exception e) {
 				e.printStackTrace();
 			}

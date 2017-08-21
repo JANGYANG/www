@@ -128,7 +128,7 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		sql = String.format("INSERT INTO users (unique_id, name, email, encrypted_password, salt, created_at) "
-				+ "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", uid.toString(), name.toString(), email.toString(), encrypted_password, salt, created_at);
+				+ "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", uid.toString(), name, email.toString(), encrypted_password, salt, created_at);
 		
 		try {
 			stmt = conn.createStatement();

@@ -19,22 +19,22 @@ $(function(){
                url: '../../UserRegisterServlet',
                data: {email: email.val()},
 
-               success: function (json) {
-               console.log("ajax success")
-	               if(json.error == false) {
-	                  console.log("Available Email");
-	                  console.log("Error: " + json.error);
-	                  emailCheck.text('사용가능한 아이디 입니다.');
-	                  emailCheck.css("background-color","#40b0df");
-	                }else{
-	                  console.log("Unavailable Email");
-	                  console.log("Error: " + json.error);
-	                  console.log(json.error_msg);
-	                  emailCheck.css("background-color","red");
-	                  emailCheck.text('다른 아이디를 입력해 주세요.');
-	                  console.log(emailCheck.css("background-color"));
-	                  email.focus();
-	                }
+               success: function(json){
+            	   	console.log("ajax success");
+            	   	if(json.error == false) {
+                  console.log("Available Email");
+                  console.log("Error: " + json.error);
+                  emailCheck.text('사용가능한 아이디 입니다.');
+                  emailCheck.css("background-color","#40b0df");
+            	   	}else{
+                  console.log("Unavailable Email");
+	              console.log("Error: " + json.error);
+                  console.log(json.error_msg);
+                  emailCheck.css("background-color","red");
+                  emailCheck.text('다른 아이디 입력해 주세요.');
+                  console.log(emailCheck.css("background-color"));
+                  email.focus();
+                }
                },
                error: function(){
             	   	console.log('Ajax Error');
