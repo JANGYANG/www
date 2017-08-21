@@ -1,6 +1,9 @@
 package com.bg.www;
 
 public class UserJson {
+	boolean error;
+	String error_msg;
+	
 	String unique_id;
 	String email;
 	String name;
@@ -70,8 +73,6 @@ public class UserJson {
 	public void setTeam_uid(String team_uid) {
 		this.team_uid = team_uid;
 	}
-	boolean error;
-	String error_msg;
 
 	public String getUnique_id() {
 		return unique_id;

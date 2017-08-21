@@ -55,12 +55,13 @@ public class UserRegisterServlet extends HttpServlet {
 		
 		
 		if (password == null && birth == null) {
+//			이메일중복체크
 			try{
 				System.out.println("EmailCheck Process");
 				json = register(email);
 				response.getWriter().write(json);
-				Gson gson = new Gson();
-				userJson = gson.fromJson(json, UserJson.class);
+//				Gson gson = new Gson();
+//				userJson = gson.fromJson(json, UserJson.class);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}

@@ -62,7 +62,7 @@
   </div>
 
   <form name="" action="./UserRegisterServlet" method="POST" onsubmit="return checkSubmit();">
-    <input name="user_uid" value="<% out.println((String)request.getAttribute("user_uid")); %>">
+    <input hidden name="user_uid" value="<% out.println((String)request.getAttribute("user_uid")); %>">
     <div class="container">
       <div class="row">
         <div class="col m6 offset-m3 s10 offset-s1" style="text-align:center;">
@@ -89,12 +89,12 @@
         	1지망 선호지역
 			<select name="sido1" id="sido1"></select>
 			<select name="gugun1" id="gugun1"></select>
-			<input name="region1"></input>
+			<input hidden name="region1"></input>
 			<br>
 			2지망 선호지역
 			<select name="sido2" id="sido2"></select>
 			<select name="gugun2" id="gugun2"></select>
-			<input name="region2"></input>
+			<input hidden name="region2"></input>
 		</div>
       </div>
 

@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -33,7 +34,9 @@ public class UserLoginServlet extends HttpServlet {
 			response.getWriter().write(json);
 		}else {
 			response.getWriter().write(json);
-//			response.sendRedirect("./soccer");
+			HttpSession session = request.getSession();
+			session.setAttribute("userUid", loginJson.getUnique_id());
+			response.sendRedirect("./soccer");
 		}
 	}
 	
