@@ -1,6 +1,13 @@
-<%@ page contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
 <%@ page import="java.io.PrintWriter" %>
+<%
+    request.setCharacterEncoding("utf-8");
+	response.setContentType("text/html;charset=UTF-8");
+	String userUid = (String)session.getAttribute("userUid");		/* 로그인했는지 세션값 지정 */
+	String userName = (String)session.getAttribute("userName");	/* 로그인했는지 세션값 지정 */
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,13 +50,15 @@
 </ul>
 <!-- Dropdown Structure -->
 <ul id="Login" class="dropdown-content ">
-  <li><a href="./register/userinfo.jsp">나의정보</a></li>
-  <li class="divider"></li>
-  <li><a href="./login/logout.jsp">로그아웃</a></li>
+  <li><a href="./login/index.jsp">로그인</a></li>
   <li class="divider"></li>
   <li><a href="./register/signup.jsp">회원가입</a></li>
+</ul>
+<!-- Dropdown Structure -->
+<ul id="user" class="dropdown-content ">
+  <li><a href="./register/userinfo.jsp">나의정보</a></li>
   <li class="divider"></li>
-  <li><a href="./login/index.jsp">로그인</a></li>
+  <li><a href="../UserLogoutServlet">로그아웃</a></li>
 </ul>
 <!-- Dropdown Structure -->
 <ul id="League" class="dropdown-content">
@@ -68,8 +77,11 @@
   <li><a class="dropdown-button" data-activates="League" href="#!">LEAGUE</a></li>
   <li><a class="dropdown-button" data-activates="Community" href="#!">COMMUNITY</a></li>
   <li><a href="./test.jsp">TEST</a></li>
+  <% if (userName == null){%> <!-- 세션 값이 null 일때(로그인하지않았을떄) -->
   <li><a class="dropdown-button" data-activates="Login" href="#!">LOGIN</a></li>
-
+  <% }else{ %>
+  <li><a class="dropdown-button" data-activates="user" href="#!"><% out.println(userName); %></a></li>
+  <% } %>
 </ul>
 
 
@@ -84,7 +96,11 @@
 	        <li><a class="dropdown-button" data-activates="League" href="#!">LEAGUE<i class="tiny material-icons right">arrow_drop_down</i></a></li>
 	        <li><a class="dropdown-button" data-activates="Community" href="#!">COMMUNITY<i class="tiny material-icons right">arrow_drop_down</i></a></li>
 	        <li><a href="./test.jsp">TEST</a></li>
+	        <% if (userName == null){ %>
 	        <li><a class="dropdown-button"  data-activates="Login" href="#!">LOGIN<i class="tiny material-icons right">arrow_drop_down</i></a></li>
+	        <% }else{ %>
+	        <li><a class="dropdown-button"  data-activates="user" href="#!"><% out.println(userName); %><i class="tiny material-icons right">arrow_drop_down</i></a></li>
+	      	<% } %>
 	      </ul>
 	    </div>
 	</nav>

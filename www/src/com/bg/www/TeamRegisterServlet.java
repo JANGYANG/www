@@ -24,7 +24,7 @@ public class TeamRegisterServlet extends HttpServlet {
 		
 		String teamName = request.getParameter("teamName");
 		String regionA = request.getParameter("region1");
-		String regionB = request.getParameter("regionB");
+		String regionB = request.getParameter("region2");
 		String teamBirth = request.getParameter("teamBirth");
 		
 		String json = "";
@@ -41,7 +41,7 @@ public class TeamRegisterServlet extends HttpServlet {
 			Gson gson = new Gson();
 			teamJson = gson.fromJson(json, TeamJson.class);
 			if(!teamJson.isError()) {
-				response.sendRedirect("./");
+				response.sendRedirect("./soccer/");
 			}
 			response.getWriter().write(json);
 		}
