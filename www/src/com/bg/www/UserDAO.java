@@ -50,6 +50,7 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			if(rs.first()){
 				String name = rs.getString("name");
+				String unique_id = rs.getString("unique_id");
 				String encrypted_password = rs.getString("encrypted_password");
 				String key = rs.getString("salt");
 				System.out.println("key : " + key);
@@ -58,11 +59,20 @@ public class UserDAO {
 			    System.out.println("input password : " + password);
 			    String decodePassword = aes256.aesDecode(encrypted_password);
 				if (password.equals(decodePassword)) {
-					loginJson.setName(name);
-					loginJson.setError(false);
-					loginJson.setEmail(email);
-					loginJson.setName(name);
-					loginJson.setUnique_id(rs.getString("unique_id"));
+					try {
+						sql = String.format("SELECT teamName FROM users_info WHERE user_uid = '%s'", unique_id);
+						pstmt = conn.prepareStatement(sql);
+						rs = pstmt.executeQuery();
+						if(rs.first()) {
+							loginJson.setError(false);
+							loginJson.setEmail(email);
+							loginJson.setName(name);
+							loginJson.setTeamName(rs.getString("teamName"));
+							loginJson.setUnique_id(unique_id);
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
 				}else{
 					loginJson.setError_msg("Password is Unavailable");
 				}

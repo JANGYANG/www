@@ -41,6 +41,7 @@ public class TeamRegisterServlet extends HttpServlet {
 			Gson gson = new Gson();
 			teamJson = gson.fromJson(json, TeamJson.class);
 			if(!teamJson.isError()) {
+				request.setAttribute(teamName, teamJson.getTeamName());
 				response.sendRedirect("./soccer/");
 			}
 			response.getWriter().write(json);

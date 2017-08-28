@@ -73,9 +73,24 @@ public class TeamDAO {
 		try {
 			stmt = conn.createStatement();
 		    int r = stmt.executeUpdate(sql);
-		    if (r > 0) {
-				registerJson.setError(false);
-				registerJson.setTeamName(teamName);
+		    	if(r == 1){
+		    	      String find_team = String.format("SELECT * FROM teams WHERE teamName = '%s'",teamName);
+		    	      rs = stmt.executeQuery(find_team);
+		    	      try{
+		    	        while(rs.next()){
+		    	          teamName = rs.getString(2);
+		    	          String update_userInfo = String.format("UPDATE users_info SET teamName = '%s' WHERE user_uid = '%s'", teamName, captainUid);
+		    	          r = stmt.executeUpdate(update_userInfo);
+		    	          if (r == 1){
+		    	        	  	registerJson.setError(false);
+		    	        	  	registerJson.setTeamName(teamName);
+		    	          }else{
+		    	        	  	registerJson.setError_msg("users_info update error");
+		    	          }
+		    	        }
+		    	      }catch(Exception e){
+		    	        e.printStackTrace();
+		    	      }
 		    }else {
 		    		registerJson.setError_msg("Mysql Error");
 		    }
@@ -87,6 +102,7 @@ public class TeamDAO {
 		try {
 			stmt.close();
 			conn.close();
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}

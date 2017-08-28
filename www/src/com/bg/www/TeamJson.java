@@ -4,12 +4,21 @@ public class TeamJson {
 	boolean error;
 	String error_msg;
 	
+	int teamId;
 	String teamName;
 	String regionA;
 	String regionB;
 	String teamBirth;
 	String captainUid;
 	
+
+	public int getTeamId() {
+		return teamId;
+	}
+	public void setTeamId(int teamId) {
+		this.teamId = teamId;
+	}
+
 	public boolean isError() {
 		return error;
 	}

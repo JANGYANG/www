@@ -55,7 +55,7 @@
       <div class="input-field col m6 offset-m3 s9 offset-s1">
         <input type="text" id="teamName" name="teamName" class="validate">
         <label for="icon_prefix">TeamName</label>
-        <textbox id="teamNameCheck" class="btn" style="border-radius:15px;width:100%">Team name Check</textbox>
+        <div id="teamNameCheck" class="btn" style="border-radius:15px;width:100%">Team name Check</div>
       </div>
     </div>
     <!-- 지역선택 -->

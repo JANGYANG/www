@@ -16,7 +16,7 @@ public class UserJson {
 	Integer height;
 	Integer weight;
 	String position;
-	String team_uid;
+	String teamName;
 	
 	public UserJson() {
 		
@@ -31,7 +31,6 @@ public class UserJson {
 		height = paramHeight;
 		weight = paramWeight;
 		position = paramPosition;
-		team_uid = paramTeam_uid;
 	}
 	
 	
@@ -67,11 +66,21 @@ public class UserJson {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	public String getTeam_uid() {
-		return team_uid;
+
+	public String getTeamName() {
+		return teamName;
 	}
-	public void setTeam_uid(String team_uid) {
-		this.team_uid = team_uid;
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
+
+	public Integer getHeight() {
+		return height;
+	}
+
+	public Integer getWeight() {
+		return weight;
 	}
 
 	public String getUnique_id() {

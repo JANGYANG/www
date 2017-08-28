@@ -1,5 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%
+String userUid = (String)session.getAttribute("userUid");
+String userName = (String)session.getAttribute("userName");
+String teamName = (String)session.getAttribute("teamName");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,6 +37,60 @@
 <title>Broken-glasses</title>
 </head>
 <body style="margin-bottom:1000px;">
+<%
+  if (userUid != null){
+  if (teamName != null){
+%>
+  <section class="container content-section">
+    <div class="container">
+       <div class="row">
+         <div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-3">
+           <%
+           out.println("<h2>Comming Soon</h2>");
+           out.println("<h3>Your Team is " + teamName + "</h3>");
+           out.println("<h4>We are Ready for Team Data.</h4>");
+           out.println("<h3>Thank you.</h3>");
+           %>
+        </div>
+      </div>
+    </div>
+  </section>
+<%
+  }else{
+%>
+  <section class="container content-section">
+    <div class="container">
+       <div class="row">
+         <div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-3">
+           <h4>You have NO TEAM</h4>
+           <a href="./teamMake.jsp"><button type="submit" class="btn waves-effect waves-light" style="width:100%;">Make Team</button></a>
+           <h3 style="margin-top:5%;margin-bottom:5%;">Or</h3>
+           <a href="./teamSearch.jsp"><button class="btn waves-effect waves-light" style="width:100%;">Search your Team</button></a>
+        </div>
+      </div>
+    </div>
+  </section>
+<%
+  }
+}else{
+%>
+  <section class="container content-section">
+    <div class="container">
+       <div class="row">
+         <div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-3">
+           <h4>Login First</h4>
+           <h3>Please</h3>
+           <a href="../login/"><button class="btn waves-effect waves-light">LOGIN</button></a>
+        </div>
+      </div>
+    </div>
+  </section>
+<%
+} %>
+
+
+
+
 <!-- 팀이 가입되지 않았을 떄 -->
 <div class="container">
 	<div class="row">
