@@ -77,8 +77,7 @@ public class UserDAO {
 					loginJson.setError_msg("Password is Unavailable");
 				}
 			}else{
-				loginJson.setError_msg("There is no Such like { " + email + " } Email");
-				
+				loginJson.setError_msg("There is no email such like " + email);
 			}
 			pstmt.close();
 			rs.close();

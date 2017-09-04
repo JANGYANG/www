@@ -28,18 +28,18 @@ public class UserLoginServlet extends HttpServlet {
 		
 		Gson gson = new Gson();
 		String json = login(email, password);
-		UserJson loginJson = gson.fromJson(json, UserJson.class);
-		
+		UserJson loginJson = gson.fromJson(json, UserJson.class);		
+	
 		if (loginJson.getError()) {
 			response.getWriter().write(json);
 		}else {
-			response.getWriter().write(json);
 			HttpSession session = request.getSession();
 			session.setAttribute("userUid", loginJson.getUnique_id());
 			session.setAttribute("userName", loginJson.getName());
 			session.setAttribute("teamName", loginJson.getTeamName());
 			System.out.println("session user UID : " + loginJson.getUnique_id());
-			response.sendRedirect("./soccer");
+			response.getWriter().write(json);
+//			response.sendRedirect("./soccer");
 		}
 	}
 	

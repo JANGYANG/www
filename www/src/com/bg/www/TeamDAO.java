@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import com.google.gson.Gson;
+
 
 public class TeamDAO {
 	private Connection conn = null;
@@ -21,10 +23,11 @@ public class TeamDAO {
 	public TeamDAO(){
 		System.out.println("TeamDAO Constructor is called!");
 		try {
-			  final String driverName= "com.mysql.jdbc.Driver";
-			  final String dbDatabase = "jdbc:mysql://db.broken-glasses.com/dbradiata03";
-			  final String dbUser = "radiata03";
-			  final String dbPassword ="20160815!@";
+			  DB db = new DB();
+			  final String driverName= db.getDriverName();
+			  final String dbDatabase = db.getDbDatabase();
+			  final String dbUser = db.getDbUser();
+			  final String dbPassword = db.getDbPassword();
 			  Class.forName(driverName);
 			  conn = DriverManager.getConnection(dbDatabase,dbUser,dbPassword);
 			  System.out.println("DB Connection Success!");
@@ -110,6 +113,31 @@ public class TeamDAO {
 		String json = gson.toJson(registerJson);
 		System.out.println(json);
 		return json;
-	}	
+	}
+	
+	public String search(String teamName){
+		System.out.println("TeamDAO search RUN");
+		String SQL = "SELECT * FROM teams WHERE teamName LIKE ?";
+		ArrayList<TeamJson> teamList = new ArrayList<TeamJson>();
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, "%" + teamName + "%");
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				TeamJson team = new TeamJson();
+				team.setTeamId(rs.getInt(1));
+				team.setTeamName(rs.getString(2));
+				team.setRegionA(rs.getString(3));
+				team.setRegionB(rs.getString(4));
+				team.setTeamBirth(rs.getString(5));
+				team.setCaptainUid(rs.getString(6));
+				teamList.add(team);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		return gson.toJson(teamList).toString();
+	}
 	
 }

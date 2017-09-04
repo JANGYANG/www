@@ -21,7 +21,38 @@
 	   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	   
 	   <script type="text/javascript" src="../../js/materialize.min.js"></script>
-	   
+	   <script>
+	   $(function(){
+		  	$('#btnLogin').click(function(){
+			  var email = $('#email');
+			  var password = $('#password').val();
+				  console.log("password : " + password );
+		           $.ajax({
+		               type: "POST",
+		               dataType: "json",
+		               url: '../../UserLoginServlet',
+		               data: {email: email.val(), password: password},
+	
+		               success: function(json){
+		            	   	console.log("ajax success");
+		            	   	if(json.error == false) {
+		                  console.log("Available Email");
+		                  console.log("Error: " + json.error);
+		                  window.location.replace("../");
+		            	   	}else{
+		                  console.log("Unavailable Email");
+			              console.log("Error: " + json.error);
+						  alert("Please check your form  \n"+json.error_msg);
+		                  email.focus();
+		                }
+		               },
+		               error: function(){
+		            	   	console.log('Ajax Error');
+		               }
+		           });
+			});
+	   });
+	   </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>BROKEN-GLASSES LOGIN</title>
 </head>
@@ -34,7 +65,7 @@
     </div>
   </div>
 
-  <form action="../../UserLoginServlet" method="POST" id="form">
+  <!-- <form action="../../UserLoginServlet" method="POST" id="form"> -->
 
   <div class="container">
     <div class="row">
@@ -67,7 +98,7 @@
     </div>
   </div>
 
-  </form>
+  <!-- </form> -->
 
   <div class="container">
     <div class="row">
@@ -80,12 +111,6 @@
     </div>
   </div>
 
-  <!-- jsp session을 위한 -->
-  <form id="formUser_uid" action="login.jsp" method="post">
-    <input type="hidden" id="userUid" name="userUid">
-    <input type="hidden" name="userName" id="userName">
-  </form>
-	
 	
 	
 	
