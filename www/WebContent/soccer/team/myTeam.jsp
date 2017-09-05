@@ -41,7 +41,7 @@ String teamName = (String)session.getAttribute("teamName");
   if (userUid != null){
   if (teamName != null){
 %>
-  <section class="container content-section">
+  <section class="container content-section center" >
     <div class="container">
        <div class="row">
          <div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-3">
@@ -58,11 +58,11 @@ String teamName = (String)session.getAttribute("teamName");
 <%
   }else{
 %>
-  <section class="container content-section">
+  <section class="container content-section center">
     <div class="container">
        <div class="row">
          <div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-3">
-           <h4>You have NO TEAM</h4>
+           <h4>YOU HAVE NO TEAM</h4>
            <a href="./teamMake.jsp"><button type="submit" class="btn waves-effect waves-light" style="width:100%;">Make Team</button></a>
            <h3 style="margin-top:5%;margin-bottom:5%;">Or</h3>
            <a href="./teamSearch.jsp"><button class="btn waves-effect waves-light" style="width:100%;">Search your Team</button></a>
@@ -74,7 +74,7 @@ String teamName = (String)session.getAttribute("teamName");
   }
 }else{
 %>
-  <section class="container content-section">
+  <section class="container content-section center">
     <div class="container">
        <div class="row">
          <div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-3">
@@ -92,12 +92,12 @@ String teamName = (String)session.getAttribute("teamName");
 
 
 <!-- 팀이 가입되지 않았을 떄 -->
-<div class="container">
+<!-- <div class="container">
 	<div class="row">
 		<a href="./teamMake.jsp"><button class="btn">팀만들기</button></a>
 		<a href="./teamSearch.jsp"><button class="btn">팀찾기</button></a>
 	</div>
 </div>
-
+ -->
 </body>   
 </html>

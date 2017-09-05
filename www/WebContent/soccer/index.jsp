@@ -122,7 +122,7 @@
 		<div class="container">
 
 			<section id="grid" class="grid clearfix">
-				<a href="#" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
+				<a href="./team" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
 					<figure>
 						<img src="../img/1.png" />
 						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
@@ -166,6 +166,19 @@
 						</figcaption>
 					</figure>
 				</a>
+				</section>
+				
+				    <div class="fixed-action-btn toolbar">
+					    <a class="btn-floating btn-large red" >
+					      <i class="large material-icons">mode_edit</i>
+					    </a>
+					    <ul>
+					      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">insert_chart</i></a></li>
+					      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">format_quote</i></a></li>
+					      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">publish</i></a></li>
+					      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">attach_file</i></a></li>
+					    </ul>
+					  </div>
 				
 				<!-- 여분입니다. -->
 				<!-- <a href="#" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
@@ -212,7 +225,7 @@
 						</figcaption>
 					</figure>
 				</a> -->
-			</section>
+			
 		</div><!-- /container -->
 		<script>
 			(function() {

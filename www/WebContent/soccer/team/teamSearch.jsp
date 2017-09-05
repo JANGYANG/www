@@ -7,6 +7,8 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.bg.www.TeamDAO" %>
+
+
 <!DOCTYPE html>
 
 <html lang="kor">
@@ -24,7 +26,7 @@
   src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
   <!-- Bootstrap Core CSS -->
-  <link href="../../css/bootstrap.min.css" rel="stylesheet">
+  <link href="<%= request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -33,11 +35,11 @@
 
 
   <!-- Theme CSS -->
-  <link rel="stylesheet" href="..././css/materialize.css">
-  <link rel="stylesheet" href="../../css/customize.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/materialize.css">
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/customize.css">
 
   <!-- materialize js -->
-  <script type="text/javascript" src="../../js/materialize.js"></script>
+  <script type="text/javascript" src="<%= request.getContextPath() %>/js/materialize.js"></script>
 
   <!-- google icon 쓰기 참고 :  https://www.w3schools.com/icons/google_icons_intro.asp -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -118,5 +120,7 @@
   	json = teamDAO.search(teamName);
   	out.println(json);
     %>
+  <script>
   
+  </script>
 </body>

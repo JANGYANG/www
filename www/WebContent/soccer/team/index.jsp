@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,14 +31,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Broken-glasses</title>
 </head>
-<body style="margin-bottom:1000px;">
 <!-- 팀이 가입되지 않았을 떄 -->
-<div class="container">
-	<div class="row center">
-		<a href="./teamMake.jsp"><button class="btn">팀만들기</button></a>
-		<a href="./teamSearch.jsp"><button class="btn">팀찾기</button></a>
+<div class="container white" >
+	<div class="center" style="padding: 100px; 100px; 100px; 100px;">
+		<a href="./teamMake.jsp"><button class="btn blue darken-2" >팀만들기</button></a>      
+          <div class="input-field col s6 s12 blue-text text-darken-2">
+          <i class="blue-text text-darken-2 material-icons prefix">search</i>
+          <input type="text" id="autocomplete" class="autocomplete blue-text text-darken-2" >
+          <a href="./teamSearch.jsp"><button class="btn blue darken-2" >팀찾기</button></a>
+          </div>
 	</div>
 </div>
+
+<!-- 팀이 가입되어 있을때 -->
+<div class="container">
+
+</div>
+
+
+<script>
+$(function(){
+    var autocomplete_text = ["자동완성기능","Autocomplete","개발로짜","국이"];
+         $("#autocomplete").autocomplete({
+            source: autocomplete_text
+         });
+})
+</script>
 
 </body>   
 </html>
