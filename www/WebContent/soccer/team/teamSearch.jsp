@@ -7,7 +7,8 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.bg.www.TeamDAO" %>
-
+<%@page import="com.bg.www.TeamJson" %>
+<%@page import="com.google.gson.Gson" %>
 
 <!DOCTYPE html>
 
@@ -22,8 +23,7 @@
   <meta name="author" content="">
 
   <!-- j-query-3 -->
-  <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
   <!-- Bootstrap Core CSS -->
   <link href="<%= request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
@@ -85,39 +85,30 @@
       </div>
     </div>
   </div>
-  <div class="container">
-    <div class="row">
-      <div class="col s8 offset-s2 l6 offset-l3" style="text-align:center;">
-      	<form action="" method="GET">
-	        <input style="text-align:center" type="text" name="teamName" id="inputSearch">
-	      	<button id="btnSearch" class="btn" type="submit" style="text-align:center;">Search</button>
-      	</form>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col s10 offset-s1 l8 offset-l2">
-        <table>
-          <thead>
-            <tr>
-              <th>NUM</th>
-              <th>TEAM NAME</th>
-              <th>REGION A</th>
-              <th>REGION B</th>
-            </tr>
-          </thead>
-          <tbody id="ajaxTable">
+	<div class="container">
+		<div class="row">
+			<div class="col s8 offset-s2 l6 offset-l3"
+				style="text-align: center;">
+				<form action="" method="GET">
+					<input style="text-align: center" type="text" name="teamName"
+						id="inputSearch">
+					<button id="btnSearch" class="btn" type="submit"
+						style="text-align: center;">Search</button>
+				</form>
+			</div>
+		</div>
+	</div>
 
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  
-  <%
+	<%
     	TeamDAO teamDAO = new TeamDAO();
   	String json = "";
   	String teamName = (String)request.getParameter("teamName");
   	json = teamDAO.search(teamName);
+  	Gson gson = new Gson();
+  	TeamJson[] teamAry = gson.fromJson(json, TeamJson[].class);
+  	for(int i = 0; i < teamAry.length; i++){
+  	  	out.println(i + teamAry[i].getTeamName()+"<br>");
+  	}
   	out.println(json);
     %>
   <script>
