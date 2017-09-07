@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import com.google.gson.Gson;
@@ -17,6 +18,7 @@ public class UserDAO {
 	private Statement stmt = null;
 	private ResultSet rs = null;
 	private String sql = null;
+	private ResultSet rs2 = null;
 	Gson gson = new Gson();
     
 	SecureRandom sr = new SecureRandom();
@@ -201,5 +203,92 @@ public class UserDAO {
 		String json = gson.toJson(registerUserInfoJson);
 		System.out.println(json);
 		return json;
+	}
+	
+//	이름으로 검색
+	public String searchByN(String name){
+		System.out.println("UserDAO searchByName RUN");
+		String SQL = "SELECT * FROM users WHERE name LIKE ?";
+		ArrayList<UserJson> userList = new ArrayList<UserJson>();
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, "%" + name + "%");
+			rs = pstmt.executeQuery();
+			int t = 1;
+			int t2 = 1;
+			while(rs.next()) {
+				System.out.println(t++);
+				UserJson user = new UserJson();
+				user.setUnique_id(rs.getString("unique_id"));
+				user.setName(rs.getString("name"));
+				SQL = "SELECT * FROM users_info WHERE user_uid = ?";
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, user.getUnique_id());
+				rs2 = pstmt.executeQuery();
+				while(rs2.next()) {
+					System.out.println(t2++);
+					user.setBirth(rs2.getString("birth"));
+					user.setPosition(rs2.getString("position"));
+					user.setHeight(rs2.getInt("height"));
+					user.setWeight(rs2.getInt("weight"));
+					user.setRegion_a(rs2.getString("region_a"));
+					user.setRegion_b(rs2.getString("region_b"));
+					user.setTeamName(rs2.getString("teamName"));
+				}
+				userList.add(user);
+			}
+			pstmt.close();
+			conn.close();
+			rs.close();
+			rs2.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		return gson.toJson(userList).toString();
+	}
+
+//	지역으로 검색
+	public String searchByR(String region){
+		System.out.println("UserDAO searchByR RUN");
+		String SQL = "SELECT * FROM users_info WHERE region_a LIKE ? OR region_b LIKE ?";
+		ArrayList<UserJson> userList = new ArrayList<UserJson>();
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, "%" + region + "%");
+			pstmt.setString(2, "%" + region + "%");
+			rs = pstmt.executeQuery();
+			int t = 1;
+			int t2 = 1;
+			while(rs.next()) {
+				System.out.println(t++);
+				UserJson user = new UserJson();
+				user.setUnique_id(rs.getString("user_uid"));
+				user.setBirth(rs.getString("birth"));
+				user.setPosition(rs.getString("position"));
+				user.setHeight(rs.getInt("height"));
+				user.setWeight(rs.getInt("weight"));
+				user.setRegion_a(rs.getString("region_a"));
+				user.setRegion_b(rs.getString("region_b"));
+				user.setTeamName(rs.getString("teamName"));
+				SQL = "SELECT * FROM users WHERE unique_id = ?";
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, user.getUnique_id());
+				rs2 = pstmt.executeQuery();
+				while(rs2.next()) {
+					System.out.println(t2++);
+					user.setName(rs2.getString("name"));
+					}
+				userList.add(user);
+			}
+			pstmt.close();
+			conn.close();
+			rs.close();
+			rs2.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		return gson.toJson(userList).toString();
 	}
 }

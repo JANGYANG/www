@@ -115,7 +115,8 @@ public class TeamDAO {
 		return json;
 	}
 	
-	public String search(String teamName){
+//	이름으로 팀검색
+	public String searchByN(String teamName){
 		System.out.println("TeamDAO search RUN");
 		String SQL = "SELECT * FROM teams WHERE teamName LIKE ?";
 		ArrayList<TeamJson> teamList = new ArrayList<TeamJson>();
@@ -133,6 +134,39 @@ public class TeamDAO {
 				team.setCaptainUid(rs.getString(6));
 				teamList.add(team);
 			}
+			conn.close();
+			pstmt.close();
+			rs.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		Gson gson = new Gson();
+		return gson.toJson(teamList).toString();
+	}
+	
+//	지역으로 검색
+	public String searchByR(String region){
+		System.out.println("TeamDAO searchByRun RUN");
+		String SQL = "SELECT * FROM teams WHERE regionA LIKE ? OR regionB LIKE ?";
+		ArrayList<TeamJson> teamList = new ArrayList<TeamJson>();
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, "%" + region + "%");
+			pstmt.setString(2, "%" + region + "%");
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				TeamJson team = new TeamJson();
+				team.setTeamId(rs.getInt(1));
+				team.setTeamName(rs.getString(2));
+				team.setRegionA(rs.getString(3));
+				team.setRegionB(rs.getString(4));
+				team.setTeamBirth(rs.getString(5));
+				team.setCaptainUid(rs.getString(6));
+				teamList.add(team);
+			}
+			conn.close();
+			pstmt.close();
+			rs.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
