@@ -100,18 +100,22 @@
 	</div>
 
 	<%
-    	TeamDAO teamDAO = new TeamDAO();
-  	String json = "";
-  	String teamName = (String)request.getParameter("teamName");
-  	json = teamDAO.searchByN(teamName);
-  	Gson gson = new Gson();
-  	TeamJson[] teamAry = gson.fromJson(json, TeamJson[].class);
-  	for(int i = 0; i < teamAry.length; i++){
-  	  	out.println(i + teamAry[i].getTeamName()+"<br>");
-  	}
-  	out.println(json);
-    %>
-  <script>
+		TeamDAO teamDAO = new TeamDAO();
+		String json = "";
+		String teamName = (String) request.getParameter("teamName");
+		json = teamDAO.searchByN(teamName);
+		Gson gson = new Gson();
+		TeamJson[] teamAry = gson.fromJson(json, TeamJson[].class);
+		for (int i = 0; i < teamAry.length; i++) {
+	%>
+	<a href="teamView.jsp?teamName=<%out.println(teamAry[i].getTeamName()); %>">
+	<h4><%out.println(i+1);%>팀 이름 : <% out.println(teamAry[i].getTeamName()); %></h4>
+	</a>
+	<%
+		}
+		out.println(json);
+	%>
+	<script>
   
   </script>
 </body>

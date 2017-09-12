@@ -291,4 +291,22 @@ public class UserDAO {
 		Gson gson = new Gson();
 		return gson.toJson(userList).toString();
 	}
+	
+	public boolean teamJoin(String teamName, String userUID) {
+		System.out.println("UserDAO teamJoin is run");
+		System.out.println("teamName : " + teamName);
+		System.out.println("userUID : " + userUID);
+		boolean i = false;
+		try {
+			String update_userInfo = String.format("UPDATE users_info SET teamName = '%s' WHERE userUID LIKE '%s'", teamName, userUID);
+			stmt = conn.createStatement();
+		    int r = stmt.executeUpdate(update_userInfo);
+		    stmt.close();
+		    conn.close();
+		    i = (r==1) ? true : false; 
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return i;
+	}
 }
