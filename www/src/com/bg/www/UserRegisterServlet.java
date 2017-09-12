@@ -88,7 +88,7 @@ public class UserRegisterServlet extends HttpServlet {
 				userJson = gson.fromJson(json, UserJson.class);
 				if (!userJson.getError())
 				{
-					request.setAttribute("user_uid", userJson.getUnique_id());
+					request.setAttribute("user_uid", userJson.getUserUID());
 					request.setAttribute("userName", name);
 					RequestDispatcher dispatcher = request.getRequestDispatcher("./soccer/register/userinfo.jsp");
 					dispatcher.forward(request, response);

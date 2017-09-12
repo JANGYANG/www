@@ -75,16 +75,16 @@ public class TeamDAO {
 		
 		try {
 			stmt = conn.createStatement();
-		    int r = stmt.executeUpdate(sql);
-		    	if(r == 1){
+		    boolean r = stmt.execute(sql);
+		    	if( r ){
 		    	      String find_team = String.format("SELECT * FROM teams WHERE teamName = '%s'",teamName);
 		    	      rs = stmt.executeQuery(find_team);
 		    	      try{
 		    	        while(rs.next()){
 		    	          teamName = rs.getString(2);
-		    	          String update_userInfo = String.format("UPDATE users_info SET teamName = '%s' WHERE user_uid = '%s'", teamName, captainUid);
-		    	          r = stmt.executeUpdate(update_userInfo);
-		    	          if (r == 1){
+		    	          String update_userInfo = String.format("UPDATE users_info SET teamName = '%s' WHERE userUID = '%s'", teamName, captainUid);
+		    	          r = stmt.execute(update_userInfo);
+		    	          if ( r ){
 		    	        	  	registerJson.setError(false);
 		    	        	  	registerJson.setTeamName(teamName);
 		    	          }else{

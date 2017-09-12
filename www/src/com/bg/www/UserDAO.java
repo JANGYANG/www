@@ -42,7 +42,7 @@ public class UserDAO {
 	
 	public String login(String email, String password){
 	    
-		sql = "SELECT unique_id, name ,encrypted_password, salt FROM users WHERE email = ?";
+		sql = "SELECT userUID, name ,encrypted_password, salt FROM users WHERE email = ?";
 		UserJson loginJson = new UserJson();
 		loginJson.setError(true);
 		
@@ -52,7 +52,7 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			if(rs.first()){
 				String name = rs.getString("name");
-				String unique_id = rs.getString("unique_id");
+				String userUID = rs.getString("userUID");
 				String encrypted_password = rs.getString("encrypted_password");
 				String key = rs.getString("salt");
 				System.out.println("key : " + key);
@@ -62,7 +62,7 @@ public class UserDAO {
 			    String decodePassword = aes256.aesDecode(encrypted_password);
 				if (password.equals(decodePassword)) {
 					try {
-						sql = String.format("SELECT teamName FROM users_info WHERE user_uid = '%s'", unique_id);
+						sql = String.format("SELECT teamName FROM users_info WHERE userUID = '%s'", userUID);
 						pstmt = conn.prepareStatement(sql);
 						rs = pstmt.executeQuery();
 						if(rs.first()) {
@@ -70,7 +70,7 @@ public class UserDAO {
 							loginJson.setEmail(email);
 							loginJson.setName(name);
 							loginJson.setTeamName(rs.getString("teamName"));
-							loginJson.setUnique_id(unique_id);
+							loginJson.setUserUID(userUID);
 						}
 					}catch(Exception e) {
 						e.printStackTrace();
@@ -140,7 +140,7 @@ public class UserDAO {
 			System.out.println("Encrypt Error");
 			e.printStackTrace();
 		}
-		sql = String.format("INSERT INTO users (unique_id, name, email, encrypted_password, salt, created_at) "
+		sql = String.format("INSERT INTO users (userUID, name, email, encrypted_password, salt, created_at) "
 				+ "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", uid.toString(), name, email.toString(), encrypted_password, salt, created_at);
 		
 		try {
@@ -149,7 +149,7 @@ public class UserDAO {
 		    if (r > 0) {
 				registerJson.setError(false);
 				registerJson.setEmail(email);
-				registerJson.setUnique_id(uid);
+				registerJson.setUserUID(uid);
 		    }else {
 		    		registerJson.setError_msg("Mysql Error");
 		    }
@@ -171,14 +171,14 @@ public class UserDAO {
 		return json;
 	}
 //	user 추가정보 입력
-	public String register(String user_uid, String birth, String region_a, String region_b, int height, int weight, String position){
+	public String register(String userUID, String birth, String regionA, String regionB, int height, int weight, String position){
 		UserJson registerUserInfoJson = new UserJson();
 		registerUserInfoJson.setError(true);
 	    String created_at = new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
 	    
-		sql = String.format("INSERT INTO users_info (user_uid, birth, region_a, region_b, height, we"
+		sql = String.format("INSERT INTO users_info (userUID, birth, regionA, regionB, height, we"
 				+ "ight, position, created_at)" 
-				+ "VALUES ('%s', '%s', '%s', '%s', '%d', '%d', '%s', '%s')", user_uid, birth, region_a, region_b, height, weight, position, created_at);
+				+ "VALUES ('%s', '%s', '%s', '%s', '%d', '%d', '%s', '%s')", userUID, birth, regionA, regionB, height, weight, position, created_at);
 		try {
 			stmt = conn.createStatement();
 		    int r = stmt.executeUpdate(sql);
@@ -219,11 +219,11 @@ public class UserDAO {
 			while(rs.next()) {
 				System.out.println(t++);
 				UserJson user = new UserJson();
-				user.setUnique_id(rs.getString("unique_id"));
+				user.setUserUID(rs.getString("userUID"));
 				user.setName(rs.getString("name"));
-				SQL = "SELECT * FROM users_info WHERE user_uid = ?";
+				SQL = "SELECT * FROM users_info WHERE userUID = ?";
 				pstmt = conn.prepareStatement(SQL);
-				pstmt.setString(1, user.getUnique_id());
+				pstmt.setString(1, user.getUserUID());
 				rs2 = pstmt.executeQuery();
 				while(rs2.next()) {
 					System.out.println(t2++);
@@ -231,8 +231,8 @@ public class UserDAO {
 					user.setPosition(rs2.getString("position"));
 					user.setHeight(rs2.getInt("height"));
 					user.setWeight(rs2.getInt("weight"));
-					user.setRegion_a(rs2.getString("region_a"));
-					user.setRegion_b(rs2.getString("region_b"));
+					user.setRegionA(rs2.getString("regionA"));
+					user.setRegionB(rs2.getString("regionB"));
 					user.setTeamName(rs2.getString("teamName"));
 				}
 				userList.add(user);
@@ -251,7 +251,7 @@ public class UserDAO {
 //	지역으로 검색
 	public String searchByR(String region){
 		System.out.println("UserDAO searchByR RUN");
-		String SQL = "SELECT * FROM users_info WHERE region_a LIKE ? OR region_b LIKE ?";
+		String SQL = "SELECT * FROM users_info WHERE regionA LIKE ? OR regionB LIKE ?";
 		ArrayList<UserJson> userList = new ArrayList<UserJson>();
 		try {
 			pstmt = conn.prepareStatement(SQL);
@@ -263,17 +263,17 @@ public class UserDAO {
 			while(rs.next()) {
 				System.out.println(t++);
 				UserJson user = new UserJson();
-				user.setUnique_id(rs.getString("user_uid"));
+				user.setUserUID(rs.getString("userUID"));
 				user.setBirth(rs.getString("birth"));
 				user.setPosition(rs.getString("position"));
 				user.setHeight(rs.getInt("height"));
 				user.setWeight(rs.getInt("weight"));
-				user.setRegion_a(rs.getString("region_a"));
-				user.setRegion_b(rs.getString("region_b"));
+				user.setRegionA(rs.getString("regionA"));
+				user.setRegionB(rs.getString("regionB"));
 				user.setTeamName(rs.getString("teamName"));
-				SQL = "SELECT * FROM users WHERE unique_id = ?";
+				SQL = "SELECT * FROM users WHERE userUID = ?";
 				pstmt = conn.prepareStatement(SQL);
-				pstmt.setString(1, user.getUnique_id());
+				pstmt.setString(1, user.getUserUID());
 				rs2 = pstmt.executeQuery();
 				while(rs2.next()) {
 					System.out.println(t2++);

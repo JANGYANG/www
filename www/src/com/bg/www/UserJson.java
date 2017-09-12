@@ -4,15 +4,15 @@ public class UserJson {
 	boolean error;
 	String error_msg;
 	
-	String unique_id;
+	String userUID;
 	String email;
 	String name;
 	String password;
 	String salt;
 	
 	String birth;
-	String region_a;
-	String region_b;
+	String regionA;
+	String regionB;
 	Integer height;
 	Integer weight;
 	String position;
@@ -21,19 +21,7 @@ public class UserJson {
 	public UserJson() {
 		
 	}
-	
-	public UserJson(String paramEmail, String paramName, String paramBirth, String paramRegion_a, String paramRegion_b, Integer paramHeight, Integer paramWeight, String paramPosition, String paramTeam_uid){
-		email = paramEmail;
-		name = paramName;
-		birth = paramBirth;
-		region_a = paramRegion_a;
-		region_b = paramRegion_b;
-		height = paramHeight;
-		weight = paramWeight;
-		position = paramPosition;
-	}
-	
-	
+		
 	public void setHeight(Integer height) {
 		this.height = height;
 	}
@@ -48,17 +36,17 @@ public class UserJson {
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
-	public String getRegion_a() {
-		return region_a;
+	public String getRegionA() {
+		return regionA;
 	}
-	public void setRegion_a(String region_a) {
-		this.region_a = region_a;
+	public void setRegionA(String regionA) {
+		this.regionA = regionA;
 	}
-	public String getRegion_b() {
-		return region_b;
+	public String getRegionB() {
+		return regionB;
 	}
-	public void setRegion_b(String region_b) {
-		this.region_b = region_b;
+	public void setRegionB(String regionB) {
+		this.regionB = regionB;
 	}
 	public String getPosition() {
 		return position;
@@ -83,12 +71,14 @@ public class UserJson {
 		return weight;
 	}
 
-	public String getUnique_id() {
-		return unique_id;
+	public String getUserUID() {
+		return userUID;
 	}
-	public void setUnique_id(String unique_id) {
-		this.unique_id = unique_id;
+
+	public void setUserUID(String userUID) {
+		this.userUID = userUID;
 	}
+
 	public String getName() {
 		return name;
 	}
