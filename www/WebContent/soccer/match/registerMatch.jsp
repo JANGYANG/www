@@ -115,8 +115,7 @@ function opponent(e){
 </script>
 
 </head>
-<body>
-           
+<body>     
 	<div class="container">
 		<div class="row">
 			<div class="col m6 offset-m3 s8 offset-s2">
@@ -125,6 +124,12 @@ function opponent(e){
 			</div>
 		</div>
 	</div>
+	
+       <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
+<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:100;-webkit-overflow-scrolling:touch;">
+<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
+</div>
+      
 
 	<div class="swiper-container">
 		<!-- Additional required wrapper -->
@@ -153,10 +158,6 @@ function opponent(e){
 <input type="text" id="sample2_address" placeholder="한글주소">
 <input type="text" id="sample2_addressEnglish" placeholder="영문주소">
 
-<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
-<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
-<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
-</div>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
 <script>
@@ -207,7 +208,7 @@ function opponent(e){
             height : '100%',
             maxSuggestItems : 5
         }).embed(element_layer);
-    			});
+    	});
         // iframe을 넣은 element를 보이게 한다.
         element_layer.style.display = 'block';
 
