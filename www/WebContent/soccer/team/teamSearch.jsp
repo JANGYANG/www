@@ -139,7 +139,8 @@
 	</div>	
   </div>
 	<%--  <%out.println(json); %> --%>
-  <script>
+
+	<script>
   
   </script>
 </body>

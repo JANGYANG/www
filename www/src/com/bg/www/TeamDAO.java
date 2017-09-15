@@ -76,15 +76,16 @@ public class TeamDAO {
 		try {
 			stmt = conn.createStatement();
 		    int r = stmt.executeUpdate(sql);
-		    	if(r == 1){
+		    	if( r == 1 ){
 		    	      String find_team = String.format("SELECT * FROM teams WHERE teamName = '%s'",teamName);
 		    	      rs = stmt.executeQuery(find_team);
 		    	      try{
 		    	        while(rs.next()){
 		    	          teamName = rs.getString(2);
-		    	          String update_userInfo = String.format("UPDATE users_info SET teamName = '%s' WHERE user_uid = '%s'", teamName, captainUid);
+//		    	          팀을 새로 만듬에 따라 만드는 사람의 DB에 팀 정보를 추가해준다.
+		    	          String update_userInfo = String.format("UPDATE users_info SET teamName = '%s' WHERE userUID = '%s'", teamName, captainUid);
 		    	          r = stmt.executeUpdate(update_userInfo);
-		    	          if (r == 1){
+		    	          if ( r == 1 ){
 		    	        	  	registerJson.setError(false);
 		    	        	  	registerJson.setTeamName(teamName);
 		    	          }else{
@@ -172,6 +173,32 @@ public class TeamDAO {
 		}
 		Gson gson = new Gson();
 		return gson.toJson(teamList).toString();
+	}
+	
+//	팀뷰를 위한
+	public TeamJson viewTeam(String teamName){
+		System.out.println("TeamDAO viewTeam RUN");
+		String SQL = "SELECT * FROM teams WHERE teamName LIKE ?";
+		TeamJson team = new TeamJson();
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, teamName);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				team.setTeamId(rs.getInt(1));
+				team.setTeamName(rs.getString(2));
+				team.setRegionA(rs.getString(3));
+				team.setRegionB(rs.getString(4));
+				team.setTeamBirth(rs.getString(5));
+				team.setCaptainUid(rs.getString(6));
+			}
+			conn.close();
+			pstmt.close();
+			rs.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return team;
 	}
 	
 }
