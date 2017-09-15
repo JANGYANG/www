@@ -309,4 +309,34 @@ public class UserDAO {
 		}
 		return i;
 	}
+	
+	public UserJson findByUserUID(String userUID) {
+		UserJson user = new UserJson();
+		try {
+			stmt = conn.createStatement();
+			String sql = String.format("SELECT * FROM users_info WHERE userUID = '%s'", userUID);
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				user.setBirth(rs.getString("birth"));
+				user.setPosition(rs.getString("position"));
+				user.setHeight(rs.getInt("height"));
+				user.setRegionA(rs.getString("regionA"));
+				user.setRegionB(rs.getString("regionB"));
+				user.setTeamName(rs.getString("teamName"));
+			}
+			sql = String.format("SELECT * FROM users WHERE userUID = %s", userUID);
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				user.setName(rs.getString("name"));
+				user.setEmail(rs.getString("email"));
+			}
+			stmt.close();
+			conn.close();
+			rs.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
 }
