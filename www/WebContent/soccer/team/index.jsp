@@ -44,18 +44,14 @@
 </div>
 
 <!-- 팀이 가입되어 있을때 -->
-<div class="container">
 
+<div class="container">
+	
 </div>
 
 
 <script>
-$(function(){
-    var autocomplete_text = ["자동완성기능","Autocomplete","개발로짜","국이"];
-         $("#autocomplete").autocomplete({
-            source: autocomplete_text
-         });
-})
+
 </script>
 
 </body>   

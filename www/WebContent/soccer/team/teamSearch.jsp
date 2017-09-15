@@ -29,7 +29,7 @@
 
   <!-- Theme CSS -->
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/materialize.css">
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/customize.css">
+ 
 
   <!-- materialize js -->
   <script type="text/javascript" src="<%= request.getContextPath() %>/js/materialize.js"></script>
@@ -66,13 +66,12 @@
 	};
   </script> -->
 
-
 </head>
 
 <body>
   <div class="container">
     <div class="row">
-      <div class="col m4 offset-m4 s6 offset-s3">
+      <div class="center">
         <img src="../../img/logo_CI.png" alt="LOGIN" title="BG" style="width:20%"></img>
         <h4 style="text-align:center">SEARCH TEAM</h4>
       </div>
@@ -91,19 +90,55 @@
 			</div>
 		</div>
 	</div>
-
-	<%
-    	TeamDAO teamDAO = new TeamDAO();
+	<div class="container">
+	<div class="row">
+<%
+    TeamDAO teamDAO = new TeamDAO();
   	String json = "";
   	String teamName = (String)request.getParameter("teamName");
   	json = teamDAO.searchByN(teamName);
   	Gson gson = new Gson();
   	TeamJson[] teamAry = gson.fromJson(json, TeamJson[].class);
-  	for(int i = 0; i < teamAry.length; i++){
-  	  	out.println(i + teamAry[i].getTeamName()+"<br>");
+  	if(teamAry.length==0){
+%>
+<div class="center">
+결과가 없습니다. 다시 입력해주세요.
+</div>
+
+<%
   	}
-  	out.println(json);
-    %>
+  	for(int i = 0; i < teamAry.length; i++){
+ %>
+
+    <div class="col s12 m6 l4">
+      <div class="card">
+        <div class="card-image click-to-toggle fixed-action-btn" style="right:0px;">
+          <img src="<%= request.getContextPath() %>/img/1.png">
+          <span class="card-title"><%= teamAry[i].getTeamName() %></span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+         	  <ul>
+			      <li><a class="btn-floating red"><i class="large material-icons">person_add</i></a></li>
+			      <li><a class="btn-floating yellow darken-1"><i class="large material-icons">pin_drop</i></a></li>
+			      <li><a class="btn-floating green"><i class="large material-icons">search</i></a></li>
+			    </ul>
+        </div>
+        <div class="card-content">
+          <p>팀짧은 설명!</p>
+        </div>
+      </div>
+    </div>
+  
+     <%
+     
+  	}
+     %>
+
+  
+  
+ 
+	</div>	
+  </div>
+	<%--  <%out.println(json); %> --%>
   <script>
   
   </script>

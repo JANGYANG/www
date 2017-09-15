@@ -58,7 +58,7 @@
 <ul id="user" class="dropdown-content ">
   <li><a href="./register/userinfo.jsp">나의정보</a></li>
   <li class="divider"></li>
-  <li><a href="../UserLogoutServlet">로그아웃</a></li>
+  <li><a href="<%= request.getContextPath() %>/UserLogoutServlet">로그아웃</a></li>
 </ul>
 <!-- Dropdown Structure -->
 <ul id="League" class="dropdown-content">
@@ -104,17 +104,7 @@
 	      </ul>
 	    </div>
 	</nav>
-	
-<!-- 	캐러셀 -->
-<!-- 		<div class="container">
-			<div class="carousel carousel-slider center" data-indicators="true">
-			    <a class="carousel-item" href="#one!"><img height=400px; style="border-radius: 8px;
-	opacity: 0.8;"src="../img/time.jpg"></a>
-			    <a class="carousel-item" href="#two!"><img height=400px; src="../img/where.jpg"></a>
-			    <a class="carousel-item" href="#three!"><img height=400px; src="../img/stadium.jpg"></a>
-			    <a class="carousel-item" href="#four!"><img height=400px; src="../img/league.jpg"></a>
-		  	</div>
-	  	</div> -->
+
 	  	
 	  	<body>
 	  	
@@ -173,60 +163,16 @@
 					      <i class="large material-icons">mode_edit</i>
 					    </a>
 					    <ul>
-					      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">insert_chart</i></a></li>
+							<li><a href="<%= request.getContextPath() %>/UserLogoutServlet">로그아웃</a></li>
+					     
+					     <!--  <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">insert_chart</i></a></li>
 					      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">format_quote</i></a></li>
 					      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">publish</i></a></li>
-					      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">attach_file</i></a></li>
+					      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">attach_file</i></a></li> -->
 					    </ul>
 					  </div>
-				
-				<!-- 여분입니다. -->
-				<!-- <a href="#" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
-					<figure>
-						<img src="../img/1.png" />
-						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
-						<figcaption>
-							<h2>Nebulous</h2>
-							<p>Pea horseradish azuki bean lettuce.</p>
-							<button>View</button>
-						</figcaption>
-					</figure>
-				</a>
-				<a href="#" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
-					<figure>
-						<img src="../img/1.png" />
-						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
-						<figcaption>
-							<h2>Iridescent</h2>
-							<p>A grape silver beet watercress potato.</p>
-							<button>View</button>
-						</figcaption>
-					</figure>
-				</a>
-				<a href="#" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
-					<figure>
-						<img src="../img/1.png" />
-						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
-						<figcaption>
-							<h2>Resonant</h2>
-							<p>Chickweed okra pea winter purslane.</p>
-							<button>View</button>
-						</figcaption>
-					</figure>
-				</a>
-				<a href="#" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
-					<figure>
-						<img src="../img/1.png" />
-						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
-						<figcaption>
-							<h2>Zenith</h2>
-							<p>Salsify taro catsear garlic gram.</p>
-							<button>View</button>
-						</figcaption>
-					</figure>
-				</a> -->
-			
-		</div><!-- /container -->
+	
+		</div>
 		<script>
 			(function() {
 	
@@ -269,13 +215,6 @@
 	   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
 	   <script type="text/javascript" src="../js/materialize.js"></script>
 	   <script type="text/javascript" src="../js/main.js"></script>
-	   
-	   	<script>
-	$(document).ready(function(){
-	$(".dropdown-button").dropdown({belowOrigin: true});
-	$("#change-body").load("./main.jsp");
 
-	})
-	   </script>
 </body>
 </html>

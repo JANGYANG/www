@@ -77,7 +77,7 @@
   <div class="container">
     <div class="row">
       <div class="col m4 offset-m4 s6 offset-s3">
-        <img src="../../img/logo_CI.png" alt="LOGIN" title="BG" style="width:20%"></img>
+        <img src="<%= request.getContextPath() %>/img/logo_CI.png" alt="LOGIN" title="BG" style="width:20%"></img>
         <h4 style="text-align:center">SEARCH TEAM</h4>
       </div>
     </div>
@@ -95,9 +95,36 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="row">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-image">
+          <img src="images/sample-1.jpg">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-image">
+          <img src="images/sample-1.jpg">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+        </div>
+        <div class="card-content">
+          <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 	<%
-    	TeamDAO teamDAO = new TeamDAO();
+    TeamDAO teamDAO = new TeamDAO();
   	String json = "";
   	String region = (String)request.getParameter("region");
   	json = teamDAO.searchByR(region);

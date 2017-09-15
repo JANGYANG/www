@@ -37,6 +37,10 @@ String teamName = (String)session.getAttribute("teamName");
 <title>Broken-glasses</title>
 </head>
 <body style="margin-bottom:1000px;">
+
+<%= teamName %>
+<%= userUid %>
+
 <%
   if (userUid != null){
   if (teamName != null){
@@ -51,6 +55,16 @@ String teamName = (String)session.getAttribute("teamName");
            out.println("<h4>We are Ready for Team Data.</h4>");
            out.println("<h3>Thank you.</h3>");
            %>
+           <div>구단 세부정보</div>
+           <div>진행 리그</div>
+           <div>설립연도</div>
+           <div>리그 역사</div>
+           <div>최근 경기 결과</div>
+           <div>주요 인물</div>
+           <div>유니폼</div>
+           <div>경기장</div>
+
+           
         </div>
       </div>
     </div>
