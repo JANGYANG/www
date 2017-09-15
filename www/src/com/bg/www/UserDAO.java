@@ -91,7 +91,7 @@ public class UserDAO {
 		return json;
 	}
 	
-//	아이디 중복체크
+//	�븘�씠�뵒 以묐났泥댄겕
 	public String register(String email) {
 		UserJson isUserExistJson = new UserJson();
 		isUserExistJson.setError(true);
@@ -170,7 +170,7 @@ public class UserDAO {
 		System.out.println(json);
 		return json;
 	}
-//	user 추가정보 입력
+//	user 異붽��젙蹂� �엯�젰
 	public String register(String userUID, String birth, String regionA, String regionB, int height, int weight, String position){
 		UserJson registerUserInfoJson = new UserJson();
 		registerUserInfoJson.setError(true);
@@ -205,7 +205,7 @@ public class UserDAO {
 		return json;
 	}
 	
-//	이름으로 검색
+//	�씠由꾩쑝濡� 寃��깋
 	public String searchByN(String name){
 		System.out.println("UserDAO searchByName RUN");
 		String SQL = "SELECT * FROM users WHERE name LIKE ?";
@@ -248,7 +248,7 @@ public class UserDAO {
 		return gson.toJson(userList).toString();
 	}
 
-//	지역으로 검색
+//	吏��뿭�쑝濡� 寃��깋
 	public String searchByR(String region){
 		System.out.println("UserDAO searchByR RUN");
 		String SQL = "SELECT * FROM users_info WHERE regionA LIKE ? OR regionB LIKE ?";
@@ -324,7 +324,7 @@ public class UserDAO {
 				user.setRegionB(rs.getString("regionB"));
 				user.setTeamName(rs.getString("teamName"));
 			}
-			sql = String.format("SELECT * FROM users WHERE userUID = %s", userUID);
+			sql = String.format("SELECT * FROM users WHERE userUID = '%s'", userUID);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				user.setName(rs.getString("name"));
