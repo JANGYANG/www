@@ -35,7 +35,7 @@
 <title>Broken-glasses</title>
 </head>
 <body>
-	<!-- Dropdown Structure -->
+<%-- 	<!-- Dropdown Structure -->
 <ul id="Community" class="dropdown-content">
   <li><a href="">공지사항</a></li>
   <li><a href="./community/bbsSoccer.jsp">축구게시판</a></li>
@@ -104,7 +104,7 @@
 	      </ul>
 	    </div>
 	</nav>
-
+ --%>
 	  	
 	  	<body>
 	  	
@@ -163,8 +163,13 @@
 					      <i class="large material-icons">mode_edit</i>
 					    </a>
 					    <ul>
+					    <%if(userUid != null){%>
 							<li><a href="<%= request.getContextPath() %>/UserLogoutServlet">로그아웃</a></li>
-					     
+					     <%} 
+					    else{%>
+					   		<li><a href="<%= request.getContextPath() %>/soccer/login/index.jsp">로그인</a></li>
+					    
+					     <%}%>
 					     <!--  <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">insert_chart</i></a></li>
 					      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">format_quote</i></a></li>
 					      <li class="waves-effect waves-light"><a href="#!"><i class="material-icons">publish</i></a></li>

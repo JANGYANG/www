@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@page import="com.bg.www.TeamDAO" %>
+<%@page import="com.bg.www.TeamJson" %>
+<%@page import="com.google.gson.Gson"%>
 <%
 String userUid = (String)session.getAttribute("userUid");
 String userName = (String)session.getAttribute("userName");
@@ -36,43 +39,76 @@ String teamName = (String)session.getAttribute("teamName");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Broken-glasses</title>
 </head>
-<body style="margin-bottom:1000px;">
-
-<%= teamName %>
-<%= userUid %>
-
+<body>
 <%
   if (userUid != null){
   if (teamName != null){
+		TeamDAO teamDAO = new TeamDAO();
+		Gson gson = new Gson();
+		TeamJson team = new TeamJson();
+		team = teamDAO.viewTeam(teamName);
 %>
-  <section class="container content-section center" >
-    <div class="container">
-       <div class="row">
-         <div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-3">
-           <%
-           out.println("<h2>Comming Soon</h2>");
-           out.println("<h3>Your Team is " + teamName + "</h3>");
-           out.println("<h4>We are Ready for Team Data.</h4>");
-           out.println("<h3>Thank you.</h3>");
-           %>
-           <div>구단 세부정보</div>
-           <div>진행 리그</div>
-           <div>설립연도</div>
-           <div>리그 역사</div>
-           <div>최근 경기 결과</div>
-           <div>주요 인물</div>
-           <div>유니폼</div>
-           <div>경기장</div>
 
-           
-        </div>
+<div class="container">
+   <div class="row">
+   	  <h5 class="center">구단 세부 정보</h5>
+      <div class="col l2 m2 s6">
+      	<img width='100%;' height="auto" src="<%= request.getContextPath() %>/img/1.png">
       </div>
-    </div>
-  </section>
+      <div class="col l2 m2 s6">
+      	<div>구단 이름 : <%= team.getTeamName() %></div>
+      	<div>구단주 : <%= team.getCaptainUid() %></div>
+      	<div>설립연도 : <%= team.getTeamBirth() %></div>
+      	<div>전적 : $승 $패 $무 </div>
+      	<div>진행중인 리그 : </div>
+      </div>
+      <div class="col l4 m4 s12">
+        <div>최근 경기 결과</div>
+	      <table class="bordered">
+	        <thead>
+	          <tr>
+	              <th>Name</th>
+	              <th>Item Name</th>
+	              <th>Item Price</th>
+	          </tr>
+	        </thead>
+	
+	        <tbody>
+	          <tr>
+	            <td>Alvin</td>
+	            <td>Eclair</td>
+	            <td>$0.87</td>
+	          </tr>
+	          <tr>
+	            <td>Alan</td>
+	            <td>Jellybean</td>
+	            <td>$3.76</td>
+	          </tr>
+	          <tr>
+	            <td>Jonathan</td>
+	            <td>Lollipop</td>
+	            <td>$7.00</td>
+	          </tr>
+	        </tbody>
+	      </table>
+      </div>
+           
+      <div class="col l4 m4 s12">
+        <div>선호 지역</div>
+        <div><%= team.getRegionA() %></div>
+        <div><%= team.getRegionB() %></div>
+        <div>변경하기</div>
+      </div>
+		
+  </div>
+  <div>탈퇴하기</div>
+</div>
+
+
 <%
   }else{
 %>
-  <section class="container content-section center">
+  <section class="container">
     <div class="container">
        <div class="row">
          <div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-3">

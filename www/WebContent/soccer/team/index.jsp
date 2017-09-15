@@ -1,6 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%
+String userUid = (String)session.getAttribute("userUid");
+String userName = (String)session.getAttribute("userName");
+String teamName = (String)session.getAttribute("teamName");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,23 +34,29 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Broken-glasses</title>
+
 </head>
 <!-- 팀이 가입되지 않았을 떄 -->
-<div class="container white" >
-	<div class="center" style="padding: 100px; 100px; 100px; 100px;">
+<%if(teamName == null){ %>
+<div class="container center" >
+	<div style="margin-top:100px">
+	<h3 class="black-text">아직도 팀이 없으신가요?</h3>
+	</div>
+	<div style="margin-top:150px; top:50%;">
 		<a href="./teamMake.jsp"><button class="btn blue darken-2" >팀만들기</button></a>      
           <div class="input-field col s6 s12 blue-text text-darken-2">
-          <i class="blue-text text-darken-2 material-icons prefix">search</i>
-          <input type="text" id="autocomplete" class="autocomplete blue-text text-darken-2" >
           <a href="./teamSearch.jsp"><button class="btn blue darken-2" >팀찾기</button></a>
           </div>
 	</div>
 </div>
-
+<% } %>
 <!-- 팀이 가입되어 있을때 -->
 
 <div class="container">
-	
+	<%if(teamName != null){
+		response.sendRedirect( request.getContextPath()+"/soccer/team/myTeam.jsp");
+	}
+	%>	
 </div>
 
 

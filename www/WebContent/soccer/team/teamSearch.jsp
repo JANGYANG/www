@@ -140,7 +140,11 @@
   </div>
 	<%--  <%out.println(json); %> --%>
 
-	<script>
-  
-  </script>
+<script>
+$(document).ready(funtion(){
+	$('.card').click(function(){
+		
+	})
+})  
+</script>
 </body>
