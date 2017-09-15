@@ -139,7 +139,11 @@
 	</div>	
   </div>
 
-	<script>
-  
-  </script>
+<script>
+$(document).ready(funtion(){
+	$('.card').click(function(){
+		
+	})
+})  
+</script>
 </body>
