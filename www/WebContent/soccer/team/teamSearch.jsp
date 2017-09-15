@@ -93,7 +93,7 @@
 	<div class="container">
 	<div class="row">
 <%
-    TeamDAO teamDAO = new TeamDAO();
+  TeamDAO teamDAO = new TeamDAO();
   	String json = "";
   	String teamName = (String)request.getParameter("teamName");
   	json = teamDAO.searchByN(teamName);
@@ -138,7 +138,6 @@
  
 	</div>	
   </div>
-	<%--  <%out.println(json); %> --%>
 
 	<script>
   
