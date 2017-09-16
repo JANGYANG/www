@@ -5,6 +5,7 @@
 <%@page import="com.google.gson.Gson"%>
 <%@page import="com.bg.www.UserDAO" %>
 <%@page import="com.bg.www.UserJson" %>
+<%@page import="com.bg.www.RegionJson" %>
 <%
 String userUid = (String)session.getAttribute("userUid");
 String userName = (String)session.getAttribute("userName");
@@ -52,6 +53,7 @@ String teamName = (String)session.getAttribute("teamName");
 		UserDAO userDAO = new UserDAO();
 		UserJson user = new UserJson();
 		user = userDAO.findByUserUID(team.getCaptainUid());
+		RegionJson UR = new RegionJson();
 		
   	
 %>
