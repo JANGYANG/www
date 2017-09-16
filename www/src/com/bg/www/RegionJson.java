@@ -1,52 +1,37 @@
 package com.bg.www;
 
 public class RegionJson {
-	boolean error;
-	String error_msg;
 	
 	String sidoA;
 	String gugunA;
 	String sidoB;
 	String gugunB;
 	
-	public RegionJson() {
-	}
-	public String getsidoA() {
+	public String getSidoA() {
 		return sidoA;
 	}
-	public void setsidoA(String sidoA) {
-		this.sidoA =sidoA;
+	public void setSidoA(String sidoA) {
+		this.sidoA = sidoA;
 	}
-	public String getgugunA() {
+	public String getGugunA() {
 		return gugunA;
 	}
-	public void setgugunA(String gugunA) {
+	public void setGugunA(String gugunA) {
 		this.gugunA = gugunA;
 	}
-	public String getsidoB() {
+	public String getSidoB() {
 		return sidoB;
 	}
-	public void setsidoB(String sidoB) {
-		this.sidoB =sidoB;
+	public void setSidoB(String sidoB) {
+		this.sidoB = sidoB;
 	}
-	public String getgugunB() {
+	public String getGugunB() {
 		return gugunB;
 	}
-	public void setgugunB(String gugunB) {
+	public void setGugunB(String gugunB) {
 		this.gugunB = gugunB;
 	}
-			public boolean getError() {
-		return error;
-	}
-	public void setError(boolean error) {
-		this.error = error;
-	}
-	public String getError_msg() {
-		return error_msg;
-	}
-	public void setError_msg(String error_msg) {
-		this.error_msg = error_msg;
-	}
+
 }
 
 
