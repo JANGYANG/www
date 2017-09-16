@@ -53,7 +53,14 @@ String teamName = (String)session.getAttribute("teamName");
 		UserDAO userDAO = new UserDAO();
 		UserJson user = new UserJson();
 		user = userDAO.findByUserUID(team.getCaptainUid());
-		RegionJson UR = new RegionJson();
+		RegionJson uR1 = gson.fromJson(user.getRegionA(), RegionJson.class);
+		RegionJson uR2 = gson.fromJson(user.getRegionB(), RegionJson.class);
+		
+		out.println("지역 A 시도 : " + uR1.getSido());
+		out.println("지역 A 시도 : " + uR1.getGugun());
+		
+		out.println("지역 B 시도 : " + uR2.getSido());
+		out.println("지역 B 시도 : " + uR2.getGugun());
 		
   	
 %>
