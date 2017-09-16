@@ -42,7 +42,7 @@ String teamName = (String)session.getAttribute("teamName");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Broken-glasses</title>
 </head>
-<body>
+<body class="blue">
 <%
   if (userUid != null){
   if (teamName != null){
@@ -55,39 +55,38 @@ String teamName = (String)session.getAttribute("teamName");
 		user = userDAO.findByUserUID(team.getCaptainUid());
 		RegionJson uR1 = gson.fromJson(user.getRegionA(), RegionJson.class);
 		RegionJson uR2 = gson.fromJson(user.getRegionB(), RegionJson.class);
-		
-		out.println("지역 A 시도 : " + uR1.getSido());
-		out.println("지역 A 시도 : " + uR1.getGugun());
-		
-		out.println("지역 B 시도 : " + uR2.getSido());
-		out.println("지역 B 시도 : " + uR2.getGugun());
 
-		
 %>
 
 <div class="container">
-   <div class="row">
-   	  <h5 class="center">구단 세부 정보</h5>
-   	  <div class="z-depth-4" style="width:100%; height:100%;">
-	   	  <div class="col l3 m3 s6">
-	      	<img width='100%;' height="auto" src="<%= request.getContextPath() %>/img/1.png">
+   <div class="row center">
+   	  <h3 class="center">MY TEAM</h3>
+	  <div class="col s12 m6">
+	    <h2 class="header">구단 세부 정보</h2>
+	    <div class="card horizontal">
+	      <div class="card-image">
+	        <img width='50%;' height="auto" src="<%= request.getContextPath() %>/img/1.png">
 	      </div>
-	      <div class="col l3 m3 s6 ">
-	      	<div>구단 이름 : <%= team.getTeamName() %></div>
-	      	<div>주장 : <%= user.getName() %></div>
-	      	<div>설립연도 : <%= team.getTeamBirth() %></div>
-	      	<div>전적 : $승 $패 $무 </div>
-	      	<div>진행중인 리그 : </div>
-	      	 <div>선호 지역</div>
-	        <div><%= team.getRegionA() %></div>
-	        <div><%= team.getRegionB() %></div>
-	        <div>변경하기</div>
+	      <div class="card-stacked">
+	        <div class="card-content center">
+	          <p>구단 이름 : <%= team.getTeamName() %></p>
+	          <p>주장 : <%= user.getName() %></p>
+	          <p>설립립연도 : <%= team.getTeamBirth() %></p>
+	          <p>전적 : $승 $패 $무</p>
+	          <p>진행중인 리그 : </p>
+	          <p>선호 지역</p>
+	          <div>지역 A: <%= uR1.getSido() %>-<%= uR1.getGugun() %></div>
+	          <div>지역 B: <%= uR2.getSido() %>-<%= uR2.getGugun() %></div>
+	        </div>
+	        <div class="card-action">
+	          <a href="#">지역 변경하기</a>
+	        </div>
 	      </div>
-    
-   	  </div>
-        <div class="col l6 m6 s12">
+	    </div>
+	  </div>
+        <div class="col l5 m5 s12 z-depth-3">
         <div >최근 경기 결과</div>
-	      <table class="bordered">
+	      <table>
 	        <thead>
 	          <tr>
 	              <th>날짜</th>
