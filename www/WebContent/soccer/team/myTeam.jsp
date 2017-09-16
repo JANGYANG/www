@@ -53,36 +53,38 @@ String teamName = (String)session.getAttribute("teamName");
 		UserDAO userDAO = new UserDAO();
 		UserJson user = new UserJson();
 		user = userDAO.findByUserUID(team.getCaptainUid());
-		RegionJson UR = new RegionJson();
 		
-  	
 %>
 
 <div class="container">
    <div class="row">
    	  <h5 class="center">구단 세부 정보</h5>
-      <div class="col l3 m3 s6">
-      	<img width='100%;' height="auto" src="<%= request.getContextPath() %>/img/1.png">
-      </div>
-      <div class="col l3 m3 s6">
-      	<div>구단 이름 : <%= team.getTeamName() %></div>
-      	<div>주장 : <%= user.getName() %></div>
-      	<div>설립연도 : <%= team.getTeamBirth() %></div>
-      	<div>전적 : $승 $패 $무 </div>
-      	<div>진행중인 리그 : </div>
-      	 <div>선호 지역</div>
-        <div><%= team.getRegionA() %></div>
-        <div><%= team.getRegionB() %></div>
-        <div>변경하기</div>
-      </div>
-      <div class="col l6 m6 s12">
+   	  <div class="z-depth-4" style="width:100%; height:100%;">
+	   	  <div class="col l3 m3 s6">
+	      	<img width='100%;' height="auto" src="<%= request.getContextPath() %>/img/1.png">
+	      </div>
+	      <div class="col l3 m3 s6 ">
+	      	<div>구단 이름 : <%= team.getTeamName() %></div>
+	      	<div>주장 : <%= user.getName() %></div>
+	      	<div>설립연도 : <%= team.getTeamBirth() %></div>
+	      	<div>전적 : $승 $패 $무 </div>
+	      	<div>진행중인 리그 : </div>
+	      	 <div>선호 지역</div>
+	        <div><%= team.getRegionA() %></div>
+	        <div><%= team.getRegionB() %></div>
+	        <div>변경하기</div>
+	      </div>
+    
+   	  </div>
+        <div class="col l6 m6 s12">
         <div >최근 경기 결과</div>
 	      <table class="bordered">
 	        <thead>
 	          <tr>
-	              <th>Name</th>
-	              <th>Item Name</th>
-	              <th>Item Price</th>
+	              <th>날짜</th>
+	              <th>상대팀</th>
+	              <th>스코어</th>
+	              <th>결과</th>
 	          </tr>
 	        </thead>
 	
@@ -91,16 +93,19 @@ String teamName = (String)session.getAttribute("teamName");
 	            <td>Alvin</td>
 	            <td>Eclair</td>
 	            <td>$0.87</td>
+	            <td></td>
 	          </tr>
 	          <tr>
 	            <td>Alan</td>
 	            <td>Jellybean</td>
 	            <td>$3.76</td>
+	            <td></td>
 	          </tr>
 	          <tr>
 	            <td>Jonathan</td>
 	            <td>Lollipop</td>
 	            <td>$7.00</td>
+	            <td></td>
 	          </tr>
 	        </tbody>
 	      </table>
