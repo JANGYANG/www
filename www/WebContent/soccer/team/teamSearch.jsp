@@ -99,6 +99,7 @@
   	json = teamDAO.searchByN(teamName);
   	Gson gson = new Gson();
   	TeamJson[] teamAry = gson.fromJson(json, TeamJson[].class);
+  	out.println(json+"<br>");
   	if(teamAry.length==0){
 %>
 <div class="center">
@@ -140,10 +141,6 @@
   </div>
 
 <script>
-$(document).ready(funtion(){
-	$('.card').click(function(){
-		
-	})
-})  
+
 </script>
 </body>

@@ -3,6 +3,9 @@
 <%@page import="com.bg.www.TeamDAO" %>
 <%@page import="com.bg.www.TeamJson" %>
 <%@page import="com.google.gson.Gson"%>
+<%@page import="com.bg.www.UserDAO" %>
+<%@page import="com.bg.www.UserJson" %>
+<%@page import="com.bg.www.RegionJson" %>
 <%
 String userUid = (String)session.getAttribute("userUid");
 String userName = (String)session.getAttribute("userName");
@@ -47,23 +50,33 @@ String teamName = (String)session.getAttribute("teamName");
 		Gson gson = new Gson();
 		TeamJson team = new TeamJson();
 		team = teamDAO.viewTeam(teamName);
+		UserDAO userDAO = new UserDAO();
+		UserJson user = new UserJson();
+		user = userDAO.findByUserUID(team.getCaptainUid());
+		RegionJson UR = new RegionJson();
+		
+  	
 %>
 
 <div class="container">
    <div class="row">
    	  <h5 class="center">구단 세부 정보</h5>
-      <div class="col l2 m2 s6">
+      <div class="col l3 m3 s6">
       	<img width='100%;' height="auto" src="<%= request.getContextPath() %>/img/1.png">
       </div>
-      <div class="col l2 m2 s6">
+      <div class="col l3 m3 s6">
       	<div>구단 이름 : <%= team.getTeamName() %></div>
-      	<div>구단주 : <%= team.getCaptainUid() %></div>
+      	<div>주장 : <%= user.getName() %></div>
       	<div>설립연도 : <%= team.getTeamBirth() %></div>
       	<div>전적 : $승 $패 $무 </div>
       	<div>진행중인 리그 : </div>
+      	 <div>선호 지역</div>
+        <div><%= team.getRegionA() %></div>
+        <div><%= team.getRegionB() %></div>
+        <div>변경하기</div>
       </div>
-      <div class="col l4 m4 s12">
-        <div>최근 경기 결과</div>
+      <div class="col l6 m6 s12">
+        <div >최근 경기 결과</div>
 	      <table class="bordered">
 	        <thead>
 	          <tr>
@@ -91,13 +104,6 @@ String teamName = (String)session.getAttribute("teamName");
 	          </tr>
 	        </tbody>
 	      </table>
-      </div>
-           
-      <div class="col l4 m4 s12">
-        <div>선호 지역</div>
-        <div><%= team.getRegionA() %></div>
-        <div><%= team.getRegionB() %></div>
-        <div>변경하기</div>
       </div>
 		
   </div>
