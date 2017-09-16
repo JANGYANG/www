@@ -2,34 +2,20 @@ package com.bg.www;
 
 public class RegionJson {
 	
-	String sidoA;
-	String gugunA;
-	String sidoB;
-	String gugunB;
+	String sido;
+	String gugun;
 	
-	public String getSidoA() {
-		return sidoA;
+	public String getSido() {
+		return sido;
 	}
-	public void setSidoA(String sidoA) {
-		this.sidoA = sidoA;
+	public void setSido(String sido) {
+		this.sido = sido;
 	}
-	public String getGugunA() {
-		return gugunA;
+	public String getGugun() {
+		return gugun;
 	}
-	public void setGugunA(String gugunA) {
-		this.gugunA = gugunA;
-	}
-	public String getSidoB() {
-		return sidoB;
-	}
-	public void setSidoB(String sidoB) {
-		this.sidoB = sidoB;
-	}
-	public String getGugunB() {
-		return gugunB;
-	}
-	public void setGugunB(String gugunB) {
-		this.gugunB = gugunB;
+	public void setGugun(String gugun) {
+		this.gugun = gugun;
 	}
 
 }
