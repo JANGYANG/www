@@ -1,5 +1,19 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.*" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.bg.www.UserDAO" %>
+<%@page import="com.bg.www.UserJson" %>
+<%
+	UserDAO userDAO = new UserDAO();
+	UserJson user = new UserJson();
+	ArrayList<UserJson> userList = new ArrayList<UserJson>();
+	userList = userDAO.findByTeamName((String)session.getAttribute("teamName"));
+	out.println((String)session.getAttribute("teamName"));
+%>
+
 <!DOCTYPE html>
+
+
 <html>
 <head>
 <!--Import Google Icon Font-->
@@ -13,14 +27,6 @@
 
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!-- Compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
-
-<!-- Compiled and minified JavaScript -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -39,85 +45,179 @@
 
 <style type="text/css">
 .swiper-container {
-	height: 600px;
-	width: 900px;
+	height: 50%;
+	width: 80%;
+}
+
+select {
+	display: inherit;
 }
 </style>
 
 <script type="text/javascript">
+var pageOk = new Array();
+for(i=0;i<6;i++){
+	pageOk[i] = 0;
+}
+var pageNation = 1;
+function able(){
+	$("#pageNext").attr("disabled",false);
+}; 
+function disable(){
+	$("#pageNext").attr("disabled",true);
+};
+function pageDefault(){
+	if(pageNation == 1){
+		$("#pagePrev").attr("disabled",true);
+		$("#pageNext").attr("disabled",true);
+	}else{
+		$("#pagePrev").attr("disabled",false);
+		$("#pageNext").attr("disabled",true);
+	}
+};
+function next(){
+	pageNation++;
+	pageDefault();
+};
+function prev(){
+	pageNation--;
+	pageDefault();
+};
+
 $(document).ready(function() {
+	$("#pageNext").click(function(){
+		pageOk[pageNation-1] = 1;
+		next();
+		if(pageOk[pageNation-1] == 1){
+			able();
+		}
+	});
+	$("#pagePrev").click(function(){
+		prev();
+		able();
+	});
+	$(".dateForm").click(function(){
+		able();
+	});
+	$(".player").click(function(){
+		if($(".player:checked").length >= 3){
+			able();	
+		}else{
+			disable();
+		}
+	});
+	$(".score").click(function(){
+		able();
+	});
 	/* home팀인지 */
 	var homeYes = $('#homeYes');
 	var homeNo = $("#homeNo");
 	homeYes.click(function(){
-		if($('#homeTeamID').val() == ""){
-			$('#homeTeamID').val( "<%out.print((String)session.getAttribute("teamName"));%>" );
-			$('#awayTeamID').val( "" );
-			homeYes.css("background-color","red");
-			homeNo.css("background-color","gray")
-		}else{
-			$('#homeTeamID').val("");
-			$('#awayTeamID').val("");
-			homeYes.css("background-color","gray");
-			homeNo.css("background-color","gray");
-		}
+		$("#opponent").empty();
+		$("#homeOrAway").val(1);
+		$("#homeScore").text('<%=session.getAttribute("teamName")%>');
+		homeYes.css("background-color","red");
+		homeNo.css("background-color","gray");
+		able();
 	});
 	homeNo.click(function(){
-		if($('#awayTeamID').val() == ""){
-			$('#awayTeamID').val( "<%out.print((String)session.getAttribute("teamName"));%>" );
-			$('#homeTeamID').val( "" );
-			homeNo.css("background-color","red");
-			homeYes.css("background-color","gray")
-		}else{
-			$('#awayTeamID').val("");
-			$('#homeTeamID').val("");
-			homeYes.css("background-color","gray");
-			homeNo.css("background-color","gray");
-		}
+		$("#opponent").empty();
+		$("#homeOrAway").val(0);
+		$("#AwayScore").text('<%=session.getAttribute("teamName")%>');
+		homeNo.css("background-color", "red");
+		homeYes.css("background-color", "gray")
+		able();
+	});
+
+	$("#searchTeam").keyup(function(){
+		teamName = $('#searchTeam').val();
+		$("#teams").empty();
+		$.ajax({
+			type : "POST",
+			dataType : "json",
+			url : '../../TeamSearchServlet',
+			data : {
+				teamName : teamName
+			},
+			success : function(json) {
+				console.log("ajax success");
+				console.log(json);
+				console.log(json.length);
+				console.log(json[0]);
+				console.log(json[0]["teamName"]);
+				$.each(json, function(key, val) {
+					$('#teams').append(
+							"<div class='btn teams' onclick='opponent(this)'>"
+									+ val["teamName"] + "</div>")
+				});
+			},
+			error : function() {
+				console.log('Ajax Error');
+			}
+		});
 	});
 	
-	
+	$("#searchStadium")	.keyup(function(){
+		stadium = $("#searchStadium").val();
+		$("#stadiums").empty();
+		$.ajax({
+			type : "GET",
+			dataType : "json",
+			url : '../../NaverSearchRegionServlet',
+			data : {
+				stadium : stadium
+			},
+			success : function(json) {
+				console.log("ajax success");
+				console.log(json);
+				console.log(json.items[0].title)
+				$.each(json.items, function(key, val) {
+					$('#stadiums').append(
+							"<div class='btn teams' onclick='selectStadium(this)'>"
+									+ val["title"] + "</div>")
+				});
+			},
+			error : function() {
+				console.log('Ajax Error');
+			}
+		});
+	});
 });
 
-function searchTeam(){
-	teamName = $('#searchTeam').val();
-	$("#teams").empty();
-	$.ajax({
-        type: "POST",
-        dataType: "json",
-        url: '../../TeamSearchServlet',
-        data: {teamName: teamName},
-        success: function(json){
-     	   	console.log("ajax success");
-     	   	console.log(json);
-     	   	console.log(json.length);
-     	   	console.log(json[0]);
-     	   	console.log(json[0]["teamName"]);
-     	   	$.each(json,function(key, val){
-     	   		$('#teams').append("<div class='btn teams' onclick='opponent(this)'>"+val["teamName"]+"</div>")
-     	   	});
-        },
-        error: function(){
-     	   	console.log('Ajax Error');
-        }
-    });
+function opponent(e) {
+	$("#opponent").empty();
+	$('#opponent').append("<div class='btn'>" + e.innerHTML + "</div>");
+	$('#opponentTeam').val(e.innerHTML);
+	able();
+	if ($('#homeOrAway').val() == "1") {
+		$('#awayScore').text(e.innerHTML);
+	} else {
+		$('#homeScore').text(e.innerHTML);
+	}
 };
 
-function opponent(e){
-	$("#opponent").empty();
-	$('#opponent').append("<div class='btn'>"+ e.innerHTML + "</div>");
-	if($('#homeTeamID').val() == <%out.print((String)session.getAttribute("teamName"));%>){
-		$('#awayTeamID').val(e.innerHTML);
-	}else{
-		$('#homeTeamID').val(e.innerHTML);
-	};
+function selectStadium(e) {
+	$("#stadiumDiv").empty();
+	$('#stadiumDiv').append("<div class='btn'>" + e.innerText + "</div>");
+	$("#stadium").val(e.innerText);
+	able();
 };
+
+function check(){
+	for(i = 0; i<pageOk.length;i++){
+		if(pageOk[i] == 0){
+			return false;
+		}
+	}
+	return true;
+}
+
 </script>
 
 </head>
-<body>     
+<body>
 	<div class="container">
-		<div class="row">
+		<div class="row" style="text-align:center;">
 			<div class="col m6 offset-m3 s8 offset-s2">
 				<img src="../../img/logo_CI.png" alt="LOGIN" title="BG"
 					style="width: 50%">
@@ -125,169 +225,171 @@ function opponent(e){
 		</div>
 	</div>
 	
-       <!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
-<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:100;-webkit-overflow-scrolling:touch;">
-<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
-</div>
-      
-
+	<form action="../../MatchRegisterServlet" id="matchForm" onsubmit="return check();"method="POST">
 	<div class="swiper-container">
 		<!-- Additional required wrapper -->
-		<div class="swiper-wrapper">
+		<div style="padding:0;"class="swiper-wrapper">
 			<!-- Slides -->
-			<div class="swiper-slide">
-				<h1>당신의 팀은 홈팀입니까?</h1>
-				<div class="btn" id="homeYes">YES</div>
-				<div class="btn" id="homeNo">NO</div>
-				<input type="text" name="homeTeamID" id="homeTeamID"></input> <input
-					type="text" name="awayTeamID" id="awayTeamID"></input>
+			<div class="swiper-slide" style="text-align:center;vertical-align:middle;">
+				<div style="padding:3%">
+				<div id="1"></div>
+					<h1 style="text-align:center;">당신의 팀은 홈팀입니까?</h1>
+					<div style="text-align:center;" class="btn" id="homeYes">YES</div>
+					<div style="text-align:center;" class="btn" id="homeNo">NO</div>
+					<input type="text" name=homeOrAway id="homeOrAway"></input>
+				</div>	
 			</div>
+			
 			<div class="swiper-slide">
-				<h1>상대팀을 골라주세요.</h1>
-				<div id="opponent"></div>
-				<input type="text" id="searchTeam" onkeyup="searchTeam();"></input>
-				<div id="teams"></div>
+				<div style="padding:3%">
+					<div id="2"></div>
+					<h1>상대팀을 골라주세요.</h1>
+					<div id="opponent"></div>
+					<input type="text" id="searchTeam"></input>
+					<div id="teams"></div>
+					<input type="text" name="opponentTeam" id="opponentTeam"></input>
+				</div>
 			</div>
+			
 			<div class="swiper-slide">
-				<h1>경기장을 골라주세요.</h1>
-			
-			
-			<!--  -->
-<input type="text" id="sample2_postcode" placeholder="우편번호">
-<input type="button" onclick="sample2_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" id="sample2_address" placeholder="한글주소">
-<input type="text" id="sample2_addressEnglish" placeholder="영문주소">
-
-
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false"></script>
-<script>
-
-    // 우편번호 찾기 화면을 넣을 element
-    var element_layer = document.getElementById('layer');
-
-    function closeDaumPostcode() {
-        // iframe을 넣은 element를 안보이게 한다.
-        element_layer.style.display = 'none';
-    }
-
-    function sample2_execDaumPostcode() {
-    	daum.postcode.load(function(){
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var fullAddr = data.address; // 최종 주소 변수
-                var extraAddr = ''; // 조합형 주소 변수
-
-                // 기본 주소가 도로명 타입일때 조합한다.
-                if(data.addressType === 'R'){
-                    //법정동명이 있을 경우 추가한다.
-                    if(data.bname !== ''){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있을 경우 추가한다.
-                    if(data.buildingName !== ''){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample2_postcode').value = data.zonecode; //5자리 새우편번호 사용
-                document.getElementById('sample2_address').value = fullAddr;
-                document.getElementById('sample2_addressEnglish').value = data.addressEnglish;
-
-                // iframe을 넣은 element를 안보이게 한다.
-                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
-                element_layer.style.display = 'none';
-            },
-            width : '100%',
-            height : '100%',
-            maxSuggestItems : 5
-        }).embed(element_layer);
-    	});
-        // iframe을 넣은 element를 보이게 한다.
-        element_layer.style.display = 'block';
-
-        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
-        initLayerPosition();
-        
-    	}
-
-    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
-    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
-    // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
-    function initLayerPosition(){
-        var width = 300; //우편번호서비스가 들어갈 element의 width
-        var height = 400; //우편번호서비스가 들어갈 element의 height
-        var borderWidth = 5; //샘플에서 사용하는 border의 두께
-
-        // 위에서 선언한 값들을 실제 element에 넣는다.
-        element_layer.style.width = width + 'px';
-        element_layer.style.height = height + 'px';
-        element_layer.style.border = borderWidth + 'px solid';
-        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
-        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
-        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
-    }
-</script>			
-			<!--  -->
-			
-			
-			
-			
-			
-			</div>
-			<div class="swiper-slide">
+			<div id="3"></div>
 				<h1>경기 시간을 선택해주세요.</h1>
+				<label>경기 날짜</label><br>
+				<div style="width:15%;display:inline-block;">
+				<select class="form-control" name="matchDateYear" form="matchForm">
+					<option value="2017">2017 년</option>
+				</select>
+				</div>
+				<div style="width:20%;display:inline-block;">
+				<select class="form-control dateForm" name="matchDateMonth" form="matchForm">
+					<%
+						for (int i = 1; i <= 12; i++) {
+					%>
+					<option value="<%=i%>"><%=i%> 월</option>
+					<%
+						}
+					%>
+				</select>
+				</div>
+				<div style="width:20%;display:inline-block;">
+				<select class="form-control dateForm" name="matchDateDay" form="matchForm">
+					<%
+						for (int i = 1; i <= 31; i++) {
+					%>
+					<option value="<%=i%>"><%=i%> 일</option>
+					<%
+						}
+					%>
+				</select>
+				</div>
+				<select style="width:20%;display:inline-block;"class="form-control dateForm" name="matchDateHour" form="matchForm">
+					<%
+						for (int i = 5; i <= 23; i++) {
+					%>
+					<option value="<%=i%>"><%=i%> 시</option>
+					<%
+						}
+					%>
+				</select>
+				<select style="width:20%;display:inline-block;"class="form-control dateForm" name="matchDateMinute" form="matchForm">
+					<%
+						for (int i = 0; i <= 1; i++) {
+					%>
+					<option value="<%=i*30%>"><%=i*30%> 분</option>
+					<%
+						}
+					%>
+				</select>
+				<h6>
+					<input name="matchType" type="radio" id="test0" checked value="1"/> <label for="test0">단판</label>
+					<input name="matchType" type="radio" id="test1" checked value="2"/> <label for="test1">전반 / 후반</label>
+					<input name="matchType" type="radio" id="test2" value="3"/> <label for="test2">3 세트</label>
+					<input name="matchType" type="radio" id="test3" value="4"/> <label for="test3">4 세트</label>
+				</h6>
+				
+				<label>경기시간</label>
+				<select class="form-control dateForm" name="playingTime" form="matchForm">
+					<%
+						for (int i = 4; i <= 12; i++) {
+					%>
+					<option value="<%=i * 5%>"><%=i * 5%> 분</option>
+					<%
+						}
+					%>
+				</select>
 			</div>
+			
 			<div class="swiper-slide">
+			<div id="4"></div>
+				<h1>경기장을 골라주세요.</h1>
+				<div id="stadiumDiv"></div>
+				<input type="text" id="searchStadium" placeholder="운동장으로 검색해주세요."></input>
+				<input type="text" name="stadium" id="stadium"></input>
+				<div id="stadiums"></div>
+			</div>
+			
+			<div class="swiper-slide">
+			<div id="5"></div>
 				<h1>출전 선수는 누구입니까?</h1>
+				<%for(int i = 0; i < userList.size(); i++){ %>
+				<h6>
+					<input name="player" class="player" type="checkbox" id="member<%=i %>" value="<%=userList.get(i).getName() %>"/> <label for="member<%=i%>"><%=userList.get(i).getName() %></label>
+				</h6>
+				<%} %>
 			</div>
+			
 			<div class="swiper-slide">
-				<h1>포메이션을 선택해주세요.</h1>
-			</div>
-			<div class="swiper-slide">
+			<div id="6"></div>
 				<h1>최종 스코어를 알려주세요.</h1>
+				<label class="scoreLabel" id="homeScore">HOME</label>
+				<select class="form-control score" name="homeScore" form="matchForm" style="width:50%;">
+					<%
+						for (int i = 0; i < 13; i++) {
+					%>
+					<option value="<%=i%>"><%=i%> </option>
+					<%
+						}
+					%>
+				</select>
+				<label class="scoreLabel" id="awayScore">AWAY</label>
+				<select class="form-control score" name="awayScore" form="matchForm" style="width:50%;">
+					<%
+						for (int i = 0; i < 13; i++) {
+					%>
+					<option value="<%=i%>"><%=i%> </option>
+					<%
+						}
+					%>
+				</select>
 			</div>
+			
 			<div class="swiper-slide">
-				<h1>득점 선수는 누구일까요?</h1>
-			</div>
-			<div class="swiper-slide">
-				<h1>도움을 한 선수는 있습니까?</h1>
+			<div id="7"></div>
+				<h1>경기를 기록합니다.</h1>
+				<button class="btn" id="submit">기록</button>
 			</div>
 		</div>
-
 		<!-- If we need pagination -->
 		<div class="swiper-pagination"></div>
-
-		<!-- If we need navigation buttons -->
-		<div class="swiper-button-prev"></div>
-		<div class="swiper-button-next"></div>
-
-		<!-- If we need scrollbar -->
-		<div class="swiper-scrollbar"></div>
-
+		
+		<div disabled style="position: fixed;right:51%;"class="btn pagePrev" id="pagePrev">이전</div>
+		<div disabled style="position: fixed;left:51%;"class="btn pageNext" id="pageNext">다음</div>
 		<script>
 			var mySwiper = new Swiper('.swiper-container', {
 				// Optional parameters
 				direction : 'horizontal',
 				loop : false,
+				onlyExternal : true,
 
-		    mousewheelControl: false,
-				// If we need pagination
-				pagination : '.swiper-pagination',
+				mousewheelControl : false,
 
 				// Navigation arrows
-				nextButton : '.swiper-button-next',
-				prevButton : '.swiper-button-prev',
+				nextButton : '.pageNext',
+				prevButton : '.pagePrev'
 
-			})
+			});
 		</script>
 	</div>
-
+</form>
 </body>
 </html>

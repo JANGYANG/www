@@ -18,7 +18,5 @@ public class DB {
 	public String getDbPassword() {
 		return dbPassword;
 	}
-	  
-	  
 
 }

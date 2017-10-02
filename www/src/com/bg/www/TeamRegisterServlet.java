@@ -26,7 +26,6 @@ public class TeamRegisterServlet extends HttpServlet {
 		String regionA = request.getParameter("region1");
 		String regionB = request.getParameter("region2");
 		String teamBirth = request.getParameter("teamBirth");
-		
 		String json = "";
 		
 		if (teamName != null && regionA == null) {

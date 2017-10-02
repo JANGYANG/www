@@ -18,7 +18,6 @@ public class UserDAO {
 	private Statement stmt = null;
 	private ResultSet rs = null;
 	private String sql = null;
-	private ResultSet rs2 = null;
 	Gson gson = new Gson();
     
 	SecureRandom sr = new SecureRandom();
@@ -208,39 +207,28 @@ public class UserDAO {
 //	�씠由꾩쑝濡� 寃��깋
 	public String searchByN(String name){
 		System.out.println("UserDAO searchByName RUN");
-		String SQL = "SELECT * FROM users WHERE name LIKE ?";
+		String SQL = "SELECT * FROM users u, users_info ui WHERE u.userUID = ui.userUID AND u.name LIKE ?";
 		ArrayList<UserJson> userList = new ArrayList<UserJson>();
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, "%" + name + "%");
 			rs = pstmt.executeQuery();
-			int t = 1;
-			int t2 = 1;
 			while(rs.next()) {
-				System.out.println(t++);
 				UserJson user = new UserJson();
 				user.setUserUID(rs.getString("userUID"));
 				user.setName(rs.getString("name"));
-				SQL = "SELECT * FROM users_info WHERE userUID = ?";
-				pstmt = conn.prepareStatement(SQL);
-				pstmt.setString(1, user.getUserUID());
-				rs2 = pstmt.executeQuery();
-				while(rs2.next()) {
-					System.out.println(t2++);
-					user.setBirth(rs2.getString("birth"));
-					user.setPosition(rs2.getString("position"));
-					user.setHeight(rs2.getInt("height"));
-					user.setWeight(rs2.getInt("weight"));
-					user.setRegionA(rs2.getString("regionA"));
-					user.setRegionB(rs2.getString("regionB"));
-					user.setTeamName(rs2.getString("teamName"));
-				}
+				user.setBirth(rs.getString("birth"));
+				user.setPosition(rs.getString("position"));
+				user.setHeight(rs.getInt("height"));
+				user.setWeight(rs.getInt("weight"));
+				user.setRegionA(rs.getString("regionA"));
+				user.setRegionB(rs.getString("regionB"));
+				user.setTeamName(rs.getString("teamName"));
 				userList.add(user);
 			}
 			pstmt.close();
 			conn.close();
 			rs.close();
-			rs2.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -251,17 +239,14 @@ public class UserDAO {
 //	吏��뿭�쑝濡� 寃��깋
 	public String searchByR(String region){
 		System.out.println("UserDAO searchByR RUN");
-		String SQL = "SELECT * FROM users_info WHERE regionA LIKE ? OR regionB LIKE ?";
+		String SQL = "SELECT * FROM users_info ui, users u WHERE ui.userUID = u.userUID AND regionA LIKE ? OR regionB LIKE ?";
 		ArrayList<UserJson> userList = new ArrayList<UserJson>();
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, "%" + region + "%");
 			pstmt.setString(2, "%" + region + "%");
 			rs = pstmt.executeQuery();
-			int t = 1;
-			int t2 = 1;
 			while(rs.next()) {
-				System.out.println(t++);
 				UserJson user = new UserJson();
 				user.setUserUID(rs.getString("userUID"));
 				user.setBirth(rs.getString("birth"));
@@ -272,19 +257,12 @@ public class UserDAO {
 				user.setRegionB(rs.getString("regionB"));
 				user.setTeamName(rs.getString("teamName"));
 				SQL = "SELECT * FROM users WHERE userUID = ?";
-				pstmt = conn.prepareStatement(SQL);
-				pstmt.setString(1, user.getUserUID());
-				rs2 = pstmt.executeQuery();
-				while(rs2.next()) {
-					System.out.println(t2++);
-					user.setName(rs2.getString("name"));
-					}
+				user.setName(rs.getString("name"));
 				userList.add(user);
 			}
 			pstmt.close();
 			conn.close();
 			rs.close();
-			rs2.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -338,5 +316,34 @@ public class UserDAO {
 		}
 		
 		return user;
+	}
+	public ArrayList<UserJson> findByTeamName(String teamName) {
+		ArrayList<UserJson> userList = new ArrayList<UserJson>();
+		
+		try {
+			stmt = conn.createStatement();
+			String sql = String.format("SELECT a.birth, a.regionA, a.regionB, a.height, "
+					+ "a.weight, a.position, b.name FROM users_info a, users b "
+					+ "WHERE a.userUID = b.userUID AND a.teamName LIKE '%s'", teamName);
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				UserJson user = new UserJson();
+				user.setBirth(rs.getString("birth"));
+				user.setPosition(rs.getString("position"));
+				user.setHeight(rs.getInt("height"));
+				user.setRegionA(rs.getString("regionA"));
+				user.setRegionB(rs.getString("regionB"));
+				user.setName(rs.getString("name"));
+				System.out.println(rs.getString("name"));
+				user.setWeight(rs.getInt("weight"));
+				userList.add(user);
+			}
+			stmt.close();
+			conn.close();
+			rs.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return userList;
 	}
 }
