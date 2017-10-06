@@ -255,12 +255,12 @@ function check(){
 			<div id="3"></div>
 				<h1>경기 시간을 선택해주세요.</h1>
 				<label>경기 날짜</label><br>
-				<div style="width:15%;display:inline-block;">
+				<div style="width:33%;display:inline-block;">
 				<select class="form-control" name="matchDateYear" form="matchForm">
 					<option value="2017">2017 년</option>
 				</select>
 				</div>
-				<div style="width:20%;display:inline-block;">
+				<div style="width:33%;display:inline-block;">
 				<select class="form-control dateForm" name="matchDateMonth" form="matchForm">
 					<%
 						for (int i = 1; i <= 12; i++) {
@@ -271,7 +271,7 @@ function check(){
 					%>
 				</select>
 				</div>
-				<div style="width:20%;display:inline-block;">
+				<div style="width:33%;display:inline-block;">
 				<select class="form-control dateForm" name="matchDateDay" form="matchForm">
 					<%
 						for (int i = 1; i <= 31; i++) {
@@ -282,24 +282,6 @@ function check(){
 					%>
 				</select>
 				</div>
-				<select style="width:20%;display:inline-block;"class="form-control dateForm" name="matchDateHour" form="matchForm">
-					<%
-						for (int i = 5; i <= 23; i++) {
-					%>
-					<option value="<%=i%>"><%=i%> 시</option>
-					<%
-						}
-					%>
-				</select>
-				<select style="width:20%;display:inline-block;"class="form-control dateForm" name="matchDateMinute" form="matchForm">
-					<%
-						for (int i = 0; i <= 1; i++) {
-					%>
-					<option value="<%=i*30%>"><%=i*30%> 분</option>
-					<%
-						}
-					%>
-				</select>
 				<h6>
 					<input name="matchType" type="radio" id="test0" checked value="1"/> <label for="test0">단판</label>
 					<input name="matchType" type="radio" id="test1" checked value="2"/> <label for="test1">전반 / 후반</label>

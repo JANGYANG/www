@@ -123,7 +123,7 @@
 						</figcaption>
 					</figure>
 				</a>
-				<a href="#" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
+				<a href="./player/myPlayer.jsp" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
 					<figure>
 						<img src="../img/1.png" />
 						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
@@ -134,14 +134,13 @@
 						</figcaption>
 					</figure>
 				</a>
-				<a href="#" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
+				<a href="./match" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
 					<figure>
 						<img src="../img/1.png" />
 						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
 						<figcaption>
-							<h2>LEAGUE</h2>
-							<p>명승부가 가득한 리그</p>
-							
+							<h2>MATCH</h2>
+							<p>모든 경기에 대해</p>
 						</figcaption>
 					</figure>
 				</a>

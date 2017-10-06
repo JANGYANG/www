@@ -23,16 +23,15 @@ public class MatchRegisterServlet extends HttpServlet {
 		String homeOrAway = request.getParameter("homeOrAway");
 		String opponentTeam = request.getParameter("opponentTeam"); 
 		String stadium = request.getParameter("stadium");
-		int homeScore = Integer.parseInt(request.getParameter("homeScore").toString()); 
-		int awayScore = Integer.parseInt(request.getParameter("awayScore").toString()); 
+		int homeScore = Integer.parseInt(request.getParameter("homeScore")); 
+		int awayScore = Integer.parseInt(request.getParameter("awayScore"));
+		System.out.println("homeScore : " + homeScore);
+		System.out.println("homeScore : " + awayScore);
 		String matchType = request.getParameter("matchType"); 
 		String matchDateYear = request.getParameter("matchDateYear");
 		String matchDateMonth = request.getParameter("matchDateMonth");
 		String matchDateDay = request.getParameter("matchDateDay");
-		String matchDateHour = request.getParameter("matchDateHour");
-		String matchDateMinute = request.getParameter("matchDateMinute");
-		String matchDate = String.format("%s-%s-%s %s:%s:00", matchDateYear, matchDateMonth, matchDateDay,
-				matchDateHour, matchDateMinute);
+		String matchDate = String.format("%s-%s-%s", matchDateYear, matchDateMonth, matchDateDay);
 		int playingTime = Integer.parseInt(request.getParameter("playingTime").toString());
 		String player = Arrays.toString(request.getParameterValues("player"));
 		HttpSession session = request.getSession();
@@ -44,9 +43,11 @@ public class MatchRegisterServlet extends HttpServlet {
 		if (Integer.parseInt(homeOrAway) == 1) {
 			homeTeamID = session.getAttribute("teamName").toString();
 			awayTeamID = opponentTeam;
+			homeOrAway = "homePlayer";
 		}else {
 			awayTeamID = session.getAttribute("teamName").toString();
 			homeTeamID = opponentTeam;
+			homeOrAway = "awayPlayer";
 		}
 		
 		
