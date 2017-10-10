@@ -31,8 +31,8 @@
 	   <link type="text/css" rel="stylesheet" href="../css/demo.css"  media="screen,projection"/>
 	   <!-- <link type="text/css" rel="stylesheet" href="../css/normalize.css"  media="screen,projection"/>
 	    -->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Broken-glasses</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Broken-glasses</title>
 </head>
 <body>
 <%-- 	<!-- Dropdown Structure -->
@@ -144,13 +144,13 @@
 						</figcaption>
 					</figure>
 				</a>
-				<a href="#" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
+				<a href="./search/" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
 					<figure>
 						<img src="../img/1.png" />
 						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
 						<figcaption>
-							<h2>COMMUNITY</h2>
-							<p>전설이 시작되는 곳</p>
+							<h2>SEARCH</h2>
+							<p>선수 와 팀을 검색하라</p>
 							
 						</figcaption>
 					</figure>

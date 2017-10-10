@@ -322,12 +322,13 @@ public class UserDAO {
 		
 		try {
 			stmt = conn.createStatement();
-			String sql = String.format("SELECT a.birth, a.regionA, a.regionB, a.height, "
+			String sql = String.format("SELECT a.userUID, a.birth, a.regionA, a.regionB, a.height, "
 					+ "a.weight, a.position, b.name FROM users_info a, users b "
 					+ "WHERE a.userUID = b.userUID AND a.teamName LIKE '%s'", teamName);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				UserJson user = new UserJson();
+				user.setUserUID(rs.getString("userUID"));
 				user.setBirth(rs.getString("birth"));
 				user.setPosition(rs.getString("position"));
 				user.setHeight(rs.getInt("height"));

@@ -36,22 +36,24 @@ String teamName = (String)session.getAttribute("teamName");
 <title>Broken-glasses</title>
 
 </head>
+<body>
+<%if(userUid != null){ %>
+
 <!-- 팀이 가입되지 않았을 떄 -->
 <%if(teamName == null){ %>
-<div class="container center" >
-	<div style="margin-top:100px">
-	<h3 class="black-text">아직도 팀이 없으신가요?</h3>
-	</div>
-	<div style="margin-top:150px; top:50%;">
-		<a href="./teamMake.jsp"><button class="btn blue darken-2" >팀만들기</button></a>      
-          <div class="input-field col s6 s12 blue-text text-darken-2">
-          <a href="./teamSearch.jsp"><button class="btn blue darken-2" >팀찾기</button></a>
-          </div>
+<div class="container content-section center" >
+	<div class="row">
+		<h3 class="black-text">아직도 팀이 없으신가요?</h3>
+		<div class="col m5 offset-m1 s10 offset-s1">
+			<a href="./teamMake.jsp"><button class="btn blue darken-2" style="width:100%">팀만들기</button></a>
+		</div>
+		<div class="col m5 s10 offset-s1">  
+			<a href="./teamSearchByN.jsp"><button class="btn blue darken-2" style="width:100%">팀찾기</button></a>
+		</div>
 	</div>
 </div>
 <% } %>
 <!-- 팀이 가입되어 있을때 -->
-
 <div class="container">
 	<%if(teamName != null){
 		response.sendRedirect( request.getContextPath()+"/soccer/team/myTeam.jsp");
@@ -59,7 +61,19 @@ String teamName = (String)session.getAttribute("teamName");
 	%>	
 </div>
 
-
+<%}else{ %>
+ <section class="container content-section center">
+    <div class="container">
+       <div class="row">
+         <div class="col m4 offset-m4 s6 offset-s3">
+           <h4>Login First</h4>
+           <h3>Please</h3>
+           <a href="../login/"><button class="btn waves-effect waves-light">LOGIN</button></a>
+        </div>
+      </div>
+    </div>
+  </section>
+<%} %>
 <script>
 
 </script>

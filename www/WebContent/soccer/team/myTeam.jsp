@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
-<%@page import="com.bg.www.TeamDAO" %>
-<%@page import="com.bg.www.TeamJson" %>
-<%@page import="com.google.gson.Gson"%>
-<%@page import="com.bg.www.UserDAO" %>
-<%@page import="com.bg.www.UserJson" %>
-<%@page import="com.bg.www.RegionJson" %>
+<%@page import="com.bg.www.*" %>
+<%@page import="com.google.gson.Gson" %>
 <%
 String userUid = (String)session.getAttribute("userUid");
 String userName = (String)session.getAttribute("userName");
 String teamName = (String)session.getAttribute("teamName");
+MatchDAO matchDAO = new MatchDAO();
+ArrayList<MatchJson> matchList = new ArrayList<MatchJson>();
+matchList = matchDAO.listMatch(teamName);
 %>
 
 <!DOCTYPE html>
@@ -42,7 +41,7 @@ String teamName = (String)session.getAttribute("teamName");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Broken-glasses</title>
 </head>
-<body class="blue">
+<body class="blue lighten-4">
 <%
   if (userUid != null){
   if (teamName != null){
@@ -53,11 +52,77 @@ String teamName = (String)session.getAttribute("teamName");
 		UserDAO userDAO = new UserDAO();
 		UserJson user = new UserJson();
 		user = userDAO.findByUserUID(team.getCaptainUid());
-		RegionJson uR1 = gson.fromJson(user.getRegionA(), RegionJson.class);
-		RegionJson uR2 = gson.fromJson(user.getRegionB(), RegionJson.class);
+		RegionJson regionA = gson.fromJson(user.getRegionA(), RegionJson.class);
+		RegionJson regionB = gson.fromJson(user.getRegionB(), RegionJson.class);
 
 %>
+<div class="container">
+	<div class="row">
+		<div class="col s12 m8 offset-m2" style="text-align:center">
+			<h3 class="header">TEAM</h3>
+			<div class="card">
+				<div class="card-content">
+					<img class="circle" src="../../img/logo_CI.png" style="width:50%;height:auto;padding:5%">
+					<h4><%= team.getTeamName() %></h4>
+					<h5><%= team.getTeamBirth() %></h5>
+					<h5><%= regionA.getGugun() %>
+							<%= regionA.getSido() %></h5>
+					<h5><%= regionB.getGugun() %>
+							<%= regionB.getSido() %></h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<h3 style="text-align:center">참가 경기</h3>
+		</div>
+		<%for(int i = 0; i<matchList.size(); i++){%>
+		<div class="row" style="text-align: center;">
+			<div class="col m2 s3 offset-m2">
+				<div class="valign-wrapper">
+					<a href="../team/teamView.jsp?teamName=<%=matchList.get(i).getHomeTeamID()%>">
+						<img src="../../img/logo_CI.png" width="80%">
+						<h6><%=matchList.get(i).getHomeTeamID() %></h6>
+					</a>
+				</div>
+			</div>
+			<div class="col m4 s6">
+				<h6><%= matchList.get(i).getMatchDate() %></h6>
+				<h6><%= matchList.get(i).getStadium() %></h6>
+				<div class="row">
+					<div class="col m4 s4">
+						<h4 style="margin: unset; text-align: right"><%= matchList.get(i).getHomeScore() %></h4>
+					</div>
+					<div class="col m4 s4">
+						<h4 style="margin: unset;">vs</h4>
+					</div>
+					<div class="col m4 s4">
+						<h4 style="margin: unset; text-align: left"><%= matchList.get(i).getAwayScore() %></h4>
+					</div>
+					<p><%=matchList.get(i).getMatchType() %>쿼터
+						<%=matchList.get(i).getPlayingTime() %>
+						분
+					</p>
+				</div>
+			</div>
+			<div class="col m2 s3">
+				<div class="valign-wrapper">
+					<a
+						href="../team/teamView.jsp?teamName=<%=matchList.get(i).getAwayTeamID()%>">
+						<img src="../../img/logo_CI.png" width="80%">
+						<h6><%=matchList.get(i).getAwayTeamID() %></h6>
+					</a>
+				</div>
+			</div>
+		</div>
+		<%} %>
+	</div>
+</div>
 
+
+
+<!-- 희융이가 만든 부분 -->
+<%-- 
 <div class="container">
    <div class="row center">
    	  <h3 class="center">MY TEAM</h3>
@@ -122,7 +187,7 @@ String teamName = (String)session.getAttribute("teamName");
   </div>
   <div>탈퇴하기</div>
 </div>
-
+ --%>
 
 <%
   }else{

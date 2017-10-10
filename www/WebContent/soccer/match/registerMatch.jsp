@@ -6,9 +6,10 @@
 <%
 	UserDAO userDAO = new UserDAO();
 	UserJson user = new UserJson();
+	String teamName = (String)session.getAttribute("teamName");
+	String userUID = (String)session.getAttribute("userUID");
 	ArrayList<UserJson> userList = new ArrayList<UserJson>();
-	userList = userDAO.findByTeamName((String)session.getAttribute("teamName"));
-	out.println((String)session.getAttribute("teamName"));
+	userList = userDAO.findByTeamName(teamName);
 %>
 
 <!DOCTYPE html>
@@ -315,7 +316,7 @@ function check(){
 				<h1>출전 선수는 누구입니까?</h1>
 				<%for(int i = 0; i < userList.size(); i++){ %>
 				<h6>
-					<input name="player" class="player" type="checkbox" id="member<%=i %>" value="<%=userList.get(i).getName() %>"/> <label for="member<%=i%>"><%=userList.get(i).getName() %></label>
+					<input name="player" class="player" type="checkbox" id="member<%=i %>" value="<%=userList.get(i).getUserUID() %>"/> <label for="member<%=i%>"><%=userList.get(i).getName() %></label>
 				</h6>
 				<%} %>
 			</div>

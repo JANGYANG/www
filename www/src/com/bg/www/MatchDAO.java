@@ -78,11 +78,74 @@ public class MatchDAO {
 				match.setPlayingTime(rs.getInt("playingTime"));
 				matchList.add(match);
 			}
+			rs.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 		return matchList;
 	}
+	
+	public ArrayList<MatchJson> listMatch(String teamName, String userUID){
+		ArrayList<MatchJson> matchList = new ArrayList<MatchJson>();
+		try {
+			stmt = conn.createStatement();
+			String sql = String.format("SELECT * FROM matches "
+					+ "WHERE homePlayer LIKE '%s' "
+					+ "OR awayPlayer LIKE '%s'", "%"+ userUID + "%", "%" + userUID + "%");
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				MatchJson match = new MatchJson();
+				match.setMatchID(rs.getInt("matchID"));
+				match.setHomeTeamID(rs.getString("homeTeamID"));
+				match.setAwayTeamID(rs.getString("awayTeamID"));
+				match.setHomeScore(rs.getInt("homeScore"));
+				match.setAwayScore(rs.getInt("awayScore"));
+				match.setMatchDate(rs.getString("matchDate"));
+				match.setStadium(rs.getString("stadium"));
+				match.setMatchType(rs.getString("matchType"));
+				match.setHomePlayer(rs.getString("homePlayer"));
+				match.setAwayPlayer(rs.getString("awayPlayer"));
+				match.setPlayingTime(rs.getInt("playingTime"));
+				matchList.add(match);
+			}
+			rs.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return matchList;
+		
+	}
 
+	public ArrayList<MatchJson> listMatch(String teamName){
+		ArrayList<MatchJson> matchList = new ArrayList<MatchJson>();
+		try {
+			stmt = conn.createStatement();
+			String sql = String.format("SELECT * FROM matches "
+					+ "WHERE homeTeamID LIKE '%s' "
+					+ "OR awayTeamID LIKE '%s'", teamName, teamName);
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				MatchJson match = new MatchJson();
+				match.setMatchID(rs.getInt("matchID"));
+				match.setHomeTeamID(rs.getString("homeTeamID"));
+				match.setAwayTeamID(rs.getString("awayTeamID"));
+				match.setHomeScore(rs.getInt("homeScore"));
+				match.setAwayScore(rs.getInt("awayScore"));
+				match.setMatchDate(rs.getString("matchDate"));
+				match.setStadium(rs.getString("stadium"));
+				match.setMatchType(rs.getString("matchType"));
+				match.setHomePlayer(rs.getString("homePlayer"));
+				match.setAwayPlayer(rs.getString("awayPlayer"));
+				match.setPlayingTime(rs.getInt("playingTime"));
+				matchList.add(match);
+			}
+			rs.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return matchList;
+		
+	}
+	
 }

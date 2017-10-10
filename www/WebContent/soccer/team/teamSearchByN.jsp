@@ -39,45 +39,9 @@
 
   <title>SEARCH TEAM -BROKEN-GLASSES-</title>
 
-
-
-
-<!--   <script type="text/javascript">
-	$(function(){
-		$("#btnSearch").click(function(){
-			var teamName = $("#inputSearch").val();
-			searchFunction(teamName);
-		});
-	})
-	function searchFunction(teamName){
-		$.ajax({
-		       type: "POST",
-		       dataType: "JSON",
-		       url: '../../TeamSearchServlet',
-		       data: {teamName: teamName},
-		       success: function (json) {
-		           console.log("ajax success");
-			   },
-		       error: function(){
-		        //  console.log("json : " + json.error);
-		           console.log('Ajax Error');
-		       }
-	     });
-	};
-  </script> -->
-
 </head>
 
 <body>
-<div class="input-field col s12">
-    <select>
-      <option value="" disabled selected>Choose your option</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
-    </select>
-    <label>Materialize Select</label>
-  </div>
   <div class="container">
     <div class="row">
       <div class="center">
@@ -108,7 +72,6 @@
   	json = teamDAO.searchByN(teamName);
   	Gson gson = new Gson();
   	TeamJson[] teamAry = gson.fromJson(json, TeamJson[].class);
-  	out.println(json+"<br>");
   	if(teamAry.length==0){
 %>
 <div class="center">
