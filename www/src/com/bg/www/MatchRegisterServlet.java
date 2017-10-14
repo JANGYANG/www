@@ -33,7 +33,8 @@ public class MatchRegisterServlet extends HttpServlet {
 		String matchDateDay = request.getParameter("matchDateDay");
 		String matchDate = String.format("%s-%s-%s", matchDateYear, matchDateMonth, matchDateDay);
 		int playingTime = Integer.parseInt(request.getParameter("playingTime").toString());
-		String player = Arrays.toString(request.getParameterValues("player"));
+		String[] player = request.getParameterValues("player");
+		
 		HttpSession session = request.getSession();
 		MatchDAO matchDAO = new MatchDAO();
 		

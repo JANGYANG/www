@@ -15,8 +15,9 @@ RegionJson regionB = gson.fromJson(user.getRegionB(), RegionJson.class);
 
 MatchDAO matchDAO = new MatchDAO();
 ArrayList<MatchJson> matchList = new ArrayList<MatchJson>();
+if(teamName != null){
 matchList = matchDAO.listMatch(teamName, userUid);
-
+}
 
 %>
 
@@ -90,11 +91,11 @@ matchList = matchDAO.listMatch(teamName, userUid);
 								<a href="../team/teamView.jsp?teamName=<%=teamName%>"><%=teamName%></a>
 								<%}%>
 							</h5>
-							<h5><%= regionA.getGugun() %>
+<%-- 							<h5><%= regionA.getGugun() %>
 								<%= regionA.getSido() %></h5>
 							<h5><%= regionB.getGugun() %>
 								<%= regionB.getSido() %></h5>
-						</div>
+ --%>						</div>
 					</div>
 				</div>
 			</div>
