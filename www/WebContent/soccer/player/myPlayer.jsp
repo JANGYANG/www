@@ -73,7 +73,7 @@ matchList = matchDAO.listMatch(teamName, userUid);
 	</section>
 	<%
 }else{ %>
-	<div class="container">
+	<div class="container center">
 		<div class="row">
 			<div class="col s12 m8 offset-m2">
 				<h3 class="header">Player</h3>
@@ -95,73 +95,86 @@ matchList = matchDAO.listMatch(teamName, userUid);
 								<%= regionA.getSido() %></h5>
 							<h5><%= regionB.getGugun() %>
 								<%= regionB.getSido() %></h5>
- --%>						</div>
+ --%>					</div>
 					</div>
+				</div>
+				<div class="card">
+				    <!-- Card Content -->
+				    		<div class="card-content center">		
+					    		<div class="row">
+					    			<div class="col m3"><h5>참가 게임</h5></div>
+								<div class="col m3"><h5>평균 평점</h5></div>
+								<div class="col m3"><h5>득 점</h5></div>
+								<div class="col m3"><h5>어시스트</h5></div>
+					    		<div class="row">
+								<div class="col m3"><h5>37 경기</h5></div>
+								<div class="col m3"><h5>7.77 점</h5></div>
+								<div class="col m3"><h5>7 골</h5></div>
+								<div class="col m3"><h5>7 개</h5></div>
+							</div>
+				    		</div>
+				    	</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="container">
-		<div class="row">
-			<div class="col m3"><h3>참가 게임</h3></div>
-			<div class="col m3"><h3>평균 평점</h3></div>
-			<div class="col m3"><h3>득 점</h3></div>
-			<div class="col m3"><h3>어시스트</h3></div>
-		</div>
-		<div class="row">
-			<div class="col m3"><h3>37 경기</h3></div>
-			<div class="col m3"><h3>7.77 점</h3></div>
-			<div class="col m3"><h3>7 골</h3></div>
-			<div class="col m3"><h3>7 개</h3></div>
-		</div>
+
+	<div class="container center">
 	
 		<div class="row">
-		<h3 style="text-align:center">참가 경기</h3>
+			<h3>참가 경기</h3>
 		</div>
 		<%for(int i = 0; i<matchList.size(); i++){%>
-		<div class="row" style="text-align: center;">
-			<div class="col m2 s3 offset-m2">
-				<div class="valign-wrapper">
-					<a href="../team/teamView.jsp?teamName=<%=matchList.get(i).getHomeTeamID()%>">
-						<img src="../../img/logo_CI.png" width="80%">
-						<h6><%=matchList.get(i).getHomeTeamID() %></h6>
-					</a>
+		<div class="row" >
+		<div class="col s12 m8 offset-m2">
+		<div class="card">
+			<div class="card-content center">
+				<div class="row" style="margin-bottom:0px;">
+				
+					<div class="col m2 s3 offset-m2">
+						<div class="valign-wrapper">
+							<a href="../team/teamView.jsp?teamName=<%=matchList.get(i).getHomeTeamID()%>">
+								<img src="../../img/logo_CI.png" width="80%">
+								<h6><%=matchList.get(i).getHomeTeamID() %></h6>
+							</a>
+						</div>
+					</div>
+					<div class="col m4 s6">
+						<h6><%= matchList.get(i).getMatchDate() %></h6>
+						<h6><%= matchList.get(i).getStadium() %></h6>
+						<div class="row">
+							<div class="col m4 s4">
+								<h4 style="margin: unset; text-align: right"><%= matchList.get(i).getHomeScore() %></h4>
+							</div>
+							<div class="col m4 s4">
+								<h4 style="margin: unset;">vs</h4>
+							</div>
+							<div class="col m4 s4">
+								<h4 style="margin: unset; text-align: left"><%= matchList.get(i).getAwayScore() %></h4>
+							</div>
+							<p><%=matchList.get(i).getMatchType() %>쿼터
+								<%=matchList.get(i).getPlayingTime() %>
+								분
+							</p>
+						</div>
+					</div>
+					<div class="col m2 s3">
+						<div class="valign-wrapper">
+							<a
+								href="../team/teamView.jsp?teamName=<%=matchList.get(i).getAwayTeamID()%>">
+								<img src="../../img/logo_CI.png" width="80%">
+								<h6><%=matchList.get(i).getAwayTeamID() %></h6>
+							</a>
+						</div>
+					</div>
 				</div>
+				
 			</div>
-			<div class="col m4 s6">
-				<h6><%= matchList.get(i).getMatchDate() %></h6>
-				<h6><%= matchList.get(i).getStadium() %></h6>
-				<div class="row">
-					<div class="col m4 s4">
-						<h4 style="margin: unset; text-align: right"><%= matchList.get(i).getHomeScore() %></h4>
-					</div>
-					<div class="col m4 s4">
-						<h4 style="margin: unset;">vs</h4>
-					</div>
-					<div class="col m4 s4">
-						<h4 style="margin: unset; text-align: left"><%= matchList.get(i).getAwayScore() %></h4>
-					</div>
-					<p><%=matchList.get(i).getMatchType() %>쿼터
-						<%=matchList.get(i).getPlayingTime() %>
-						분
-					</p>
-				</div>
 			</div>
-			<div class="col m2 s3">
-				<div class="valign-wrapper">
-					<a
-						href="../team/teamView.jsp?teamName=<%=matchList.get(i).getAwayTeamID()%>">
-						<img src="../../img/logo_CI.png" width="80%">
-						<h6><%=matchList.get(i).getAwayTeamID() %></h6>
-					</a>
-				</div>
 			</div>
 		</div>
 		<%} %>
-	</div>
-	
-	
-	
+	</div>	
 	<%} %>
 
 
