@@ -39,9 +39,9 @@ public class UserDAO {
 		}
 	}
 	
-	public String login(String email, String password){
+	public UserJson login(String email, String password){
 	    
-		sql = "SELECT userUID, name ,encrypted_password, salt FROM users WHERE email = ?";
+		sql = "SELECT playerUID, playerName ,encryptedPW, salt FROM player WHERE email = ?";
 		UserJson loginJson = new UserJson();
 		loginJson.setError(true);
 		
@@ -50,97 +50,85 @@ public class UserDAO {
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
 			if(rs.first()){
-				String name = rs.getString("name");
-				String userUID = rs.getString("userUID");
-				String encrypted_password = rs.getString("encrypted_password");
+				String name = rs.getString("playerName");
+				String userUID = rs.getString("playerUID");
+				String encryptedPW = rs.getString("encryptedPW");
 				String key = rs.getString("salt");
 				System.out.println("key : " + key);
 			    AES256Util aes256 = new AES256Util(key);
-			    System.out.println("Decode password : " + aes256.aesDecode(encrypted_password));
-			    System.out.println("input password : " + password);
-			    String decodePassword = aes256.aesDecode(encrypted_password);
+			    String decodePassword = aes256.aesDecode(encryptedPW);
 				if (password.equals(decodePassword)) {
-					try {
-						sql = String.format("SELECT teamName FROM users_info WHERE userUID = '%s'", userUID);
-						pstmt = conn.prepareStatement(sql);
-						rs = pstmt.executeQuery();
-						if(rs.first()) {
-							loginJson.setError(false);
-							loginJson.setEmail(email);
-							loginJson.setName(name);
-							loginJson.setTeamName(rs.getString("teamName"));
-							loginJson.setUserUID(userUID);
-						}
-					}catch(Exception e) {
-						e.printStackTrace();
-					}
+					loginJson.setError(false);
+					loginJson.setEmail(email);
+					loginJson.setName(name);
+					loginJson.setUserUID(userUID);
 				}else{
 					loginJson.setError_msg("Password is Unavailable");
 				}
-			}else{
-				loginJson.setError_msg("There is no email such like " + email);
+				pstmt.close();
+				rs.close();
+			}else {
+				loginJson.setError_msg("Email is Unavailable");
 			}
-			pstmt.close();
-			rs.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 
-		String json = gson.toJson(loginJson);
-		return json;
+		return loginJson;
 	}
 	
 //	�븘�씠�뵒 以묐났泥댄겕
-	public String register(String email) {
-		UserJson isUserExistJson = new UserJson();
-		isUserExistJson.setError(true);
-		sql = "SELECT * FROM users WHERE email = ?";
+	public UserJson register(String email) {
+		UserJson isUserExist = new UserJson();
+		isUserExist.setError(true);
+		sql = "SELECT * FROM player WHERE email = ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
 			if(rs.first()) {
-				isUserExistJson.setEmail(rs.getString("email"));
-				isUserExistJson.setError_msg(rs.getString("email") + " is Exist!@!@!@!@");
-				System.out.println(isUserExistJson.getError_msg());
+				isUserExist.setEmail(rs.getString("email"));
+				isUserExist.setError_msg(rs.getString("email") + " is Exist!@!@!@!@");
+				System.out.println(isUserExist.getError_msg());
 			}else {
-				isUserExistJson.setError(false);
-				isUserExistJson.setError_msg(email + "can USE!!");
+				isUserExist.setError(false);
+				isUserExist.setError_msg(email + "can USE!!");
 			}
 			rs.close();
 			pstmt.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		String json = gson.toJson(isUserExistJson);
-		System.out.println(json);
-		return json;
+		return isUserExist;
 	}
 	
 	
-	public String register(String email, String password, String name){
+	public UserJson register(String email, String password, String name){
 		UserJson registerJson = new UserJson();
 		registerJson.setError(true);
 		
 		String uid = UUID.randomUUID().toString();
-		String encrypted_password = null;
-		String salt = uid.toString();
-	    String created_at = new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
+		String encryptedPW = null;
+		SecureRandom random1 = new SecureRandom();
+		SecureRandom random2 = new SecureRandom();
+		String key1 = Integer.toString(random1.nextInt());
+	    String key2 = Integer.toString(random2.nextInt());
 	    
+	    String salt = key1 + key2;
+		
 		try {
 			AES256Util aes256 = new AES256Util(salt);
 			System.out.println(uid.toString());
 //			System.out.println(key.toString());
-			encrypted_password = aes256.aesEncode(password);
-			System.out.println(encrypted_password);
-			System.out.println(aes256.aesDecode(encrypted_password));
+			encryptedPW = aes256.aesEncode(password);
+			System.out.println(encryptedPW);
+			System.out.println(aes256.aesDecode(encryptedPW));
 		}catch(Exception e) {
 			System.out.println("Encrypt Error");
 			e.printStackTrace();
 		}
-		sql = String.format("INSERT INTO users (userUID, name, email, encrypted_password, salt, created_at) "
-				+ "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')", uid.toString(), name, email.toString(), encrypted_password, salt, created_at);
+		sql = String.format("INSERT INTO player (playerUID, playerName, email, encryptedPW, salt) "
+				+ "VALUES ('%s', '%s', '%s', '%s', '%s')", uid.toString(), name, email, encryptedPW, salt);
 		
 		try {
 			stmt = conn.createStatement();
@@ -164,27 +152,31 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		
-		
-		String json = gson.toJson(registerJson);
-		System.out.println(json);
-		return json;
+		return registerJson;
 	}
+	
 //	user 異붽��젙蹂� �엯�젰
-	public String register(String userUID, String birth, String regionA, String regionB, int height, int weight, String position){
-		UserJson registerUserInfoJson = new UserJson();
-		registerUserInfoJson.setError(true);
-	    String created_at = new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date());
+	public UserJson register(String userUID,String birth, String[] mainRegion, String[] subRegion, int height, int weight, String[] position,String job){
+		UserJson user = new UserJson();
+		user.setError(true);
 	    
-		sql = String.format("INSERT INTO users_info (userUID, birth, regionA, regionB, height, we"
-				+ "ight, position, created_at)" 
-				+ "VALUES ('%s', '%s', '%s', '%s', '%d', '%d', '%s', '%s')", userUID, birth, regionA, regionB, height, weight, position, created_at);
+		sql = String.format("UPDATE player SET playerBirth='%s', height = %d, weight= %d, job = '%s' " 
+				+ "WHERE playerUID = '%s'", birth, height, weight, job, userUID);
 		try {
 			stmt = conn.createStatement();
 		    int r = stmt.executeUpdate(sql);
 		    if (r > 0) {
-				registerUserInfoJson.setError(false);
+		    		for(int i = 0; i < mainRegion.length; i++) {
+		    			sql = String.format("INSERT INTO playerRegion (playerUID, mainRegion, subRegion) VALUES('%s','%s','%s')",userUID, mainRegion[i], subRegion[i]);
+		    			stmt.executeUpdate(sql);
+		    		}
+		    		for(int i = 0; i < position.length; i++) {
+		    			sql = String.format("INSERT INTO playerPosition (playerUID, position) VALUES('%s','%s')", userUID, position[i]);
+		    			stmt.executeUpdate(sql);
+		    		}
+				user.setError(false);
 		    }else {
-		    		registerUserInfoJson.setError_msg("Mysql Error");
+		    		user.setError_msg("Mysql Error");
 		    }
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -198,150 +190,151 @@ public class UserDAO {
 			e.printStackTrace();
 		}		
 		
-		
-		String json = gson.toJson(registerUserInfoJson);
-		System.out.println(json);
-		return json;
+		return user;
 	}
 	
-//	�씠由꾩쑝濡� 寃��깋
-	public String searchByN(String name){
-		System.out.println("UserDAO searchByName RUN");
-		String SQL = "SELECT * FROM users u, users_info ui WHERE u.userUID = ui.userUID AND u.name LIKE ?";
-		ArrayList<UserJson> userList = new ArrayList<UserJson>();
-		try {
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, "%" + name + "%");
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				UserJson user = new UserJson();
-				user.setUserUID(rs.getString("userUID"));
-				user.setName(rs.getString("name"));
-				user.setBirth(rs.getString("birth"));
-				user.setPosition(rs.getString("position"));
-				user.setHeight(rs.getInt("height"));
-				user.setWeight(rs.getInt("weight"));
-				user.setRegionA(rs.getString("regionA"));
-				user.setRegionB(rs.getString("regionB"));
-				user.setTeamName(rs.getString("teamName"));
-				userList.add(user);
-			}
-			pstmt.close();
-			conn.close();
-			rs.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		Gson gson = new Gson();
-		return gson.toJson(userList).toString();
-	}
-
-//	吏��뿭�쑝濡� 寃��깋
-	public String searchByR(String region){
-		System.out.println("UserDAO searchByR RUN");
-		String SQL = "SELECT * FROM users_info ui, users u WHERE ui.userUID = u.userUID AND regionA LIKE ? OR regionB LIKE ?";
-		ArrayList<UserJson> userList = new ArrayList<UserJson>();
-		try {
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, "%" + region + "%");
-			pstmt.setString(2, "%" + region + "%");
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				UserJson user = new UserJson();
-				user.setUserUID(rs.getString("userUID"));
-				user.setBirth(rs.getString("birth"));
-				user.setPosition(rs.getString("position"));
-				user.setHeight(rs.getInt("height"));
-				user.setWeight(rs.getInt("weight"));
-				user.setRegionA(rs.getString("regionA"));
-				user.setRegionB(rs.getString("regionB"));
-				user.setTeamName(rs.getString("teamName"));
-				SQL = "SELECT * FROM users WHERE userUID = ?";
-				user.setName(rs.getString("name"));
-				userList.add(user);
-			}
-			pstmt.close();
-			conn.close();
-			rs.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		Gson gson = new Gson();
-		return gson.toJson(userList).toString();
-	}
-	
-	public boolean teamJoin(String teamName, String userUID) {
-		System.out.println("UserDAO teamJoin is run");
-		System.out.println("teamName : " + teamName);
-		System.out.println("userUID : " + userUID);
-		boolean i = false;
-		try {
-			String update_userInfo = String.format("UPDATE users_info SET teamName = '%s' WHERE userUID LIKE '%s'", teamName, userUID);
-			stmt = conn.createStatement();
-		    int r = stmt.executeUpdate(update_userInfo);
-		    stmt.close();
-		    conn.close();
-		    i = (r==1) ? true : false; 
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return i;
-	}
-	
+////	�씠由꾩쑝濡� 寃��깋
+//	public String searchByN(String name){
+//		System.out.println("UserDAO searchByName RUN");
+//		String SQL = "SELECT * FROM users u, users_info ui WHERE u.userUID = ui.userUID AND u.name LIKE ?";
+//		ArrayList<UserJson> userList = new ArrayList<UserJson>();
+//		try {
+//			pstmt = conn.prepareStatement(SQL);
+//			pstmt.setString(1, "%" + name + "%");
+//			rs = pstmt.executeQuery();
+//			while(rs.next()) {
+//				UserJson user = new UserJson();
+//				user.setUserUID(rs.getString("userUID"));
+//				user.setName(rs.getString("name"));
+//				user.setBirth(rs.getString("birth"));
+//				user.setPosition(rs.getString("position"));
+//				user.setHeight(rs.getInt("height"));
+//				user.setWeight(rs.getInt("weight"));
+//				user.setTeamName(rs.getString("teamName"));
+//				userList.add(user);
+//			}
+//			pstmt.close();
+//			conn.close();
+//			rs.close();
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		Gson gson = new Gson();
+//		return gson.toJson(userList).toString();
+//	}
+//
+////	吏��뿭�쑝濡� 寃��깋
+//	public String searchByR(String region){
+//		System.out.println("UserDAO searchByR RUN");
+//		String SQL = "SELECT * FROM users_info ui, users u WHERE ui.userUID = u.userUID AND regionA LIKE ? OR regionB LIKE ?";
+//		ArrayList<UserJson> userList = new ArrayList<UserJson>();
+//		try {
+//			pstmt = conn.prepareStatement(SQL);
+//			pstmt.setString(1, "%" + region + "%");
+//			pstmt.setString(2, "%" + region + "%");
+//			rs = pstmt.executeQuery();
+//			while(rs.next()) {
+//				UserJson user = new UserJson();
+//				user.setUserUID(rs.getString("userUID"));
+//				user.setBirth(rs.getString("birth"));
+//				user.setPosition(rs.getString("position"));
+//				user.setHeight(rs.getInt("height"));
+//				user.setWeight(rs.getInt("weight"));
+//				user.setTeamName(rs.getString("teamName"));
+//				SQL = "SELECT * FROM users WHERE userUID = ?";
+//				user.setName(rs.getString("name"));
+//				userList.add(user);
+//			}
+//			pstmt.close();
+//			conn.close();
+//			rs.close();
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		Gson gson = new Gson();
+//		return gson.toJson(userList).toString();
+//	}
+//	
+//	public boolean teamJoin(String teamName, String userUID) {
+//		System.out.println("UserDAO teamJoin is run");
+//		System.out.println("teamName : " + teamName);
+//		System.out.println("userUID : " + userUID);
+//		boolean i = false;
+//		try {
+//			String update_userInfo = String.format("UPDATE users_info SET teamName = '%s' WHERE userUID LIKE '%s'", teamName, userUID);
+//			stmt = conn.createStatement();
+//		    int r = stmt.executeUpdate(update_userInfo);
+//		    stmt.close();
+//		    conn.close();
+//		    i = (r==1) ? true : false; 
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		return i;
+//	}
+//	
 	public UserJson findByUserUID(String userUID) {
 		UserJson user = new UserJson();
 		try {
 			stmt = conn.createStatement();
-			String sql = String.format("SELECT * FROM users_info WHERE userUID = '%s'", userUID);
+			String sql = String.format("SELECT * FROM player WHERE playerUID = '%s'", userUID);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
-				user.setBirth(rs.getString("birth"));
-				user.setPosition(rs.getString("position"));
+				user.setName(rs.getString("playerName"));
+				user.setBirth(rs.getString("playerbirth"));
+				user.setJob(rs.getString("job"));
 				user.setHeight(rs.getInt("height"));
-				user.setRegionA(rs.getString("regionA"));
-				user.setRegionB(rs.getString("regionB"));
-				user.setTeamName(rs.getString("teamName"));
+				user.setWeight(rs.getInt("weight"));
+				user.setTeamUID(rs.getString("teamUID"));
 			}
-			sql = String.format("SELECT * FROM users WHERE userUID = '%s'", userUID);
+			sql = String.format("SELECT * FROM playerRegion WHERE playerUID = '%s'", userUID);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
-				user.setName(rs.getString("name"));
-				user.setEmail(rs.getString("email"));
+				user.setRegion(rs.getString("mainRegion"), rs.getString("subRegion"));
 			}
-			stmt.close();
-			conn.close();
+			sql = String.format("SELECT * FROM playerPosition WHERE playerUID = '%s'", userUID);
 			rs.close();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				user.setPosition(rs.getString("position"));
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 		return user;
 	}
-	public ArrayList<UserJson> findByTeamName(String teamName) {
+	public ArrayList<UserJson> findByTeamUID(String teamUID) {
 		ArrayList<UserJson> userList = new ArrayList<UserJson>();
 		
 		try {
 			stmt = conn.createStatement();
-			String sql = String.format("SELECT a.userUID, a.birth, a.regionA, a.regionB, a.height, "
-					+ "a.weight, a.position, b.name FROM users_info a, users b "
-					+ "WHERE a.userUID = b.userUID AND a.teamName LIKE '%s'", teamName);
+			String sql = String.format("SELECT * FROM player WHERE teamUID = '%s'", teamUID);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				UserJson user = new UserJson();
-				user.setUserUID(rs.getString("userUID"));
-				user.setBirth(rs.getString("birth"));
-				user.setPosition(rs.getString("position"));
+				user.setUserUID(rs.getString("playerUID"));
+				user.setBirth(rs.getString("playerBirth"));
 				user.setHeight(rs.getInt("height"));
-				user.setRegionA(rs.getString("regionA"));
-				user.setRegionB(rs.getString("regionB"));
-				user.setName(rs.getString("name"));
-				System.out.println(rs.getString("name"));
+				user.setName(rs.getString("playerName"));
+				user.setJob(rs.getString("job"));
 				user.setWeight(rs.getInt("weight"));
+				sql = String.format("SELECT position FROM playerPosition WHERE playerUID = '%s'", user.getUserUID());
+
+				Statement subStmt = conn.createStatement();
+				ResultSet subRs = subStmt.executeQuery(sql);
+				while(subRs.next()) {
+					user.setPosition(subRs.getString("position"));
+				}
+				sql = String.format("SELECT mainRegion, subRegion FROM playerRegion WHERE playerUID = '%s'", user.getUserUID());
+
+				subRs = subStmt.executeQuery(sql);
+
+				while(subRs.next()) {
+					user.setRegion(subRs.getString("mainRegion"), subRs.getString("subRegion"));
+				}
 				userList.add(user);
 			}
-			stmt.close();
-			conn.close();
-			rs.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

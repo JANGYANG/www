@@ -26,25 +26,25 @@ public class UserLoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		
+		UserJson loginJson = login(email, password);
+		
+
 		Gson gson = new Gson();
-		String json = login(email, password);
-		UserJson loginJson = gson.fromJson(json, UserJson.class);		
-	
-		if (loginJson.getError()) {
-			response.getWriter().write(json);
+		if (loginJson.isError()) {
+			response.getWriter().write(gson.toJson(loginJson));
 		}else {
 			HttpSession session = request.getSession();
-			session.setAttribute("userUid", loginJson.getUserUID());
+			session.setAttribute("userUID", loginJson.getUserUID());
 			session.setAttribute("userName", loginJson.getName());
-			session.setAttribute("teamName", loginJson.getTeamName());
+			session.setAttribute("teamUID", loginJson.getTeamUID());
 			System.out.println("session user UID : " + loginJson.getUserUID());
-			response.getWriter().write(json);
+			response.getWriter().write(gson.toJson(loginJson));
 //			response.sendRedirect("./soccer");
 		}
 	}
 	
 	
-	public String login(String email, String password) {
+	public UserJson login(String email, String password) {
 		UserDAO userDAO = new UserDAO();
 		return userDAO.login(email, password);
 	}

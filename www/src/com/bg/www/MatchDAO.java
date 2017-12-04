@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import com.google.gson.Gson;
 
@@ -36,30 +37,34 @@ public class MatchDAO {
 	
 	public boolean registerMatch(String homeTeamID, String awayTeamID, String stadium, int homeScore, 
 			int awayScore, String matchType, String matchDate, int playingTime, 
-			String homeOrAway, String[] player) {
+			boolean homeOrAway, String[] player) {
 		System.out.println(this.toString() + " registerMatch is start");
 		try {
+			String matchID = UUID.randomUUID().toString();
 			stmt = conn.createStatement();
-			String sql1 = String.format("INSERT INTO matches (homeTeamID, awayTeamID, stadium, "
+			
+//			is it homePlayer or AwayPlayer
+			String homePlayer = homeOrAway ? "homePlayer" : "awayPlayer";
+			String sql1 = String.format("INSERT INTO matches (matchID ,homeTeamID, awayTeamID, stadium, "
 					+ "homeScore, awayScore, matchType, matchDate, playingTime, %s)"
-					+ "VALUES ('%s','%s','%s','%d','%d','%s','%s','%d','%s')", homeOrAway, 
+					+ "VALUES ('%s','%s','%s','%s','%d','%d','%s','%s','%d','%s')", homePlayer, matchID,
 					homeTeamID, awayTeamID, stadium, homeScore, awayScore, matchType, matchDate,
 					playingTime, player.toString());
-			//SELECT로 메치 아이디 가져오고 그를 토대로 선수 입력 해주자.
-			StringBuffer sql2 = new StringBuffer(" INSERT INTO playerOfMatch (matchID, userUID ) VALUES (?, ?) ");
+			System.out.println(sql1);
+			int r1 = stmt.executeUpdate(sql1);
+			
+
+			StringBuffer sql2 = new StringBuffer(" INSERT INTO playerOfMatch (matchID, userUID) VALUES (?, ?)");
 			pstmt = conn.prepareStatement(sql2.toString());
 			for(int i = 0; i<player.length; i++) {
-			    pstmt.setString(1, "test");
-			    pstmt.setString(2, "test");
+			    pstmt.setString(1, matchID);
+			    pstmt.setString(2, player[i]);
 			    pstmt.addBatch();
 			    pstmt.clearParameters();
 			}
 			pstmt.executeBatch();
-
 			
-			System.out.println(sql1);
-			int r1 = stmt.executeUpdate(sql1);
-			
+			pstmt.close();
 			stmt.close();
 			conn.close();
 			if(r1==1) {
@@ -80,7 +85,7 @@ public class MatchDAO {
 			System.out.println(rs.getFetchSize());
 			while(rs.next()) {
 				MatchJson match = new MatchJson();
-				match.setMatchID(rs.getInt("matchID"));
+				match.setMatchID(rs.getString("matchID"));
 				match.setHomeTeamID(rs.getString("homeTeamID"));
 				match.setAwayTeamID(rs.getString("awayTeamID"));
 				match.setHomeScore(rs.getInt("homeScore"));
@@ -101,14 +106,14 @@ public class MatchDAO {
 		return matchList;
 	}
 	
-	public MatchJson findByMatchID(int matchID) {
+	public MatchJson findByMatchID(String matchID) {
 		MatchJson match = new MatchJson();
 		try {
 			stmt = conn.createStatement();
-			String sql = String.format("SELECT * FROM matches WHERE matchID = '%d'", matchID);
+			String sql = String.format("SELECT * FROM matches WHERE matchID LIKE '%s'", matchID);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
-				match.setMatchID(rs.getInt("matchID"));
+				match.setMatchID(rs.getString("matchID"));
 				match.setHomeTeamID(rs.getString("homeTeamID"));
 				match.setAwayTeamID(rs.getString("awayTeamID"));
 				match.setHomeScore(rs.getInt("homeScore"));
@@ -120,21 +125,6 @@ public class MatchDAO {
 				match.setAwayPlayer(rs.getString("awayPlayer"));
 				match.setPlayingTime(rs.getInt("playingTime"));
 				
-				
-//				   matchID         | int(1) unsigned     | NO   | PRI | NULL    | auto_increment | 
-//				 | homeTeamID      | varchar(36)         | YES  |     | NULL    |                | 
-//				 | awayTeamID      | varchar(36)         | YES  |     | NULL    |                | 
-//				 | stadium         | varchar(30)         | YES  |     | NULL    |                | 
-//				 | homeScore       | tinyint(1) unsigned | YES  |     | NULL    |                | 
-//				 | awayScore       | tinyint(1) unsigned | YES  |     | NULL    |                | 
-//				 | matchType       | varchar(10)         | YES  |     | NULL    |                | 
-//				 | matchDate       | date                | YES  |     | NULL    |                | 
-//				 | playingTime     | tinyint(1) unsigned | YES  |     | NULL    |                | 
-//				 | homePlayer      | varchar(999)        | YES  |     | NULL    |                | 
-//				 | awayPlayer      | varchar(100)        | YES  |     | NULL    |                | 
-//				 | homeScorePlayer | varchar(100)        | YES  |     | NULL    |                | 
-//				 | awayScorePlayer | varchar(100)        | YES  |     | NULL    |      
-
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -153,7 +143,7 @@ public class MatchDAO {
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				MatchJson match = new MatchJson();
-				match.setMatchID(rs.getInt("matchID"));
+				match.setMatchID(rs.getString("matchID"));
 				match.setHomeTeamID(rs.getString("homeTeamID"));
 				match.setAwayTeamID(rs.getString("awayTeamID"));
 				match.setHomeScore(rs.getInt("homeScore"));
@@ -184,7 +174,7 @@ public class MatchDAO {
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				MatchJson match = new MatchJson();
-				match.setMatchID(rs.getInt("matchID"));
+				match.setMatchID(rs.getString("matchID"));
 				match.setHomeTeamID(rs.getString("homeTeamID"));
 				match.setAwayTeamID(rs.getString("awayTeamID"));
 				match.setHomeScore(rs.getInt("homeScore"));

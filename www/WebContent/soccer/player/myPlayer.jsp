@@ -1,182 +1,85 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@page import="com.bg.www.*"%>
-<%@page import="com.google.gson.Gson"%>
 <%
-String userUid = (String)session.getAttribute("userUid");
+String userUID = (String)session.getAttribute("userUID");
 String userName = (String)session.getAttribute("userName");
-String teamName = (String)session.getAttribute("teamName");
+String teamUID = (String)session.getAttribute("teamUID");
 UserDAO userDAO = new UserDAO();
-UserJson user = userDAO.findByUserUID(userUid);
-Gson gson = new Gson();
-RegionJson regionA = gson.fromJson(user.getRegionA(), RegionJson.class);
-RegionJson regionB = gson.fromJson(user.getRegionB(), RegionJson.class);
+TeamDAO teamDAO = new TeamDAO();
+UserJson user = userDAO.findByUserUID(userUID);
+TeamJson team = teamDAO.searchByTeamUID(user.getTeamUID());
 
-MatchDAO matchDAO = new MatchDAO();
-ArrayList<MatchJson> matchList = new ArrayList<MatchJson>();
-if(teamName != null){
-matchList = matchDAO.listMatch(teamName, userUid);
+if(user.getJob() == null){
+	response.sendRedirect("/www/soccer/register/userinfo.jsp");	
 }
-
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
-<!--Import Google Icon Font-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<!--Import materialize.css-->
-<link type="text/css" rel="stylesheet"
-	href="../../css/materialize.min.css" media="screen,projection" />
-<link type="text/css" rel="stylesheet" href="../../css/main.css"
-	media="screen,projection" />
-
-<!--Let browser know website is optimized for mobile-->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!-- Compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
-
-<!-- Compiled and minified JavaScript -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
-
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
-<script type="text/javascript" src="../../js/materialize.min.js"></script>
-<script type="text/javascript" src="../../js/main.js"></script>
-
-<!-- select2 -->
-
-<script type="text/javascript" src="../../js/registerUserInfo.js"></script>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Broken-glasses</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Broken-glasses</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="../../css/materialize.min.css" media="screen,projection" />
+	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../../js/materialize.min.js"></script>
+	<script type="text/javascript" src="../../js/main.js"></script>
 </head>
-<body class="blue lighten-4">
-<%if (userUid == null){%>
-	<section class="container content-section center">
-		<div class="container">
-			<div class="row">
-				<div class="col m4 offset-m4 s6 offset-s3">
-					<h4>Login First</h4>
-					<h3>Please</h3>
-					<a href="../login/"><button
-							class="btn waves-effect waves-light">LOGIN</button></a>
-				</div>
+<body>
+<div class="container">
+<%
+
+%>
+	<div class="row">
+		<div class="col m3 offset-m3">
+			<div class="card" style="border-radius:10%;text-align:center;">
+				<img src="<%=request.getContextPath() %>/img/player.png" style="width:90%;border-radius:10%"></img>
 			</div>
 		</div>
-	</section>
-	<%
-}else{ %>
-	<div class="container center">
-		<div class="row">
-			<div class="col s12 m8 offset-m2">
-				<h3 class="header">Player</h3>
-				<div class="card horizontal">
-					<div class="card-image">
-						<img class="circle responsive-img" src="../../img/player.png" style="border-radius:50%">
-					</div>
-					<div class="card-stacked">
-						<div class="card-content">
-							<h1><%= user.getName() %></h1>
-							<h5><%= user.getBirth() %></h5>
-							<h5><%= user.getPosition().toUpperCase() %></h5>
-							<h5>
-								<% if( user.getTeamName() == null ){out.print("무소속");}else{%>
-								<a href="../team/teamView.jsp?teamName=<%=teamName%>"><%=teamName%></a>
-								<%}%>
-							</h5>
-<%-- 							<h5><%= regionA.getGugun() %>
-								<%= regionA.getSido() %></h5>
-							<h5><%= regionB.getGugun() %>
-								<%= regionB.getSido() %></h5>
- --%>					</div>
-					</div>
-				</div>
-				<div class="card">
-				    <!-- Card Content -->
-				    		<div class="card-content center">		
-					    		<div class="row">
-					    			<div class="col m3"><h5>참가 게임</h5></div>
-								<div class="col m3"><h5>평균 평점</h5></div>
-								<div class="col m3"><h5>득 점</h5></div>
-								<div class="col m3"><h5>어시스트</h5></div>
-					    		<div class="row">
-								<div class="col m3"><h5>37 경기</h5></div>
-								<div class="col m3"><h5>7.77 점</h5></div>
-								<div class="col m3"><h5>7 골</h5></div>
-								<div class="col m3"><h5>7 개</h5></div>
-							</div>
-				    		</div>
-				    	</div>
-				</div>
+		<div class="col m3">
+			<div class="card" style="height:100%;border-radius:10%">
+				NAME <%=user.getName() %>
+				<p>BIRTH <%=user.getBirth() %></p>
+				<p>JOB <%=user.getJob() %></p>
+				<p>HEIGHT <%=user.getHeight() %></p>
+				<p>WEIGHT <%=user.getWeight() %></p>
 			</div>
 		</div>
 	</div>
-
-	<div class="container center">
-	
-		<div class="row">
-			<h3>참가 경기</h3>
+	<div class="row">
+		<div class="col m4 offset-m2">
+		  <p>소속 팀 : <% if (team.getTeamName() != null){
+			  out.println(team.getTeamName());}else{
+				  out.println("없음");
+			  }%></p>
+			  팀 아이디
+			  <%=user.getTeamUID() %>
+			  <%=teamDAO.searchByTeamUID(user.getTeamUID()).getTeamName() %>
 		</div>
-		<%for(int i = 0; i<matchList.size(); i++){%>
-		<div class="row" >
-		<div class="col s12 m8 offset-m2">
-		<div class="card">
-			<div class="card-content center">
-				<div class="row" style="margin-bottom:0px;">
-				
-					<div class="col m2 s3 offset-m2">
-						<div class="valign-wrapper">
-							<a href="../team/teamView.jsp?teamName=<%=matchList.get(i).getHomeTeamID()%>">
-								<img src="../../img/logo_CI.png" width="80%">
-								<h6><%=matchList.get(i).getHomeTeamID() %></h6>
-							</a>
-						</div>
-					</div>
-					<div class="col m4 s6">
-						<h6><%= matchList.get(i).getMatchDate() %></h6>
-						<h6><%= matchList.get(i).getStadium() %></h6>
-						<div class="row">
-							<div class="col m4 s4">
-								<h4 style="margin: unset; text-align: right"><%= matchList.get(i).getHomeScore() %></h4>
-							</div>
-							<div class="col m4 s4">
-								<h4 style="margin: unset;">vs</h4>
-							</div>
-							<div class="col m4 s4">
-								<h4 style="margin: unset; text-align: left"><%= matchList.get(i).getAwayScore() %></h4>
-							</div>
-							<p><%=matchList.get(i).getMatchType() %>쿼터
-								<%=matchList.get(i).getPlayingTime() %>
-								분
-							</p>
-						</div>
-					</div>
-					<div class="col m2 s3">
-						<div class="valign-wrapper">
-							<a
-								href="../team/teamView.jsp?teamName=<%=matchList.get(i).getAwayTeamID()%>">
-								<img src="../../img/logo_CI.png" width="80%">
-								<h6><%=matchList.get(i).getAwayTeamID() %></h6>
-							</a>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-			</div>
-			</div>
+	</div>
+	<div class="row">
+		<div class="col m4 offset-m2">
+			<div class="collection">
+				<%for(int i = 0; i < user.getRegion().size(); i++){ %>
+					<p class="collection-item"><%=user.getRegion().get(i).getMainRegion() %>  <%=user.getRegion().get(i).getSubRegion() %></p>
+				<% }%>	
+			</div>	
 		</div>
-		<%} %>
-	</div>	
-	<%} %>
-
-
+		<div class="col m4">
+			<div class="collection">
+				<%for(int i = 0; i < user.getPosition().size(); i++){ %>
+					<p class="collection-item"><%=user.getPosition().get(i)%></p>
+				<% }%>	
+			</div>	
+		</div>
+	</div>
+</div>
+<%out.println(userUID); %>
+<%=user.getName() %>
+<%=user.getBirth() %>
+<%=user.getJob() %>
 </body>
 </html>

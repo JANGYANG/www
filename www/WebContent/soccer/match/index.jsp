@@ -64,8 +64,6 @@ matchList = matchDAO.listMatch();
 								</div>
 								<div class="col m6 s6">
 									<h6><%= matchList.get(i).getMatchDate() %></h6>
-									<%-- <h6><%= matchList.get(i).getStadium() %></h6> --%>
-									<a href="./matchView.jsp?matchID=<%=matchList.get(i).getMatchID() %>">
 										<div class="row">
 											<div class="col m4 s4" ><h4 style="margin:unset;text-align:right"><%= matchList.get(i).getHomeScore() %></h4></div>
 											<div class="col m4 s4" ><h4 style="margin:unset;">vs</h4></div>

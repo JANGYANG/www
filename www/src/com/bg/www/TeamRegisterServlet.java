@@ -23,40 +23,42 @@ public class TeamRegisterServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		String teamName = request.getParameter("teamName");
-		String regionA = request.getParameter("region1");
-		String regionB = request.getParameter("region2");
 		String teamBirth = request.getParameter("teamBirth");
-		String json = "";
-		
-		if (teamName != null && regionA == null) {
-			json = registerTeam(teamName);
-			response.getWriter().write(json);
+		String[] mainRegion = request.getParameterValues("mainRegion[]");
+		String[] subRegion = request.getParameterValues("subRegion[]");
+		String[] formation = request.getParameterValues("formation[]");
+
+		TeamJson team = new TeamJson();
+
+		if (teamBirth == null) {
+//			팀이름 중복 체크
+			team = registerTeam(teamName);
+			Gson gson = new Gson();
+			response.getWriter().write(gson.toJson(team));
 		}else {
 			HttpSession session = request.getSession();
-			String userUid = (String)session.getAttribute("userUid");
-			System.out.println("userUid : " + userUid);
-			json = registerTeam(teamName, regionA, regionB, teamBirth, userUid);
-			TeamJson teamJson = new TeamJson();
+			String userUID = (String)session.getAttribute("userUID");
+			System.out.println("userUid : " + userUID);
+			team = registerTeam(teamName, mainRegion, subRegion, teamBirth, userUID, formation);
 			Gson gson = new Gson();
-			teamJson = gson.fromJson(json, TeamJson.class);
-			if(!teamJson.isError()) {
-				session.setAttribute("teamName", teamJson.getTeamName());
-				request.setAttribute(teamName, teamJson.getTeamName());
+			if(!team.isError()) {
+				session.setAttribute("teamUID", team.getTeamUID());
+				session.setAttribute("teamName", team.getTeamName());
 				response.sendRedirect("./soccer/");
 			}
-			response.getWriter().write(json);
+			response.getWriter().write(gson.toJson(team));
 		}
 	
 	}
 	
-	public String registerTeam(String teamName) {
+	public TeamJson registerTeam(String teamName) {
 		TeamDAO teamDAO = new TeamDAO();
 		System.out.println("TeamNameCheck Function in servlet is runned");
 		return teamDAO.registerTeam(teamName);
 	}
-	public String registerTeam(String teamName, String regionA, String regionB, String teamBirth, String captainUid) {
+	public TeamJson registerTeam(String teamName, String mainRegion[], String subRegion[], String teamBirth, String captainUID, String[] formation){
 		TeamDAO teamDAO = new TeamDAO();
 		System.out.println("TeamNameCheck Function in servlet is runned");
-		return teamDAO.registerTeam(teamName, regionA, regionB, teamBirth, captainUid);
+		return teamDAO.registerTeam(teamName, mainRegion, subRegion, teamBirth, captainUID, formation);
 	}
 }

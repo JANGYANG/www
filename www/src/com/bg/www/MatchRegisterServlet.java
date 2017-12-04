@@ -1,7 +1,6 @@
 package com.bg.www;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,10 +19,11 @@ public class MatchRegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		String homeOrAway = request.getParameter("homeOrAway");
+		Boolean homeOrAway = Integer.parseInt(request.getParameter("homeOrAway")) == 1 ? true : false;
+		System.out.println("is it home? " + homeOrAway);
 		String opponentTeam = request.getParameter("opponentTeam"); 
 		String stadium = request.getParameter("stadium");
-		int homeScore = Integer.parseInt(request.getParameter("homeScore")); 
+		int homeScore = Integer.parseInt(request.getParameter("homeScore"));
 		int awayScore = Integer.parseInt(request.getParameter("awayScore"));
 		System.out.println("homeScore : " + homeScore);
 		System.out.println("homeScore : " + awayScore);
@@ -41,14 +41,12 @@ public class MatchRegisterServlet extends HttpServlet {
 		String homeTeamID = new String();
 		String awayTeamID = new String();
 
-		if (Integer.parseInt(homeOrAway) == 1) {
+		if (homeOrAway) {
 			homeTeamID = session.getAttribute("teamName").toString();
 			awayTeamID = opponentTeam;
-			homeOrAway = "homePlayer";
 		}else {
 			awayTeamID = session.getAttribute("teamName").toString();
 			homeTeamID = opponentTeam;
-			homeOrAway = "awayPlayer";
 		}
 		
 		

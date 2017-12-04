@@ -3,66 +3,72 @@
 
 <%@ page contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String rootURL=request.getContextPath();
+UserDAO uDAO = new UserDAO();
+String userUID = (String)session.getAttribute("userUID");
+if(userUID == null){
+	response.sendRedirect(request.getContextPath()+"/soccer/login/");
+}else{
+	UserJson user = uDAO.findByUserUID((String)session.getAttribute("userUID").toString());
+	if(user.getBirth() != null){
+		response.sendRedirect(request.getContextPath()+"/soccer/");
+	}else{
+%>    
 <!DOCTYPE html>
 <html>
 <head>
 <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="./css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="./css/main.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="<%=rootURL.toString() %>/css/materialize.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="<%=rootURL.toString() %>/css/main.css"  media="screen,projection"/>
 		
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      
-       <!-- Compiled and minified CSS -->
-	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
-	
-	  <!-- Compiled and minified JavaScript -->
-	  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
 	  
 	   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	   
-	   <script type="text/javascript" src="./js/materialize.min.js"></script>
-	   <script type="text/javascript" src="./js/main.js"></script>
+	   <script type="text/javascript" src="<%=rootURL %>/js/materialize.min.js"></script>
+	   <script type="text/javascript" src="<%=rootURL %>/js/main.js"></script>
 	   
 	   <!-- select2 -->
 
-	  <script type="text/javascript" src="./js/registerUserInfo.js"></script>
+	  <script type="text/javascript" src="<%=rootURL %>/js/registerUserInfo.js"></script>
 	  <style>
 	  select{
 	  display: inherit;
+	  }
+	  .mPosition{
+	  background-color: #40b0df;
 	  }
 	  </style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Broken-glasses</title>
 </head>
-<body style="margin-bottom:1000px;">
-
+<body>
 
   <div class="container">
     <div class="row">
       <div class="col m6 offset-m3 s8 offset-s2">
-        <img src="./img/logo_CI.png" alt="LOGIN" title="BG" style="width:100%;padding:30px">
+        <img src="<%= rootURL %>/img/logo_CI.png" alt="LOGIN" title="BG" style="width:100%;padding:30px">
       </div>
     </div>
   </div>
-
   <div class="container">
     <div class="row">
       <div class="col m6 offset-m3">
         <h6 style="text-align:center;">선수이름</h6>
         <h3 style="text-align:center;">
         		<% 
-        		out.println((String)request.getAttribute("userName"));
+        		out.println(user.getName());
         		%>
         </h3>
       </div>
     </div>
   </div>
 
-  <form name="" action="./UserRegisterServlet" method="POST" onsubmit="return checkSubmit();">
-    <input hidden name="user_uid" value="<% out.println((String)request.getAttribute("user_uid")); %>">
+  <form name="" action="<%=rootURL %>/UserRegisterServlet" method="POST" onsubmit="return checkSubmit();">
     <div class="container">
       <div class="row">
         <div class="col m6 offset-m3 s10 offset-s1" style="text-align:center;">
@@ -80,22 +86,25 @@
           <input style="text-align:center;" type="number" name="weight" id="weight" value="">
         </div>
       </div>
+      <div class="row">
+        <div class="col m6 offset-m3 s10 offset-s1" style="text-align:center;">
+          <h5>Job</h5>
+					<select name="job" id="job" class="job"></select>
+				</div>
+      </div>
      <!-- 지역선택 -->
       <div class="row">
         <div class="col m6 offset-m3 s10 offset-s1" style="text-align:center;">
           <h5>Region</h5>
-        
-        	<br>
-        	1지망 선호지역
-			<select name="sido1" id="sido1"></select>
-			<select name="gugun1" id="gugun1"></select>
-			<input hidden name="region1"></input>
-			<br>
-			2지망 선호지역
-			<select name="sido2" id="sido2"></select>
-			<select name="gugun2" id="gugun2"></select>
-			<input hidden name="region2"></input>
-		</div>
+	        <p>선호지역</p>
+	        <section id="regionForm">
+						<section id="region" style="margin-bottom:2%">
+							<select name="mainRegion[]" id="" class="sido"></select>
+							<select name="subRegion[]" id="" class="gugun"></select>
+						</section>
+					</section>
+					<div class="btn" id="addRegion">추가하기</div>
+				</div>
       </div>
 
 
@@ -103,10 +112,23 @@
       <div class="row">
         <div class="col m8 offset-m2 s10 offset-s1" style="text-align:center;">
           <h5 style="text-align:center;">POSITION</h5>
-          <textbox class="btn mPosition" id="position_fw" style="border-radius:15px">FW</textbox>
-          <textbox class="btn mPosition" id="position_md" style="border-radius:15px">MD</textbox>
-          <textbox class="btn mPosition" id="position_df" style="border-radius:15px">DF</textbox>
-          <textbox class="btn mPosition" id="position_gk" style="border-radius:15px">GK</textbox>
+          <div class="btn mPosition fw" style="border-radius:15px;width:25%;background-color:white;color:gray;">LFW</div>
+          <div class="btn mPosition fw" style="border-radius:15px;width:25%;background-color:white;color:gray;">CFW</div>
+          <div class="btn mPosition fw" style="border-radius:15px;width:25%;background-color:white;color:gray;">RFW</div>
+          <br><br>
+          <div class="btn mPosition md" style="border-radius:15px;width:25%;background-color:white;color:gray;">ACM</div>
+          <br><br>
+          <div class="btn mPosition md" style="border-radius:15px;width:25%;background-color:white;color:gray;">LWM</div>
+          <div class="btn mPosition md" style="border-radius:15px;width:25%;background-color:white;color:gray;">CM</div>
+          <div class="btn mPosition md" style="border-radius:15px;width:25%;background-color:white;color:gray;">RWM</div>
+          <br><br>
+          <div class="btn mPosition md" style="border-radius:15px;width:25%;background-color:white;color:gray;">DCM</div>
+          <br><br>
+          <div class="btn mPosition d" style="border-radius:15px;width:25%;background-color:white;color:gray;">LB</div>
+          <div class="btn mPosition d" style="border-radius:15px;width:25%;background-color:white;color:gray;">CD</div>
+          <div class="btn mPosition d" style="border-radius:15px;width:25%;background-color:white;color:gray;">RB</div>
+          <br><br>
+          <div class="btn mPosition gk" style="border-radius:15px;width:25%;background-color:white;color:gray;">GK</div>
         </div>
         <input type="hidden" name="position" id="position">
       </div>
@@ -115,7 +137,7 @@
 	
 	      <div class="row">
 	        <div class="col m6 offset-m3 s10 offset-s1" style="text-align:center;">
-	          <button type="submit" class="btn"name="button">NEXT</button>
+	          <button type="submit" class="btn"name="button">선수등록</button>
 	        </div>
 	      </div>
 	   </div>
@@ -124,6 +146,8 @@
 <script type="text/javascript">
  
 $('document').ready(function() {
+	var job = ["고등학생","대학생","회사원","자영업자","IT","금융업계","화학","선생님"]
+	
    var area0 = ["시/도 선택","서울특별시","인천광역시","대전광역시","광주광역시","대구광역시","울산광역시","부산광역시","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","제주도"];
    var area1 = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"];
    var area2 = ["계양구","남구","남동구","동구","부평구","서구","연수구","중구","강화군","옹진군"];
@@ -142,41 +166,138 @@ $('document').ready(function() {
    var area15 = ["거제시","김해시","마산시","밀양시","사천시","양산시","진주시","진해시","창원시","통영시","거창군","고성군","남해군","산청군","의령군","창녕군","하동군","함안군","함양군","합천군"];
    var area16 = ["서귀포시","제주시","남제주군","북제주군"];
  
- // 시/도 선택 박스 초기화
- $("select[name^=sido]").each(function() {
-  $selsido = $(this);
-  $.each(eval(area0), function() {
-   $selsido.append("<option value='"+this+"'>"+this+"</option>");
-  });
-  $selsido.next().append("<option value=''>구/군 선택</option>");
- });
- 
- // 시/도 선택시 구/군 설정
- $("select[name^=sido]").change(function() {
-  var area = "area"+$("option",$(this)).index($("option:selected",$(this)));// 선택지역의 구군 Array
-  
-  var $gugun = $(this).next(); // 선택영역 군구 객체
-  $("option",$gugun).remove(); // 구군 초기화
-  if(area == "area0")
-   $gugun.append("<option value=''>구/군 선택</option>");
-  else {
-   $.each(eval(area), function() {
-	
-    $gugun.append("<option value='"+this+"'>"+this+"</option>");
+   $("#job").each(function(){
+	  $job = $(this);
+	  $.each(eval(job), function(){
+		  $job.append("<option value='"+this+"'>"+this+"</option>");
+	  });
    });
-  }
-  
-  $("select[name^=gugun]").change(function(){
-	  var obj = new Object();
-	  obj.sido = $(this).prev().val();
-	  obj.gugun = $(this).val();
-	  obj = JSON.stringify(obj);
-	  $(this).next().val(obj);
-  });
-  
- });
+   
+	 // 시/도 선택 박스 초기화
+	 $("select[name^=mainRegion]").each(function() {
+	  $selsido = $(this);
+	  $.each(eval(area0), function() {
+	   $selsido.append("<option value='"+this+"'>"+this+"</option>");
+	  });
+	  $selsido.next().append("<option value=''>구/군 선택</option>");
+	 });
+	 
+	 // 시/도 선택시 구/군 설정
+	 $("select[name^=mainRegion]").change(function() {
+	  var area = "area"+$("option",$(this)).index($("option:selected",$(this)));// 선택지역의 구군 Array
+	  
+	  var $gugun = $(this).next(); // 선택영역 군구 객체
+	  $("option",$gugun).remove(); // 구군 초기화
+	  if(area == "area0")
+	   $gugun.append("<option value=''>구/군 선택</option>");
+	  else {
+	
+		 $(this).next().append("<option selected disabled value=''>구/군 선택</option>");
+	   $.each(eval(area), function() {
+		
+	    $gugun.append("<option value='"+this+"'>"+this+"</option>");
+	   });
+	  }
+	  
+	  $(".gugun").change(function(){
+		  var obj = new Object();
+		  obj.sido = $(this).prev().val();
+		  obj.gugun = $(this).val();
+		  obj = JSON.stringify(obj);
+		  $(this).next().val(obj);
+	  });
+	});
 
+	 $("#addRegion").click(function(){
+		$('#region').clone().appendTo('#regionForm');
+		$("select[name^=mainRegion]").each(function() {
+			  $selsido = $(this);
+			  $.each(eval(area0), function() {
+			   $selsido.append("<option value='"+this+"'>"+this+"</option>");
+			  });
+			  $selsido.next().append("<option value=''>구/군 선택</option>");
+			 });
+			 
+			 // 시/도 선택시 구/군 설정
+			 $("select[name^=mainRegion]").change(function() {
+			  var area = "area"+$("option",$(this)).index($("option:selected",$(this)));// 선택지역의 구군 Array
+			  var $gugun = $(this).next(); // 선택영역 군구 객체
+			  $("option",$gugun).remove(); // 구군 초기화
+			  if(area == "area0")
+			   $gugun.append("<option value=''>구/군 선택</option>");
+			  else {
+				 $(this).next().append("<option selected disabled value=''>구/군 선택</option>");
+			   $.each(eval(area), function() {
+				
+			    $gugun.append("<option value='"+this+"'>"+this+"</option>");
+			   });
+			  }
+			 });
+	});
+	 var positionArray = [];
+	 
+	 $(".mPosition").each(function(){
+			$(this).click(function(){
+				if($(this).css("background-color") == "rgb(255, 255, 255)"){
+					console.log($(this).text());
+					positionArray.push($(this).text());
+					if($(this).hasClass('fw')){
+						$(this).css("background-color","red");
+						$(this).css("color","white");
+						
+					}else if($(this).hasClass('md')){
+						$(this).css("background-color","orange");
+						$(this).css("color","white");
+					}else if($(this).hasClass('d')){
+						$(this).css("background-color","blue");
+						$(this).css("color","white");
+					}else{
+						$(this).css("background-color","green");
+						$(this).css("color","white");
+					}
+				}else{
+					$(this).css("background-color","#FFFFFF"); 
+					$(this).css("color","gray");
+					var deletePosition = $(this).text();
+					positionArray = jQuery.grep(positionArray,function(n,i){
+						return n !== deletePosition;
+					});
+				}
+				$("#position").val(positionArray);
+			});
+		}); 
+	 
+	 
+	 
+	 
 });
+function checkSubmit(){
+	var submit = true;
+	
+	var birth = $('#birth').val();
+	var height = $('#height').val();
+	var weight = $('#weight').val();
+	var position = $('#position').val();
+	
+	$('select[name^=sub]').each(function(){
+		console.log($(this).val());
+		if($(this).val() == null){
+			submit = false;
+		}
+	});
+	
+	console.log("birth : "+ birth);
+	console.log("height : " + height);
+	console.log("weight : " + weight);
+	console.log("position : " + position);
+	
+	if(birth == '' || height == '' || weight == '' || position == ''){
+		submit = false	
+	}
+	
+	return submit;
+	
+}
 </script>
  
 
@@ -184,3 +305,8 @@ $('document').ready(function() {
 
 	</body>   
 </html>
+
+<%
+	}
+}
+%>

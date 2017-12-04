@@ -5,7 +5,7 @@
 <%
 MatchDAO matchDAO = new MatchDAO();
 MatchJson match = new MatchJson();
-match = matchDAO.findByMatchID(Integer.parseInt(request.getParameter("matchID")));
+match = matchDAO.findByMatchID(request.getParameter("matchID").toString());
 %>
 <!DOCTYPE html>
 <html>

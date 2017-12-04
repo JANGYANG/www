@@ -2,13 +2,13 @@ package com.bg.www;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//import com.bg.www.UserJson.Region;
 import com.google.gson.Gson;
 
 /**
@@ -30,69 +30,64 @@ public class UserRegisterServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		
 		String birth = request.getParameter("birth");
-		String region_a = request.getParameter("region1");
-		String region_b = request.getParameter("region2");
 		String height = request.getParameter("height");
 		String weight = request.getParameter("weight");
-		String position = request.getParameter("position");
-//		String team_uid = request.getParameter("team_uid");
-		
-//		String user_uid = request.getParameter("user_uid");
+		String job = request.getParameter("job");
 		
 		
-		String json = "";
-//		UserJson userJson = new UserJson(email, name, birth, region_a, region_b, height, weight, position, team_uid);
-		UserJson userJson = new UserJson();
+		UserJson user = new UserJson();
 
 		
 		
 		System.out.println("email " + email);
 		System.out.println("password " + password);
-		System.out.println("name " + name);
-		System.out.println("email " + email);
-		System.out.println("password " + password);
-		System.out.println("name " + name);
+		System.out.println("birth " + birth);
+		System.out.println("height " + height);
+		System.out.println("weight " + weight);
 		
 		
 		if (password == null && birth == null) {
 //			이메일중복체크
 			try{
 				System.out.println("EmailCheck Process");
-				json = register(email);
-				response.getWriter().write(json);
-//				Gson gson = new Gson();
-//				userJson = gson.fromJson(json, UserJson.class);
+				user = register(email);
+				Gson gson = new Gson();
+				System.out.println(gson.toJson(user));
+				response.getWriter().write(gson.toJson(user));
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}else if(birth != null) {
 			try {
+				String[] position = request.getParameter("position").split(",");
+				String[] mainRegion = request.getParameterValues("mainRegion[]");
+				String[] subRegion = request.getParameterValues("subRegion[]");
+
 				System.out.println("UserInfo Process is Runned");
-				json = register((String)request.getParameter("user_uid"), birth, region_a, region_b, Integer.parseInt(height), Integer.parseInt(weight), position);
-				response.getWriter().write(json);
-				Gson gson = new Gson();
-				userJson = gson.fromJson(json, UserJson.class);
-				if (!userJson.getError())
+				user = register((String)request.getSession().getAttribute("userUID"), birth, 
+						mainRegion, subRegion, Integer.parseInt(height), Integer.parseInt(weight), position, job);
+				if (!user.isError())
 				{
-					response.sendRedirect("./soccer/login/");
+					response.sendRedirect("./soccer/");
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}else {
+//			회원등록
 			try {
 				System.out.println("Register Process");
-				json = register(email, password, name);
-				response.getWriter().write(json);
-				Gson gson = new Gson();
-				userJson = gson.fromJson(json, UserJson.class);
-				if (!userJson.getError())
+				user = register(email, password, name);
+//				Gson gson = new Gson();
+//				response.getWriter().write();
+//				userJson = gson.fromJson(json, UserJson.class);
+				if (!user.isError())
 				{
-					request.setAttribute("user_uid", userJson.getUserUID());
-					request.setAttribute("userName", name);
-					RequestDispatcher dispatcher = request.getRequestDispatcher("./soccer/register/userinfo.jsp");
-					dispatcher.forward(request, response);
-//					response.sendRedirect("./soccer/register/userinfo.jsp");
+//					request.setAttribute("user_uid", user.getUserUID());
+//					request.setAttribute("userName", name);
+//					RequestDispatcher dispatcher = request.getRequestDispatcher("./soccer/register/userinfo.jsp");
+//					dispatcher.forward(request, response);
+					response.sendRedirect("./soccer/index.jsp");
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -101,21 +96,21 @@ public class UserRegisterServlet extends HttpServlet {
 	}
 	
 	
-	public String register(String email, String password,String name) throws Exception {
+	public UserJson register(String email, String password,String name) throws Exception {
 		UserDAO userDAO = new UserDAO();
 		System.out.println("register servlet register function is runed");
 		return userDAO.register(email, password, name);
 	}
 	
-	public String register(String email) throws Exception {
+	public UserJson register(String email) throws Exception {
 		UserDAO userDAO = new UserDAO();
 		System.out.println("register servlet register function for emailCheck is runed");
 		return userDAO.register(email);
 	}
 
-	public String register(String user_uid,String birth, String region_a, String region_b, int height, int weight, String position){
+	public UserJson register(String user_uid,String birth, String[] mainRegion, String[] subRegion, int height, int weight, String[] position,String job){
 		UserDAO userDAO = new UserDAO();
 		System.out.println("register servlet register function for userInfo is runed");
-		return userDAO.register(user_uid, birth, region_a, region_b, height, weight, position);
+		return userDAO.register(user_uid, birth, mainRegion, subRegion, height, weight, position, job);
 	}
 }

@@ -30,7 +30,7 @@
 		           $.ajax({
 		               type: "POST",
 		               dataType: "json",
-		               url: '../../UserLoginServlet',
+		               url: '<%=request.getContextPath()%>/www/UserLoginServlet',
 		               data: {email: email.val(), password: password},
 	
 		               success: function(json){

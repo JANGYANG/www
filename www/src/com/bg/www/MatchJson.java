@@ -1,7 +1,7 @@
 package com.bg.www;
 
 public class MatchJson {
-	int matchID;
+	String matchID;
 	String homeTeamID;
 	String awayTeamID;
 	String stadium;
@@ -12,10 +12,12 @@ public class MatchJson {
 	int playingTime;
 	String homePlayer;
 	String awayPlayer;
-	public int getMatchID() {
+
+	
+	public String getMatchID() {
 		return matchID;
 	}
-	public void setMatchID(int matchID) {
+	public void setMatchID(String matchID) {
 		this.matchID = matchID;
 	}
 	public String getHomeTeamID() {
