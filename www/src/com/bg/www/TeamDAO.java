@@ -181,61 +181,6 @@ public TeamJson searchByTeamUID(String teamUID){
 	return team;
 }
 	
-////	지역으로 검색
-//	public String searchByR(String region){
-//		System.out.println("TeamDAO searchByRun RUN");
-//		String SQL = "SELECT * FROM teams WHERE regionA LIKE ? OR regionB LIKE ?";
-//		ArrayList<TeamJson> teamList = new ArrayList<TeamJson>();
-//		try {
-//			pstmt = conn.prepareStatement(SQL);
-//			pstmt.setString(1, "%" + region + "%");
-//			pstmt.setString(2, "%" + region + "%");
-//			rs = pstmt.executeQuery();
-//			while(rs.next()) {
-//				TeamJson team = new TeamJson();
-//				team.setTeamId(rs.getInt(1));
-//				team.setTeamName(rs.getString(2));
-//				team.setRegionA(rs.getString(3));
-//				team.setRegionB(rs.getString(4));
-//				team.setTeamBirth(rs.getString(5));
-//				team.setCaptainUid(rs.getString(6));
-//				teamList.add(team);
-//			}
-//			conn.close();
-//			pstmt.close();
-//			rs.close();
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		Gson gson = new Gson();
-//		return gson.toJson(teamList).toString();
-//	}
-//	
-////	팀뷰를 위한
-//	public TeamJson viewTeam(String teamName){
-//		System.out.println("TeamDAO viewTeam RUN");
-//		String SQL = "SELECT * FROM teams WHERE teamName LIKE ?";
-//		TeamJson team = new TeamJson();
-//		try {
-//			pstmt = conn.prepareStatement(SQL);
-//			pstmt.setString(1, teamName);
-//			rs = pstmt.executeQuery();
-//			while(rs.next()) {
-//				team.setTeamId(rs.getInt(1));
-//				team.setTeamName(rs.getString(2));
-//				team.setRegionA(rs.getString(3));
-//				team.setRegionB(rs.getString(4));
-//				team.setTeamBirth(rs.getString(5));
-//				team.setCaptainUid(rs.getString(6));
-//			}
-//			conn.close();
-//			pstmt.close();
-//			rs.close();
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		return team;
-//	}
 
 	public TeamJson reqTeamJoin(String teamUID, String userUID) {
 		TeamJson reqTeamJoin = new TeamJson();

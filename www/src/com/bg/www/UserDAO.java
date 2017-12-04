@@ -193,86 +193,33 @@ public class UserDAO {
 		return user;
 	}
 	
-////	�씠由꾩쑝濡� 寃��깋
-//	public String searchByN(String name){
-//		System.out.println("UserDAO searchByName RUN");
-//		String SQL = "SELECT * FROM users u, users_info ui WHERE u.userUID = ui.userUID AND u.name LIKE ?";
-//		ArrayList<UserJson> userList = new ArrayList<UserJson>();
-//		try {
-//			pstmt = conn.prepareStatement(SQL);
-//			pstmt.setString(1, "%" + name + "%");
-//			rs = pstmt.executeQuery();
-//			while(rs.next()) {
-//				UserJson user = new UserJson();
-//				user.setUserUID(rs.getString("userUID"));
-//				user.setName(rs.getString("name"));
-//				user.setBirth(rs.getString("birth"));
-//				user.setPosition(rs.getString("position"));
-//				user.setHeight(rs.getInt("height"));
-//				user.setWeight(rs.getInt("weight"));
-//				user.setTeamName(rs.getString("teamName"));
-//				userList.add(user);
-//			}
-//			pstmt.close();
-//			conn.close();
-//			rs.close();
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		Gson gson = new Gson();
-//		return gson.toJson(userList).toString();
-//	}
-//
-////	吏��뿭�쑝濡� 寃��깋
-//	public String searchByR(String region){
-//		System.out.println("UserDAO searchByR RUN");
-//		String SQL = "SELECT * FROM users_info ui, users u WHERE ui.userUID = u.userUID AND regionA LIKE ? OR regionB LIKE ?";
-//		ArrayList<UserJson> userList = new ArrayList<UserJson>();
-//		try {
-//			pstmt = conn.prepareStatement(SQL);
-//			pstmt.setString(1, "%" + region + "%");
-//			pstmt.setString(2, "%" + region + "%");
-//			rs = pstmt.executeQuery();
-//			while(rs.next()) {
-//				UserJson user = new UserJson();
-//				user.setUserUID(rs.getString("userUID"));
-//				user.setBirth(rs.getString("birth"));
-//				user.setPosition(rs.getString("position"));
-//				user.setHeight(rs.getInt("height"));
-//				user.setWeight(rs.getInt("weight"));
-//				user.setTeamName(rs.getString("teamName"));
-//				SQL = "SELECT * FROM users WHERE userUID = ?";
-//				user.setName(rs.getString("name"));
-//				userList.add(user);
-//			}
-//			pstmt.close();
-//			conn.close();
-//			rs.close();
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		Gson gson = new Gson();
-//		return gson.toJson(userList).toString();
-//	}
-//	
-//	public boolean teamJoin(String teamName, String userUID) {
-//		System.out.println("UserDAO teamJoin is run");
-//		System.out.println("teamName : " + teamName);
-//		System.out.println("userUID : " + userUID);
-//		boolean i = false;
-//		try {
-//			String update_userInfo = String.format("UPDATE users_info SET teamName = '%s' WHERE userUID LIKE '%s'", teamName, userUID);
-//			stmt = conn.createStatement();
-//		    int r = stmt.executeUpdate(update_userInfo);
-//		    stmt.close();
-//		    conn.close();
-//		    i = (r==1) ? true : false; 
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		return i;
-//	}
-//	
+//	�씠由꾩쑝濡� 寃��깋
+	public ArrayList<UserJson> searchByN(String name){
+		System.out.println("UserDAO searchByName RUN");
+		ArrayList<UserJson> userList = new ArrayList<UserJson>();
+		String SQL = "SELECT * FROM player WHERE playerName LIKE ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, "%" + name + "%");
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				UserJson user = new UserJson();
+				user.setUserUID(rs.getString("playerUID"));
+				user.setName(rs.getString("playerName"));
+				user.setBirth(rs.getString("playerBirth"));
+				user.setHeight(rs.getInt("height"));
+				user.setWeight(rs.getInt("weight"));
+				user.setTeamUID(rs.getString("teamUID"));
+				userList.add(user);
+			}
+			pstmt.close();
+			conn.close();
+			rs.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return userList;
+	}
 	public UserJson findByUserUID(String userUID) {
 		UserJson user = new UserJson();
 		try {

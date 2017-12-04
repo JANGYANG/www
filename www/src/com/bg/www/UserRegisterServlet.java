@@ -68,7 +68,7 @@ public class UserRegisterServlet extends HttpServlet {
 						mainRegion, subRegion, Integer.parseInt(height), Integer.parseInt(weight), position, job);
 				if (!user.isError())
 				{
-					response.sendRedirect("./soccer/");
+					response.sendRedirect(request.getContextPath());
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -78,16 +78,9 @@ public class UserRegisterServlet extends HttpServlet {
 			try {
 				System.out.println("Register Process");
 				user = register(email, password, name);
-//				Gson gson = new Gson();
-//				response.getWriter().write();
-//				userJson = gson.fromJson(json, UserJson.class);
 				if (!user.isError())
 				{
-//					request.setAttribute("user_uid", user.getUserUID());
-//					request.setAttribute("userName", name);
-//					RequestDispatcher dispatcher = request.getRequestDispatcher("./soccer/register/userinfo.jsp");
-//					dispatcher.forward(request, response);
-					response.sendRedirect("./soccer/index.jsp");
+					response.sendRedirect(request.getContextPath());
 				}
 			}catch(Exception e) {
 				e.printStackTrace();

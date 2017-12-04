@@ -1,195 +1,159 @@
-<%@ page contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.PrintWriter" %>
+<%
+  request.setCharacterEncoding("utf-8");
+	response.setContentType("text/html;charset=UTF-8");
+	String userUid = (String)session.getAttribute("userUID");		/* 로그인했는지 세션값 지정 */
+	String userName = (String)session.getAttribute("userName");	/* 로그인했는지 세션값 지정 */
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
-      	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-			<title>BROKEN GLASSES</title>
-      
-	   	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-      <link type="text/css" rel="stylesheet" href="./css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="./css/main.css"  media="screen,projection"/>
-		
-	  
-	   
-	  	 	<script type="text/javascript" src="./js/materialize.min.js"></script>
-	  		<script type="text/javascript" src="./js/main.js"></script>
+	<title>AnyBALL</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/assets/css/materialize.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/assets/css/main.css"  media="screen,projection"/>
+	<!-- Compiled and minified JavaScript -->
+	<!-- index페이지 jquery -->
+	<script type="text/javascript" src="<%=request.getContextPath() %>/assets/js/snap.svg-min.js"></script>
+	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/assets/css/component.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/assets/css/demo.css"  media="screen,projection"/>
+  
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src="<%=request.getContextPath() %>/assets/js/materialize.min.js"></script>
 </head>
-	<body class="navbar-fixed black">
-		<nav class="navbar  navbar-fixed-top">
-		    <div class="nav-wrapper black">
-		      <a href="./index.jsp" class="brand-logo" style="margin-left:30px"><img style="height:50px;width:auto"src="./img/ci.png"></a>
-		      <a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="material-icons">menu</i></a>
-		      <ul class="right hide-on-med-and-down ">
-		        <li><a href="#about">About</a></li>
-		        <li><a href="#download">Characters</a></li>
-		        <li><a href="#contact">Contact</a></li>
-		      </ul>
-		      <ul class="side-nav" id="mobile-demo">
-		        <li><a href="#about">About</a></li>
-		        <li><a href="#download">Characters</a></li>
-		        <li><a href="#contact">Contact</a></li>
-		      </ul>
-		    </div>
-		  </nav>
 
-		  <div class="intro ">
-	        <div class="intro-body">
-	            <div class="container">
-	                <div class="row">
-	                    <div style="margin-top: 200px;"class="col m8 offset-m2 ">
-	                        <h2 class="brand-heading">부러진 안경</h2>
-	                        
-							<div>
-							<img style="height:100%;width:300px"src="./img/ci.png">
-							</div>
-	                        <p class="intro-text">365일, 어디서나 스마트한 축구 리그</p>
-	
-	                        <!-- <button type="button" class="btn btn-circle page-scroll" aria-label="Left Align">
-	                          <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-	                        </button> -->
-	                        <!-- 눈깔 버튼 -->
-	
-	                        <a href="./soccer/main.jsp">
-	                            <i class="large material-icons">directions_run</i>
-	                            <div style="over">시작하기-></div>
-	                        </a>
-	
-	                        <!-- <button type="button" class="btn btn-circle page-scroll" aria-label="Center Align">
-	                          <span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
-	                        </button> -->
-	
-	                        <!-- 표적 버튼 -->
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	      </div>
+<body>
+	  	<div class="center" style="margin-top:100px">
+	  		<h1>ANYBALL</h1>
+	  	</div>
+	  	<div class="container">
+		  	<div class="row">
+	  			<div class="col m10 offset-m1 input-field">
+	  			<form id="sForm" action='./player/playerSearch.jsp' method="GET">
+					<i id="sIcon" class="material-icons prefix dropdown-button" data-activates="dropdown2">person</i>
+         	<input name="playerName" id="icon_prefix" class="sInput" type="text" class="validate" style="border-bottom:1px solid #fff;width:80%;">
+         	<label for="icon_prefix" style="color:white">Search</label>
+         	<button class="btn">찾기</button>
+         </form>
+          <ul id='dropdown2' class='dropdown-content'>
+				    <li><a id="sbp" href="#!"><i class="material-icons">person</i>Search by Person</a></li>
+				    <li><a id="sbt" href="#!"><i class="material-icons">people</i>Search by Team</a></li>
+				  </ul>
+	  			</div>
+	  		</div>
+	  	</div>
 
-    <!-- About Section -->
-    <section id="about" class="text-center black">
-      <!-- <img src="./img/ci.png" style="margin-bottom:30px;" height="100px"> -->
-      <div class="container">
-	        <div class="row center">
-	            <div class="col m8 offset-m2 white-text" style="margin-top:100px; line-height:3em">
-	                <!-- <img src="./img/ci.png" height="100px" margin="50px"> -->
-	                <h2 class="shadowlight">WHY BROKEN-GLASSES</h2>
-	                <p class="shadowlight">왜 우린 경기를 기다려야 할까요?<br>우리가 참가할 대회와 리그는 왜이렇게 없는걸까요?</p>
-	                <p class="shadowlight">이런 고충을 겪는 모든 아마추어 축구 선수들에게 부러진 안경의 솔루션을 제시합니다.<br>이제 여러분들은 <b class="light-blue">원하는 시간</b>에, <b class="light-blue">원하는 장소</b>에서, <b class="light-blue">원하는 리그 경기</b>를 가질 수 있습니다.<br>저희는 가장 스마트한 리그 아마추어 플렛폼을 제공합니다.</p>
-	                <!-- <button class="btn btn-info" onclick='location="/soccer.php"'>자세히</button> -->
-	            </div>
-	        </div>
-      </div>
-    </section>
-    	<div class="blank"></div>
-    <section>
-    </section>
-    <!-- Download Section -->
-    <section id="download" class="content-section text-center">
-    	<div class="parallax-container wrap">
-	    	<div class="container over" style="margin-top:300px;">
-	            <div class="col m8 offset-m2 white-text">
-	                <h2 class="shadowlight">EVERY WHERE</h2>
-	                <p class="shadowlight">원하는 장소 어디서나 경기를 치를 수 있습니다. 이제 굳이 경기장 때문에 곤욕 치를 일이 없습니다. 자신이 원하는 가까운 장소에서 경기가 가능합니다.</p>
-	                <!-- <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a> -->
-	            </div>
-	        </div>
-		  <div class="parallax">
-		  	<img src="./img/where.jpg">
-		  </div>
+		<div class="container">
+			<section id="grid" class="grid clearfix">
+				<a href="./team" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
+					<figure>
+						<img src="<%=request.getContextPath() %>/assets/img/1.png" />
+						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
+						<figcaption>
+							<h2>TEAM</h2>
+							<p>최고의 팀을찾아라</p>
+							
+						</figcaption>
+					</figure>
+				</a>
+				<a href="./player/myPlayer.jsp" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
+					<figure>
+						<img src="<%=request.getContextPath() %>/assets/img/1.png" />
+						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
+						<figcaption>
+							<h2>PLAYER</h2>
+							<p>최고의 선수는 누구인가?</p>
+							
+						</figcaption>
+					</figure>
+				</a>
+				<a href="./match" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
+					<figure>
+						<img src="<%=request.getContextPath() %>/assets/img/1.png" />
+						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
+						<figcaption>
+							<h2>MATCH</h2>
+							<p>모든 경기에 대해</p>
+						</figcaption>
+					</figure>
+				</a>
+				<a href="./search/" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
+					<figure>
+						<img src="<%=request.getContextPath() %>/assets/img/1.png" />
+						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
+						<figcaption>
+							<h2>SEARCH</h2>
+							<p>선수 와 팀을 검색하라</p>
+							
+						</figcaption>
+					</figure>
+				</a>
+				</section>
+				
+				    <div class="fixed-action-btn toolbar">
+					    <a class="btn-floating btn-large red" >
+					      <i class="large material-icons">mode_edit</i>
+					    </a>
+					    <ul>
+					    <%if(userUid != null){%>
+					    		<li><a href="<%= request.getContextPath() %>/player/myPlayer.jsp">선수정보</a></li>
+					     	<li><a href="<%= request.getContextPath() %>/team/">팀 정보</a></li>
+								<li><a href="<%= request.getContextPath() %>/UserLogoutServlet">로그아웃</a></li>
+					     <%} 
+					    else{%>
+					   		<li><a href="<%= request.getContextPath() %>/login/index.jsp">로그인</a></li>
+					    		<li><a href="<%= request.getContextPath() %>/register/signup.jsp">회원가입</a></li>
+					    	<%} %>
+					    </ul>
+					  </div>
+	
 		</div>
-	</section>
-	
-	
-	<section>
-      <div class="blank"></div>
-    </section>   
-    
+<script>
+  	$(function(){
+  		$("#sbp").click(function(){
+  			$('#sForm').attr('action','./player/playerSearch.jsp');
+  			$('#sIcon').text("person");
+  			$('.sInput').attr('name',"playerName");
+  		});
+  		$("#sbt").click(function(){
+  			$('#sForm').attr('action','./team/teamSearch.jsp');
+  			$('#sIcon').text("people");
+  			$('.sInput').attr('name',"teamName");
+  		})
+  	});
+	(function() {
 
-    <!-- Contact Section -->
-    <section class="content-section text-center">
-        <div class="parallax-container wrap">
-	    	<div class="container over" style="margin-top:300px;">
-	            <div class="col m8 offset-m2 white-text">
-                    <h2 class="shadowlight">EVERY TIME</h2>
-                    <p class="shadowlight">가능한 시간에 경기를 치를 수 있습니다. 시간이 안맞아서 축구를 못했던 과거의 불편함이 사라집니다. 자신이 원하는 시간에 축구를 즐기세요.</p>
-                    <!-- <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a> -->
-               </div>
-	        </div>
-		  <div class="parallax">
-		  	<img src="./img/time.jpg">
-		  </div>
-		</div>
-    </section>
+		function init() {
+			var speed = 250,
+				easing = mina.easeinout;
 
-	<section>
-       <div class="blank"></div>
-    </section> 
-    
-    <!-- Contact Section -->
-    <section class="content-section text-center">
-        <div class="parallax-container wrap">
-	    	<div class="container over" style="margin-top:300px;">
-	            <div class="col m8 offset-m2 white-text">
-                    <h2 class="shadowlight">LEAGUE GAME</h2>
-                    <p class="shadowlight">지겨운 자체경기, 의미없는 친선경기는 이제 끝. 이제 승부욕과 경쟁이 치열한 공식경기만을 치를 수 있습니다. 모든 것은 기록되며 더 나은 팀이, 자신이 될 수 있게 노력하세요.</p>
-                    <!-- <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a> -->
-                  </div>
-	        </div>
-		  <div class="parallax">
-		  	<img src="./img/league.jpg" style="width:100%; ">
-		  </div>
-		</div>
-    </section>
+			[].slice.call ( document.querySelectorAll( '#grid > a' ) ).forEach( function( el ) {
+				var s = Snap( el.querySelector( 'svg' ) ), path = s.select( 'path' ),
+					pathConfig = {
+						from : path.attr( 'd' ),
+						to : el.getAttribute( 'data-path-hover' )
+					};
 
-    <!-- Contact Section -->
-    <section id="contact" class="container content-section text-center">
-        <div class="row center">
-            <div class="col m8 offset-m2">
-              <img src="./img/logo_CI.png" alt="" style="width:150px;">
-                <h2>Contact BROKEN-GLASSES</h2>
-                <p>Feel free to email us to provide some feedback on our services, give us suggestions for new services and ideas, or to just say hello!</p>
-                <p><a href="mailto:radiata03@broken-glasses.com">radiata03@broken-glasses.com</a>
-                </p>
-                <ul class="list-inline banner-social-buttons">
-                    <li>
-                        <a href="https://facebook.com/broken-glasse5" > <i class="material-icons">face</i> <span class="network-name">Facebook</span></a>
-                    </li>
-                    <li>
-                        <a href="https://instagram.com/brokenglasse5" > <i class="material-icons">camera_alt</i> <span class="network-name">Instagram</span></a>
-                    </li>
-                    <li>
-                        <a href="https://www.youtube.com/channel/UCjZKJ7NP8S0z_HJccbg3W3Q"><i class="material-icons">youtube_searched_for</i>  <span class="network-name">Youtube</span></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
+				el.addEventListener( 'mouseenter', function() {
+					path.animate( { 'path' : pathConfig.to }, speed, easing );
+				} );
 
-    <!-- Footer -->
-    <footer>
-        <div class="container text-center blue-text text-darken-2">
-            <p>Copyright &copy; BROKEN-GLASSES 2017</p>
-        </div>
-    </footer>
-	</body>
-	
-	<script>
-	/* function collapseNavbar() {
-	    if ($(".navbar").offset().top > 50) {
-	        $(".navbar-fixed-top").addClass("top-nav-collapse");
-	    } else {
-	        $(".navbar-fixed-top").removeClass("top-nav-collapse");
-	    }
-	}
-	$(window).scroll(collapseNavbar);
-	$(document).ready(collapseNavbar); */
-	
-	$(document).ready(function(){
-	      $('.carousel').carousel();
-	    });
-	</script>
+				el.addEventListener( 'mouseleave', function() {
+					path.animate( { 'path' : pathConfig.from }, speed, easing );
+				} );
+			} );
+		}
+
+		init();
+
+	})();
+</script>
+</body>
 </html>

@@ -44,7 +44,7 @@ public class TeamRegisterServlet extends HttpServlet {
 			if(!team.isError()) {
 				session.setAttribute("teamUID", team.getTeamUID());
 				session.setAttribute("teamName", team.getTeamName());
-				response.sendRedirect("./soccer/");
+				response.sendRedirect("/");
 			}
 			response.getWriter().write(gson.toJson(team));
 		}
