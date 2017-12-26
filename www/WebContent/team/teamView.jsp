@@ -67,7 +67,7 @@ UserJson captain = userDAO.findByUserUID(team.getCaptainUID());
 			</div>	
 		</div>
 	</div>
-
+</div>
 <script>
 $(function(){
 	$("#btnReqJoin").click(function(){

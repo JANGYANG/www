@@ -41,7 +41,7 @@ public class UserDAO {
 	
 	public UserJson login(String email, String password){
 	    
-		sql = "SELECT playerUID, playerName ,encryptedPW, salt FROM player WHERE email = ?";
+		sql = "SELECT playerUID, playerName ,encryptedPW, salt, teamUID FROM player WHERE email = ?";
 		UserJson loginJson = new UserJson();
 		loginJson.setError(true);
 		
@@ -54,6 +54,7 @@ public class UserDAO {
 				String userUID = rs.getString("playerUID");
 				String encryptedPW = rs.getString("encryptedPW");
 				String key = rs.getString("salt");
+				String teamUID = rs.getString("teamUID");
 				System.out.println("key : " + key);
 			    AES256Util aes256 = new AES256Util(key);
 			    String decodePassword = aes256.aesDecode(encryptedPW);
@@ -62,6 +63,7 @@ public class UserDAO {
 					loginJson.setEmail(email);
 					loginJson.setName(name);
 					loginJson.setUserUID(userUID);
+					loginJson.setTeamUID(teamUID);
 				}else{
 					loginJson.setError_msg("Password is Unavailable");
 				}

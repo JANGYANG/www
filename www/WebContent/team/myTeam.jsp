@@ -12,7 +12,7 @@ ArrayList<UserJson> userList = new ArrayList<UserJson>();
 
 if(user.getTeamUID() != null){
 	TeamDAO teamDAO = new TeamDAO();
-	team = teamDAO.searchByTeamUID(user.getTeamUID());
+	team = teamDAO.findByTeamUID(user.getTeamUID());
 	captain = userDAO.findByUserUID(team.getCaptainUID());
 	userList = userDAO.findByTeamUID(team.getTeamUID());
 }
@@ -86,6 +86,7 @@ if (userUID != null){
 			</div>	
 		</div>
 	</div>
+</div>
 <%
   }else{
 %>

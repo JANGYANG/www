@@ -39,7 +39,6 @@ public class UserLoginServlet extends HttpServlet {
 			session.setAttribute("teamUID", loginJson.getTeamUID());
 			System.out.println("session user UID : " + loginJson.getUserUID());
 			response.getWriter().write(gson.toJson(loginJson));
-//			response.sendRedirect("./soccer");
 		}
 	}
 	

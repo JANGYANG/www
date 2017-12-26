@@ -1,4 +1,4 @@
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%-- <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.*" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.bg.www.UserDAO" %>
@@ -375,4 +375,4 @@ function check(){
 	</div>
 </form>
 </body>
-</html>
+</html> --%>

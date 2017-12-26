@@ -104,7 +104,7 @@ public class TeamDAO {
 	}
 	
 //	이름으로 팀검색
-	public ArrayList<TeamJson> searchByN(String teamName){
+	public ArrayList<TeamJson> findByN(String teamName){
 		System.out.println("TeamDAO search RUN");
 		String sql = "SELECT * FROM team WHERE teamName LIKE ?";
 		ArrayList<TeamJson> teamList = new ArrayList<TeamJson>();
@@ -143,7 +143,7 @@ public class TeamDAO {
 		return teamList;
 	}
 //teamUID으로 검색
-public TeamJson searchByTeamUID(String teamUID){
+public TeamJson findByTeamUID(String teamUID){
 	System.out.println("TeamDAO searchByTeamUID RUN");
 	String sql = "SELECT * FROM team WHERE teamUID = ?";
 	TeamJson team = new TeamJson();
@@ -198,6 +198,26 @@ public TeamJson searchByTeamUID(String teamUID){
 		}
 		
 		return reqTeamJoin;
+	}
+	
+	public ArrayList<ReqTeamJoinJson> reqTeamJoin(String teamUID){
+		ArrayList<ReqTeamJoinJson> reqTeamJoinList = new ArrayList<ReqTeamJoinJson>();
+		
+		try {
+			String sql = String.format("SELECT * FROM reqTeamJoin WHERE teamUID = '%s' AND confirm is NULL", teamUID);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				ReqTeamJoinJson reqTeamJoinJson = new ReqTeamJoinJson(rs.getString("playerUID"),rs.getString("teamUID"));
+				reqTeamJoinJson.setDate(rs.getString("requestDate"));
+				reqTeamJoinJson.setConfirm(rs.getBoolean("confirm"));
+				reqTeamJoinList.add(reqTeamJoinJson);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return reqTeamJoinList;
 	}
 	
 }

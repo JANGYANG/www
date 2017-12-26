@@ -11,7 +11,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Search Team</title>
+	<title>Search PLAYER</title>
 
 	<!--Import Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -31,7 +31,7 @@
     <div class="row">
       <div class="center">
         <img src="<%=request.getContextPath() %>/assets/img/logo_CI.png" style="width:20%"></img>
-        <h4 style="text-align:center">SEARCH TEAM</h4>
+        <h4 style="text-align:center">SEARCH PLAYER</h4>
       </div>
     </div>
   </div>
