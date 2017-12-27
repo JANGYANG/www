@@ -18,13 +18,6 @@
 	
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/assets/css/materialize.css"  media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/assets/css/main.css"  media="screen,projection"/>
-	<!-- Compiled and minified JavaScript -->
-	<!-- index페이지 jquery -->
-	<script type="text/javascript" src="<%=request.getContextPath() %>/assets/js/snap.svg-min.js"></script>
-	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/assets/css/component.css"  media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/assets/css/demo.css"  media="screen,projection"/>
-  
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
   <script src="<%=request.getContextPath() %>/assets/js/materialize.min.js"></script>
 </head>
@@ -34,7 +27,7 @@
 
 <jsp:include page="/headNav.jsp" flush="false" />
 
-	  	<div class="center" style="margin-top:100px">
+	  	<div class="center white-text" style="margin-top:100px">
 	  		<h1>FIND_B</h1>
 	  	</div>
 	  	<div class="container">
@@ -53,54 +46,11 @@
 	  			</div>
 	  		</div>
 	  	</div>
-
-		<div class="container">
-			<section id="grid" class="grid clearfix">
-				<a href="./team" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
-					<figure>
-						<img src="<%=request.getContextPath() %>/assets/img/1.png" />
-						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
-						<figcaption>
-							<h2>TEAM</h2>
-							<p>최고의 팀을찾아라</p>
-							
-						</figcaption>
-					</figure>
-				</a>
-				<a href="./player/myPlayer.jsp" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
-					<figure>
-						<img src="<%=request.getContextPath() %>/assets/img/1.png" />
-						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
-						<figcaption>
-							<h2>PLAYER</h2>
-							<p>최고의 선수는 누구인가?</p>
-							
-						</figcaption>
-					</figure>
-				</a>
-				<a href="./match" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
-					<figure>
-						<img src="<%=request.getContextPath() %>/assets/img/1.png" />
-						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
-						<figcaption>
-							<h2>MATCH</h2>
-							<p>모든 경기에 대해</p>
-						</figcaption>
-					</figure>
-				</a>
-				<a href="./search/" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
-					<figure>
-						<img src="<%=request.getContextPath() %>/assets/img/1.png" />
-						<svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
-						<figcaption>
-							<h2>SEARCH</h2>
-							<p>선수 와 팀을 검색하라</p>
-							
-						</figcaption>
-					</figure>
-				</a>
-				</section>
+		
+		<div>
+		
 		</div>
+		
 
 <jsp:include page="/footNav.jsp" flush="false" />
 
@@ -117,32 +67,7 @@
   			$('.sInput').attr('name',"teamName");
   		})
   	});
-	(function() {
 
-		function init() {
-			var speed = 250,
-				easing = mina.easeinout;
-
-			[].slice.call ( document.querySelectorAll( '#grid > a' ) ).forEach( function( el ) {
-				var s = Snap( el.querySelector( 'svg' ) ), path = s.select( 'path' ),
-					pathConfig = {
-						from : path.attr( 'd' ),
-						to : el.getAttribute( 'data-path-hover' )
-					};
-
-				el.addEventListener( 'mouseenter', function() {
-					path.animate( { 'path' : pathConfig.to }, speed, easing );
-				} );
-
-				el.addEventListener( 'mouseleave', function() {
-					path.animate( { 'path' : pathConfig.from }, speed, easing );
-				} );
-			} );
-		}
-
-		init();
-
-	})();
 </script>
 </body>
 </html>
