@@ -47,7 +47,7 @@
   <div class="container">
     <div class="row">
       <div class="input-field col m6 offset-m3 s9 offset-s1">
-        <input type="text" id="name" name="name" class="validate">
+        <input type="text" id="name" name="userName" class="validate">
         <label for="icon_prefix">NAME</label>
       </div>
     </div>

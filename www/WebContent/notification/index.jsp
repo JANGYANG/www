@@ -15,10 +15,6 @@
 	}else if(teamUID == null){
 		response.sendRedirect(request.getContextPath());
 	}
-	String oldstring = "2011-01-18 00:00:00.0";
-	Date date = new SimpleDateFormat("yyyy-MM-dd").parse(oldstring);
-	String newstring = new SimpleDateFormat("yyyy-MM-dd").format(date);
-	out.println(newstring); // 2011-01-18
 	TeamDAO teamDAO = new TeamDAO();
 	ArrayList<ReqTeamJoinJson> reqJoinList = teamDAO.reqTeamJoin(teamUID);
 %>
@@ -38,17 +34,27 @@
 	<script type="text/javascript" src="<%=request.getContextPath() %>/assets/js/main.js"></script>
 
 </head>
-<body>
+<body style="background-color:#5da2d4">
+
+<jsp:include page="/headNav.jsp" flush="false" />
+
 <section>
-	<h2>팀 관련 알림</h2>
 	<div class="container">
+	<h3>팀 관련 알림</h3>
+	<%if(reqJoinList.size() < 1){
+		%>
+		<div class="row blue lighten-3" >
+			<p>새로운 팀 가입 관련된 알림이 없습니다.</p>
+		</div>
+	<%}else{ %>
+	
 	<%for(int i = 0; i < reqJoinList.size(); i++){
 		%>
-		<div class="row">
-			<div class="col m3">
+		<div class="row blue lighten-3">
+			<div class="col m2">
 				<img src="<%=request.getContextPath() %>/assets/img/player.png" style="width:100%;border-radius:50%;"/>
 			</div>
-			<div class="col m5">
+			<div class="col m4">
 				<h4><%=reqJoinList.get(i).getUser().getName() %></h4>
 				<p><%=reqJoinList.get(i).getUser().getBirth() %>
 				<br/><%=reqJoinList.get(i).getUser().getHeight() %>cm <%=reqJoinList.get(i).getUser().getWeight() %>kg
@@ -58,15 +64,19 @@
 			<div class="col m2">
 			->
 			</div>
-			<div class="col m1">
-				<h4>수락</h4>
+			<div class="col m2">
+				<h4><a href="<%=request.getContextPath()%>/ReqTeamJoinServlet?teamUID=<%=reqJoinList.get(i).getTeam().getTeamUID()%>&playerUID=<%=reqJoinList.get(i).getUser().getUserUID()%>&confirm=1">수락</a></h4>
 			</div>
-			<div class="col m1">
-		  		<p>거절</p>
+			<div class="col m2">
+		  		<h4><a href="<%=request.getContextPath()%>/ReqTeamJoinServlet?teamUID=<%=reqJoinList.get(i).getTeam().getTeamUID()%>&playerUID=<%=reqJoinList.get(i).getUser().getUserUID()%>&confirm=0">거절</a></h4>
 			</div>
 		</div>
-	<%} %>
+	<%}
+	} %>
 	</div>
 </section>
+
+<jsp:include page="/footNav.jsp" flush="false" />
+
 </body>
 </html>

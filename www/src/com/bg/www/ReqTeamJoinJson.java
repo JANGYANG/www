@@ -14,6 +14,27 @@ public class ReqTeamJoinJson {
 		this.user = userDAO.findByUserUID(userUID);
 		this.team = teamDAO.findByTeamUID(teamUID);
 	}
+	
+	
+	
+	
+	
+	public TeamJson getTeam() {
+		return team;
+	}
+
+
+
+
+
+	public void setTeam(TeamJson team) {
+		this.team = team;
+	}
+
+
+
+
+
 	public String getDate() {
 		return date;
 	}

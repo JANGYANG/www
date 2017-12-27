@@ -32,4 +32,39 @@ public class ReqTeamJoinServlet extends HttpServlet {
 		response.getWriter().append(gson.toJson(reqTeamJoin));
 	}
 
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		HttpSession session = request.getSession();
+		
+		String captainUID = session.getAttribute("userUID").toString();
+		
+		
+		String teamUID = request.getParameter("teamUID");
+		String userUID = request.getParameter("userUID");
+		String confirm = request.getParameter("confirm");
+		boolean ok;
+		TeamDAO teamDAO = new TeamDAO();
+		
+		if(captainUID.equals(teamDAO.findByTeamUID(teamUID).getCaptainUID())) {
+			response.sendRedirect(request.getContextPath());
+		}
+		
+		if(confirm.equals("1")) {
+			ok = teamDAO.reqTeamJoin(teamUID, userUID, true);	
+		}else {
+			ok = teamDAO.reqTeamJoin(teamUID, userUID, false);
+		}
+		
+		if(ok) {
+			response.sendRedirect(request.getContextPath() + "/notification");
+		}else {
+			response.sendRedirect(request.getContextPath());
+		}
+		
+	}
+	
+	
+
 }

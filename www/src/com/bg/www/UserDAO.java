@@ -41,7 +41,7 @@ public class UserDAO {
 	
 	public UserJson login(String email, String password){
 	    
-		sql = "SELECT playerUID, playerName ,encryptedPW, salt, teamUID FROM player WHERE email = ?";
+		sql = "SELECT userUID, userName ,encryptedPW, salt, teamUID FROM user WHERE email = ?";
 		UserJson loginJson = new UserJson();
 		loginJson.setError(true);
 		
@@ -50,8 +50,8 @@ public class UserDAO {
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
 			if(rs.first()){
-				String name = rs.getString("playerName");
-				String userUID = rs.getString("playerUID");
+				String name = rs.getString("userName");
+				String userUID = rs.getString("userUID");
 				String encryptedPW = rs.getString("encryptedPW");
 				String key = rs.getString("salt");
 				String teamUID = rs.getString("teamUID");
@@ -83,7 +83,7 @@ public class UserDAO {
 	public UserJson register(String email) {
 		UserJson isUserExist = new UserJson();
 		isUserExist.setError(true);
-		sql = "SELECT * FROM player WHERE email = ?";
+		sql = "SELECT * FROM user WHERE email = ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);
@@ -129,7 +129,7 @@ public class UserDAO {
 			System.out.println("Encrypt Error");
 			e.printStackTrace();
 		}
-		sql = String.format("INSERT INTO player (playerUID, playerName, email, encryptedPW, salt) "
+		sql = String.format("INSERT INTO user (userUID, userName, email, encryptedPW, salt) "
 				+ "VALUES ('%s', '%s', '%s', '%s', '%s')", uid.toString(), name, email, encryptedPW, salt);
 		
 		try {
@@ -162,18 +162,18 @@ public class UserDAO {
 		UserJson user = new UserJson();
 		user.setError(true);
 	    
-		sql = String.format("UPDATE player SET playerBirth='%s', height = %d, weight= %d, job = '%s' " 
-				+ "WHERE playerUID = '%s'", birth, height, weight, job, userUID);
+		sql = String.format("UPDATE user SET userBirth='%s', height = %d, weight= %d, job = '%s' " 
+				+ "WHERE userUID = '%s'", birth, height, weight, job, userUID);
 		try {
 			stmt = conn.createStatement();
 		    int r = stmt.executeUpdate(sql);
 		    if (r > 0) {
 		    		for(int i = 0; i < mainRegion.length; i++) {
-		    			sql = String.format("INSERT INTO playerRegion (playerUID, mainRegion, subRegion) VALUES('%s','%s','%s')",userUID, mainRegion[i], subRegion[i]);
+		    			sql = String.format("INSERT INTO userRegion (userUID, mainRegion, subRegion) VALUES('%s','%s','%s')",userUID, mainRegion[i], subRegion[i]);
 		    			stmt.executeUpdate(sql);
 		    		}
 		    		for(int i = 0; i < position.length; i++) {
-		    			sql = String.format("INSERT INTO playerPosition (playerUID, position) VALUES('%s','%s')", userUID, position[i]);
+		    			sql = String.format("INSERT INTO userPosition (userUID, position) VALUES('%s','%s')", userUID, position[i]);
 		    			stmt.executeUpdate(sql);
 		    		}
 				user.setError(false);
@@ -199,16 +199,16 @@ public class UserDAO {
 	public ArrayList<UserJson> searchByN(String name){
 		System.out.println("UserDAO searchByName RUN");
 		ArrayList<UserJson> userList = new ArrayList<UserJson>();
-		String SQL = "SELECT * FROM player WHERE playerName LIKE ?";
+		String SQL = "SELECT * FROM user WHERE userName LIKE ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, "%" + name + "%");
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				UserJson user = new UserJson();
-				user.setUserUID(rs.getString("playerUID"));
-				user.setName(rs.getString("playerName"));
-				user.setBirth(rs.getString("playerBirth"));
+				user.setUserUID(rs.getString("userUID"));
+				user.setName(rs.getString("userName"));
+				user.setBirth(rs.getString("userBirth"));
 				user.setHeight(rs.getInt("height"));
 				user.setWeight(rs.getInt("weight"));
 				user.setTeamUID(rs.getString("teamUID"));
@@ -226,22 +226,23 @@ public class UserDAO {
 		UserJson user = new UserJson();
 		try {
 			stmt = conn.createStatement();
-			String sql = String.format("SELECT * FROM player WHERE playerUID = '%s'", userUID);
+			String sql = String.format("SELECT * FROM user WHERE userUID = '%s'", userUID);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
-				user.setName(rs.getString("playerName"));
-				user.setBirth(rs.getString("playerbirth"));
+				user.setUserUID(userUID);
+				user.setName(rs.getString("userName"));
+				user.setBirth(rs.getString("userbirth"));
 				user.setJob(rs.getString("job"));
 				user.setHeight(rs.getInt("height"));
 				user.setWeight(rs.getInt("weight"));
 				user.setTeamUID(rs.getString("teamUID"));
 			}
-			sql = String.format("SELECT * FROM playerRegion WHERE playerUID = '%s'", userUID);
+			sql = String.format("SELECT * FROM userRegion WHERE userUID = '%s'", userUID);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				user.setRegion(rs.getString("mainRegion"), rs.getString("subRegion"));
 			}
-			sql = String.format("SELECT * FROM playerPosition WHERE playerUID = '%s'", userUID);
+			sql = String.format("SELECT * FROM userPosition WHERE userUID = '%s'", userUID);
 			rs.close();
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
@@ -258,24 +259,24 @@ public class UserDAO {
 		
 		try {
 			stmt = conn.createStatement();
-			String sql = String.format("SELECT * FROM player WHERE teamUID = '%s'", teamUID);
+			String sql = String.format("SELECT * FROM user WHERE teamUID = '%s'", teamUID);
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				UserJson user = new UserJson();
-				user.setUserUID(rs.getString("playerUID"));
-				user.setBirth(rs.getString("playerBirth"));
+				user.setUserUID(rs.getString("userUID"));
+				user.setBirth(rs.getString("userBirth"));
 				user.setHeight(rs.getInt("height"));
-				user.setName(rs.getString("playerName"));
+				user.setName(rs.getString("userName"));
 				user.setJob(rs.getString("job"));
 				user.setWeight(rs.getInt("weight"));
-				sql = String.format("SELECT position FROM playerPosition WHERE playerUID = '%s'", user.getUserUID());
+				sql = String.format("SELECT position FROM userPosition WHERE userUID = '%s'", user.getUserUID());
 
 				Statement subStmt = conn.createStatement();
 				ResultSet subRs = subStmt.executeQuery(sql);
 				while(subRs.next()) {
 					user.setPosition(subRs.getString("position"));
 				}
-				sql = String.format("SELECT mainRegion, subRegion FROM playerRegion WHERE playerUID = '%s'", user.getUserUID());
+				sql = String.format("SELECT mainRegion, subRegion FROM userRegion WHERE userUID = '%s'", user.getUserUID());
 
 				subRs = subStmt.executeQuery(sql);
 

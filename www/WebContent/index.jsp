@@ -29,16 +29,20 @@
   <script src="<%=request.getContextPath() %>/assets/js/materialize.min.js"></script>
 </head>
 
-<body>
+<body style="background-color:#5da2d4;">
+
+
+<jsp:include page="/headNav.jsp" flush="false" />
+
 	  	<div class="center" style="margin-top:100px">
-	  		<h1>ANYBALL</h1>
+	  		<h1>FIND_B</h1>
 	  	</div>
 	  	<div class="container">
 		  	<div class="row">
 	  			<div class="col m10 offset-m1 input-field">
 	  			<form id="sForm" action='./player/playerSearch.jsp' method="GET">
 					<i id="sIcon" class="material-icons prefix dropdown-button" data-activates="dropdown2">person</i>
-         	<input name="playerName" id="icon_prefix" class="sInput" type="text" class="validate" style="border-bottom:1px solid #fff;width:80%;">
+         	<input name="userName" id="icon_prefix" class="sInput" type="text" class="validate" style="border-bottom:1px solid #fff;width:80%;">
          	<label for="icon_prefix" style="color:white">Search</label>
          	<button class="btn">찾기</button>
          </form>
@@ -96,31 +100,16 @@
 					</figure>
 				</a>
 				</section>
-				
-				    <div class="fixed-action-btn toolbar">
-					    <a class="btn-floating btn-large red" >
-					      <i class="large material-icons">mode_edit</i>
-					    </a>
-					    <ul>
-					    <%if(userUid != null){%>
-					    		<li><a href="<%= request.getContextPath() %>/player/myPlayer.jsp">선수정보</a></li>
-					     	<li><a href="<%= request.getContextPath() %>/team/">팀 정보</a></li>
-								<li><a href="<%= request.getContextPath() %>/UserLogoutServlet">로그아웃</a></li>
-					     <%} 
-					    else{%>
-					   		<li><a href="<%= request.getContextPath() %>/login/index.jsp">로그인</a></li>
-					    		<li><a href="<%= request.getContextPath() %>/register/signup.jsp">회원가입</a></li>
-					    	<%} %>
-					    </ul>
-					  </div>
-	
 		</div>
+
+<jsp:include page="/footNav.jsp" flush="false" />
+
 <script>
   	$(function(){
   		$("#sbp").click(function(){
   			$('#sForm').attr('action','./player/playerSearch.jsp');
   			$('#sIcon').text("person");
-  			$('.sInput').attr('name',"playerName");
+  			$('.sInput').attr('name',"userName");
   		});
   		$("#sbt").click(function(){
   			$('#sForm').attr('action','./team/teamSearch.jsp');

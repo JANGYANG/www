@@ -27,9 +27,9 @@ public class UserRegisterServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String name = request.getParameter("name");
+		String name = request.getParameter("userName");
 		
-		String birth = request.getParameter("birth");
+		String birth = request.getParameter("userBirth");
 		String height = request.getParameter("height");
 		String weight = request.getParameter("weight");
 		String job = request.getParameter("job");
@@ -49,6 +49,9 @@ public class UserRegisterServlet extends HttpServlet {
 		if (password == null && birth == null) {
 //			이메일중복체크
 			try{
+				
+				
+				
 				System.out.println("EmailCheck Process");
 				user = register(email);
 				Gson gson = new Gson();

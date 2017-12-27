@@ -70,7 +70,7 @@ if(userUID == null){
       <div class="row">
         <div class="col m6 offset-m3 s10 offset-s1" style="text-align:center;">
           <label for="birth">Birthday</label>
-          <input class="form-control" style="text-align:center;"type="date" name="birth" id="birth">
+          <input class="form-control" style="text-align:center;"type="date" name="userBirth" id="birth">
         </div>
       </div>
       <div class="row">

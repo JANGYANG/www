@@ -83,7 +83,7 @@ public class TeamDAO {
 		    			sql = String.format("INSERT INTO teamFormation(formation, teamUID) VALUES('%s','%s')",formation[i],teamUID);
 		    			stmt.executeUpdate(sql);
 		    		}
-		    		sql = String.format("UPDATE player SET teamUID = '%s' WHERE playerUID = '%s'", teamUID, captainUID);
+		    		sql = String.format("UPDATE user SET teamUID = '%s' WHERE userUID = '%s'", teamUID, captainUID);
 		    		stmt.executeUpdate(sql);
 		    		team.setError(false);
 		    	}
@@ -185,7 +185,7 @@ public TeamJson findByTeamUID(String teamUID){
 	public TeamJson reqTeamJoin(String teamUID, String userUID) {
 		TeamJson reqTeamJoin = new TeamJson();
 		reqTeamJoin.setError(true);
-		String sql = String.format("INSERT INTO reqTeamJoin(teamUID, playerUID) VALUES ('%s', '%s')", teamUID, userUID);
+		String sql = String.format("INSERT INTO reqTeamJoin(teamUID, userUID) VALUES ('%s', '%s')", teamUID, userUID);
 		try{
 			stmt = conn.createStatement();
 			int r = stmt.executeUpdate(sql);
@@ -208,7 +208,7 @@ public TeamJson findByTeamUID(String teamUID){
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
-				ReqTeamJoinJson reqTeamJoinJson = new ReqTeamJoinJson(rs.getString("playerUID"),rs.getString("teamUID"));
+				ReqTeamJoinJson reqTeamJoinJson = new ReqTeamJoinJson(rs.getString("userUID"),rs.getString("teamUID"));
 				reqTeamJoinJson.setDate(rs.getString("requestDate"));
 				reqTeamJoinJson.setConfirm(rs.getBoolean("confirm"));
 				reqTeamJoinList.add(reqTeamJoinJson);
@@ -220,4 +220,18 @@ public TeamJson findByTeamUID(String teamUID){
 		return reqTeamJoinList;
 	}
 	
+	public boolean reqTeamJoin(String teamUID, String userUID, boolean confirm){
+		
+		try {
+			String sql = String.format("UPDATE reqTeamJoin SET confirm = %b where teamUID = '%s' AND userUID = '%s'", confirm, teamUID, userUID);
+			stmt = conn.createStatement();
+			int r = stmt.executeUpdate(sql);
+			if(r > 0) {
+				return true;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
