@@ -172,9 +172,6 @@ public TeamJson findByTeamUID(String teamUID){
 		while(rs.next()) {
 			team.setFormation(rs.getString("formation"));
 		}
-		conn.close();
-		pstmt.close();
-		rs.close();
 	}catch(Exception e) {
 		e.printStackTrace();
 	}

@@ -1,7 +1,6 @@
-<%@ page import="java.util.*" %>
-<%@page import="com.bg.www.*"%>
-<%@ page contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.bg.www.*"%>
 <%
 String userUID = (String)session.getAttribute("userUID");
 UserDAO userDAO = new UserDAO();

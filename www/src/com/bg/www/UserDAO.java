@@ -65,12 +65,12 @@ public class UserDAO {
 					loginJson.setUserUID(userUID);
 					loginJson.setTeamUID(teamUID);
 				}else{
-					loginJson.setError_msg("Password is Unavailable");
+					loginJson.setErrorMsg("Password is Unavailable");
 				}
 				pstmt.close();
 				rs.close();
 			}else {
-				loginJson.setError_msg("Email is Unavailable");
+				loginJson.setErrorMsg("Email is Unavailable");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -90,11 +90,10 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			if(rs.first()) {
 				isUserExist.setEmail(rs.getString("email"));
-				isUserExist.setError_msg(rs.getString("email") + " is Exist!@!@!@!@");
-				System.out.println(isUserExist.getError_msg());
+				isUserExist.setErrorMsg(rs.getString("email") + " is Exist!@!@!@!@");
+				System.out.println(isUserExist.getErrorMsg());
 			}else {
 				isUserExist.setError(false);
-				isUserExist.setError_msg(email + "can USE!!");
 			}
 			rs.close();
 			pstmt.close();
@@ -140,7 +139,7 @@ public class UserDAO {
 				registerJson.setEmail(email);
 				registerJson.setUserUID(uid);
 		    }else {
-		    		registerJson.setError_msg("Mysql Error");
+		    		registerJson.setErrorMsg("Mysql Error");
 		    }
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -178,7 +177,7 @@ public class UserDAO {
 		    		}
 				user.setError(false);
 		    }else {
-		    		user.setError_msg("Mysql Error");
+		    		user.setErrorMsg("Mysql Error");
 		    }
 		}catch(SQLException e) {
 			e.printStackTrace();

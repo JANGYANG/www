@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class UserJson {
 	boolean error;
-	String error_msg;
+	String errorMsg;
 	
 	String userUID;
 	String email;
@@ -47,12 +47,12 @@ public class UserJson {
 		this.error = error;
 	}
 
-	public String getError_msg() {
-		return error_msg;
+	public String getErrorMsg() {
+		return errorMsg;
 	}
 
-	public void setError_msg(String error_msg) {
-		this.error_msg = error_msg;
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
 	}
 
 	public String getUserUID() {

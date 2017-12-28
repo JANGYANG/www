@@ -8,7 +8,7 @@ String teamUID = (String)session.getAttribute("teamUID");
 UserDAO userDAO = new UserDAO();
 TeamDAO teamDAO = new TeamDAO();
 UserJson user = userDAO.findByUserUID(userUID);
-TeamJson team = teamDAO.searchByTeamUID(user.getTeamUID());
+TeamJson team = teamDAO.findByTeamUID(user.getTeamUID());
 
 if(user.getJob() == null){
 	response.sendRedirect(request.getContextPath() +"/register/userinfo.jsp");	
@@ -57,7 +57,7 @@ if(user.getJob() == null){
 			  }%></p>
 			  팀 아이디
 			  <%=user.getTeamUID() %>
-			  <%=teamDAO.searchByTeamUID(user.getTeamUID()).getTeamName() %>
+			  <%=teamDAO.findByTeamUID(user.getTeamUID()).getTeamName() %>
 		</div>
 	</div>
 	<div class="row">
