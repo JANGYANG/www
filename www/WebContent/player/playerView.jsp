@@ -9,7 +9,7 @@ String playerUID = (String)request.getParameter("playerUID");
 TeamDAO teamDAO = new TeamDAO();
 UserDAO userDAO = new UserDAO();
 UserJson user = userDAO.findByUserUID(playerUID);
-TeamJson team =  teamDAO.searchByTeamUID(user.getTeamUID());
+TeamJson team =  teamDAO.findByTeamUID(user.getTeamUID());
 %>
 
 <!DOCTYPE html>
@@ -56,7 +56,7 @@ TeamJson team =  teamDAO.searchByTeamUID(user.getTeamUID());
 			  }%></p>
 			  팀 아이디
 			  <%=user.getTeamUID() %>
-			  <%=teamDAO.searchByTeamUID(user.getTeamUID()).getTeamName() %>
+			  <%=teamDAO.findByTeamUID(user.getTeamUID()).getTeamName() %>
 		</div>
 	</div>
 	<div class="row">

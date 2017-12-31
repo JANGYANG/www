@@ -7,7 +7,7 @@ String userUID = (String)session.getAttribute("userUID");
 String userName = (String)session.getAttribute("userName");
 String teamUID = (String)request.getParameter("teamUID");
 TeamDAO teamDAO = new TeamDAO();
-TeamJson team =  teamDAO.searchByTeamUID(teamUID);
+TeamJson team =  teamDAO.findByTeamUID(teamUID);
 UserDAO userDAO = new UserDAO();
 UserJson user = userDAO.findByUserUID(userUID);
 UserJson captain = userDAO.findByUserUID(team.getCaptainUID());
@@ -17,7 +17,7 @@ UserJson captain = userDAO.findByUserUID(team.getCaptainUID());
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>TeamView<%=team.getTeamName() %></title>
 
     	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
