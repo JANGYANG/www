@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.bg.www.*"%>
+<%@ page import="com.bg.www.UserDAO"%>
+<%@ page import="com.bg.www.UserJson"%>
 <%
+System.out.println("team_index");
+
 String userUID = (String)session.getAttribute("userUID");
+if(userUID == null){
+	response.sendRedirect(request.getContextPath()+"/login/");
+}
+System.out.println("userUID : "+userUID);
+System.out.println("userDAO is called");
 UserDAO userDAO = new UserDAO();
 UserJson user = userDAO.findByUserUID(userUID);
 
-if(user.getName() == null ){
-	response.sendRedirect(request.getContextPath()+"/login/");
-}
+
 %>
 <!DOCTYPE html>
 <html>

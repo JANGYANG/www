@@ -1,4 +1,7 @@
 $(function(){
+	
+	console.log(document.location.origin);
+	
     //아이디 중복 확인 소스
     var name = $('#name');
     var email = $('#email');
@@ -16,7 +19,7 @@ $(function(){
            $.ajax({
                type: "POST",
                dataType: "json",
-               url: '/www/UserRegisterServlet',
+               url: '/www/servlet/UserRegisterServlet',
                data: {email: email.val()},
 
                success: function(json){
@@ -44,7 +47,7 @@ $(function(){
       //이메일 유효성 검사
       email.blur(function(){
         var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-        if(regex.test(email.val()) === false){
+        if(regex.test(email.val()) === false || email.val() == ""){
           emailCheck.text('Incorrect EMAIL');
           emailCheck.css("background-color","red");
         }else{

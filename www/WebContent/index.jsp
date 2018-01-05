@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="com.bg.www.Teset"%>
 
 <%
   request.setCharacterEncoding("utf-8");
@@ -32,9 +31,6 @@
 </head>
 
 <body style="background-color:#5da2d4;">
-
-<%Teset test = new Teset();
-out.println(test.getNum());%>
 
 <jsp:include page="/headNav.jsp" flush="false" />
 

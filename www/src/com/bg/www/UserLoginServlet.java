@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 /**
  * Servlet implementation class UsreLoginServlet
  */
-@WebServlet("/UserLoginServlet")
+@WebServlet("/servlet/UserLoginServlet")
 public class UserLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

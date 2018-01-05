@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import com.google.gson.Gson;
 
 public class UserDAO {
 	private Connection conn = null;
@@ -18,10 +17,7 @@ public class UserDAO {
 	private Statement stmt = null;
 	private ResultSet rs = null;
 	private String sql = null;
-	Gson gson = new Gson();
-    
-	SecureRandom sr = new SecureRandom();
-    byte[] ab = sr.generateSeed(256);
+	
 	
 	public UserDAO(){
 		System.out.println("UserDAO is called!");
@@ -56,8 +52,10 @@ public class UserDAO {
 				String key = rs.getString("salt");
 				String teamUID = rs.getString("teamUID");
 				System.out.println("key : " + key);
+				
 			    AES256Util aes256 = new AES256Util(key);
 			    String decodePassword = aes256.aesDecode(encryptedPW);
+			    
 				if (password.equals(decodePassword)) {
 					loginJson.setError(false);
 					loginJson.setEmail(email);
@@ -90,7 +88,7 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			if(rs.first()) {
 				isUserExist.setEmail(rs.getString("email"));
-				isUserExist.setErrorMsg(rs.getString("email") + " is Exist!@!@!@!@");
+				isUserExist.setErrorMsg(rs.getString("email") + " is Exist");
 				System.out.println(isUserExist.getErrorMsg());
 			}else {
 				isUserExist.setError(false);
@@ -105,6 +103,7 @@ public class UserDAO {
 	
 	
 	public UserJson register(String email, String password, String name){
+
 		UserJson registerJson = new UserJson();
 		registerJson.setError(true);
 		
@@ -157,7 +156,7 @@ public class UserDAO {
 	}
 	
 //	user 異붽��젙蹂� �엯�젰
-	public UserJson register(String userUID,String birth, String[] mainRegion, String[] subRegion, int height, int weight, String[] position,String job){
+	public UserJson register(String userUID,String birth, ArrayList<Region> region, int height, int weight, ArrayList<String> position,String job){
 		UserJson user = new UserJson();
 		user.setError(true);
 	    
@@ -167,12 +166,12 @@ public class UserDAO {
 			stmt = conn.createStatement();
 		    int r = stmt.executeUpdate(sql);
 		    if (r > 0) {
-		    		for(int i = 0; i < mainRegion.length; i++) {
-		    			sql = String.format("INSERT INTO userRegion (userUID, mainRegion, subRegion) VALUES('%s','%s','%s')",userUID, mainRegion[i], subRegion[i]);
+		    		for(int i = 0; i < region.size(); i++) {
+		    			sql = String.format("INSERT INTO userRegion (userUID, mainRegion, subRegion) VALUES('%s','%s','%s')",userUID, region.get(i).getMainRegion(), region.get(i).getSubRegion());
 		    			stmt.executeUpdate(sql);
 		    		}
-		    		for(int i = 0; i < position.length; i++) {
-		    			sql = String.format("INSERT INTO userPosition (userUID, position) VALUES('%s','%s')", userUID, position[i]);
+		    		for(int i = 0; i < position.size(); i++) {
+		    			sql = String.format("INSERT INTO userPosition (userUID, position) VALUES('%s','%s')", userUID, position.get(i));
 		    			stmt.executeUpdate(sql);
 		    		}
 				user.setError(false);
@@ -227,7 +226,7 @@ public class UserDAO {
 			stmt = conn.createStatement();
 			String sql = String.format("SELECT * FROM user WHERE userUID = '%s'", userUID);
 			rs = stmt.executeQuery(sql);
-			while(rs.next()) {
+			if(rs.first()) {
 				user.setUserUID(userUID);
 				user.setName(rs.getString("userName"));
 				user.setBirth(rs.getString("userbirth"));

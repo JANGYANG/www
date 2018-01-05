@@ -32,7 +32,7 @@
   </div>
 
 
-  <form action="<%=request.getContextPath() %>/UserRegisterServlet" method="POST">
+  <form action="<%=request.getContextPath() %>/servlet/UserRegisterServlet" method="POST">
   <!-- 이메일 -->
   <div class="container">
     <div class="row">

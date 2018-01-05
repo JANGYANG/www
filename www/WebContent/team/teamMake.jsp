@@ -42,7 +42,7 @@
 	</div>
 
 
-	<form action="<%=request.getContextPath() %>/TeamRegisterServlet" method="POST"
+	<form action="<%=request.getContextPath() %>/servlet/TeamRegisterServlet" method="POST"
 		onsubmit='return checkSubmit();'>
 		<!-- 팀이름 -->
 		<div class="container">

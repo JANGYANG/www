@@ -26,15 +26,18 @@ public class UserJson {
 	Integer weight;
 	String teamUID;
 	
-	ArrayList<String> position = new ArrayList<String>();
+	ArrayList<String> position;
 	
-	ArrayList<Region> region = new ArrayList<Region>();
+	ArrayList<Region> region;
 	
 	public ArrayList<Region> getRegion() {
 		return this.region;
 	}
 
 	public void setRegion(String mainRegion, String subRegion) {
+		if(region.isEmpty()) {
+			this.region = new ArrayList<Region>();
+		}
 		Region newRegion = new Region(mainRegion, subRegion);
 		this.region.add(newRegion);
 	}
@@ -132,6 +135,9 @@ public class UserJson {
 	}
 	
 	public void setPosition(String position) {
+		if(position.isEmpty()) {
+			this.position = new ArrayList<String>();
+		}
 		this.position.add(position);
 	}
 }

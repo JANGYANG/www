@@ -9,7 +9,7 @@
 		<li><a href="<%= request.getContextPath() %>/player/myPlayer.jsp">PLAYER</a></li>
 		<li><a href="<%= request.getContextPath() %>/team/">TEAM</a></li>
 		<li><a href="<%= request.getContextPath() %>/notification/">NOTICE</a></li>
-		<li><a href="<%= request.getContextPath() %>/UserLogoutServlet">LOGOUT</a></li>
+		<li><a href="<%= request.getContextPath() %>/servlet/UserLogoutServlet">LOGOUT</a></li>
 	<%} 
 	else{%>
 		<li><a href="<%= request.getContextPath() %>/login/index.jsp">LOGIN</a></li>
