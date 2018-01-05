@@ -33,7 +33,6 @@
 <body style="background-color:#5da2d4;">
 
 <jsp:include page="/headNav.jsp" flush="false" />
-
 	  	<div class="center" style="margin-top:100px">
 	  		<h1>FIND_B</h1>
 	  	</div>

@@ -1,4 +1,6 @@
+
 $(function(){
+	
 	
 	console.log(document.location.origin);
 	
@@ -19,7 +21,7 @@ $(function(){
            $.ajax({
                type: "POST",
                dataType: "json",
-               url: '/www/servlet/UserRegisterServlet',
+               url: '/servlet/UserRegisterServlet',
                data: {email: email.val()},
 
                success: function(json){

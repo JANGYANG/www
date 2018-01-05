@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 /**
  * Servlet implementation class TeamRegisterServlet
  */
-@WebServlet("/TeamRegisterServlet")
+@WebServlet("/servlet/TeamRegisterServlet")
 public class TeamRegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -15,7 +15,7 @@ import java.net.URLEncoder;
 /**
  * Servlet implementation class NaverSearchRegionServlet
  */
-@WebServlet("/NaverSearchRegionServlet")
+@WebServlet("/servlet/NaverSearchRegionServlet")
 public class NaverSearchRegionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

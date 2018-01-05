@@ -62,7 +62,7 @@ $(document).ready(function() {
      $.ajax({
        type: "POST",
        dataType: "JSON",
-       url: '/www/servlet/TeamRegisterServlet',
+       url: '/servlet/TeamRegisterServlet',
        data: {teamName: teamName.val()},
 
        success: function (json) {

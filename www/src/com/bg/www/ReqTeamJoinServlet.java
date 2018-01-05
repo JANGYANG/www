@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 /**
  * Servlet implementation class ReqTeamJoinServlet
  */
-@WebServlet("/ReqTeamJoinServlet")
+@WebServlet("/servlet/ReqTeamJoinServlet")
 public class ReqTeamJoinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
