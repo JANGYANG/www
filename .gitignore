@@ -1,3 +1,7 @@
+
+.metadata/
+Servers/
+
 # 컴파일 결과물 제외
 *.com
 *.class
@@ -36,4 +40,8 @@ local.properties
 .classpath
 .factorypath
 .buildpath
+<<<<<<< HEAD
 .target
+=======
+.target
+>>>>>>> park

@@ -1,37 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*" %>
-<%@page import="com.bg.www.*" %>
-<%@page import="com.google.gson.Gson" %>
+<%@ page import="java.util.*"%>
+<%@page import="com.bg.www.*"%>
 <%
 String userUID = (String)session.getAttribute("userUID");
 String userName = (String)session.getAttribute("userName");
-String playerUID = (String)request.getParameter("playerUID");
-TeamDAO teamDAO = new TeamDAO();
+String teamUID = (String)session.getAttribute("teamUID");
 UserDAO userDAO = new UserDAO();
-UserJson user = userDAO.findByUserUID(playerUID);
-TeamJson team =  teamDAO.findByTeamUID(user.getTeamUID());
-%>
+TeamDAO teamDAO = new TeamDAO();
+UserJson user = userDAO.findByUserUID(userUID);
+TeamJson team = teamDAO.findByTeamUID(user.getTeamUID());
 
+if(user.getJob() == null){
+	response.sendRedirect(request.getContextPath() +"/register/userinfo.jsp");	
+}
+%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<title>Player View<%=user.getName() %></title>
-
-    	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  	  <!--Import materialize.css-->
-  		<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/assets/css/materialize.css"  media="screen,projection"/>
-    	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/assets/css/main.css"  media="screen,projection"/>
-
-	   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	   
-	   <script type="text/javascript" src="<%=request.getContextPath() %>/assets/js/materialize.min.js"></script>
-	   <script type="text/javascript" src="<%=request.getContextPath() %>/assets/js/main.js"></script>
-	</head>
-<body class="blue lighten-4">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Broken-glasses</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="<%=request.getContextPath() %>/assets/css/materialize.css" media="screen,projection" />
+	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/assets/js/materialize.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/assets/js/main.js"></script>
+</head>
+<body>
 <div class="container">
+<%
 
+%>
 	<div class="row">
 		<div class="col m3 offset-m3">
 			<div class="card" style="border-radius:10%;text-align:center;">
@@ -80,5 +81,5 @@ TeamJson team =  teamDAO.findByTeamUID(user.getTeamUID());
 <%=user.getName() %>
 <%=user.getBirth() %>
 <%=user.getJob() %>
-</body>   
+</body>
 </html>

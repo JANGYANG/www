@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.io.PrintWriter" %>
-
 <%
   request.setCharacterEncoding("utf-8");
 	response.setContentType("text/html;charset=UTF-8");
@@ -25,7 +24,9 @@
 
 <body style="background-color:#5da2d4;">
 
-<jsp:include page="/headNav.jsp" flush="false" />
+
+<jsp:include page="/demo_site/headNav.jsp" flush="false" />
+
 	  	<div class="center white-text" style="margin-top:100px">
 	  		<h1>FIND_B</h1>
 	  	</div>
@@ -51,22 +52,21 @@
 		</div>
 		
 
-<jsp:include page="/footNav.jsp" flush="false" />
+<jsp:include page="/demo_site/footNav.jsp" flush="false" />
 </body>
 <script>
   	$(function(){
   		$("#sbp").click(function(){
-  			$('#sForm').attr('action','./player/playerSearch.jsp');
+  			$('#sForm').attr('action','<%=request.getContextPath() %>/player/playerSearch.jsp');
   			$('#sIcon').text("person");
   			$('.sInput').attr('name',"userName");
   		});
   		$("#sbt").click(function(){
-  			$('#sForm').attr('action','./team/teamSearch.jsp');
+  			$('#sForm').attr('action','<%=request.getContextPath() %>/team/teamSearch.jsp');
   			$('#sIcon').text("people");
   			$('.sInput').attr('name',"teamName");
   		})
   	});
-  	
 </script>
 
 </html>
