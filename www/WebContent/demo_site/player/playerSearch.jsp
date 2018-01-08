@@ -3,15 +3,15 @@
 <%@page import="com.bg.www.*" %>
 <%@page import="com.google.gson.Gson" %>
 <%
-	TeamDAO teamDAO = new TeamDAO();
-	ArrayList<TeamJson> teamList = teamDAO.findByN(request.getParameter("teamName"));
+	UserDAO userDAO = new UserDAO();
+	ArrayList<UserJson> userList = userDAO.searchByN(request.getParameter("playerName"));
 %>
 <!DOCTYPE html>
 <html lang="kor">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Search Team</title>
+	<title>Search PLAYER</title>
 
 	<!--Import Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -31,7 +31,7 @@
     <div class="row">
       <div class="center">
         <img src="<%=request.getContextPath() %>/assets/img/logo_CI.png" style="width:20%"></img>
-        <h4 style="text-align:center">SEARCH TEAM</h4>
+        <h4 style="text-align:center">SEARCH PLAYER</h4>
       </div>
     </div>
   </div>
@@ -40,7 +40,7 @@
 			<form action="" method="get">
 	  			<div class="col m8 offset-m2 input-field">
 					<i class="material-icons prefix dropdown-button" data-activates="dropdown2">person</i>
-	         <input id="icon_prefix" name="teamName"type="text" class="validate">
+	         <input id="icon_prefix" name="playerName"type="text" class="validate">
 	         <label for="icon_prefix">Search</label>
 	         <ul id='dropdown2' class='dropdown-content'>
 				    <li><a href=""><i class="material-icons">person</i>Name</a></li>
@@ -52,10 +52,10 @@
 	</div>
 	<div class="container">
 		<%
-		for(int i = 0; i<teamList.size(); i++){ %>
+		for(int i = 0; i<userList.size(); i++){ %>
 		<div class="collection">
 			<p class="collection-item">
-				<a  href="./teamView.jsp?teamUID=<%=teamList.get(i).getTeamUID()%>"><%= teamList.get(i).getTeamName() %></a>
+				<a  href="./playerView.jsp?playerUID=<%=userList.get(i).getUserUID()%>"><%= userList.get(i).getName() %></a>
 			</p>
 		</div>	
 		<%}%>

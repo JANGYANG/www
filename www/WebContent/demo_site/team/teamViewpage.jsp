@@ -15,7 +15,7 @@
 	
 	
 </head>
-<body style="background-color:#5da2d4" >
+<body class="my-container" >
 <jsp:include page="/headNav.jsp"></jsp:include>
 <div class="center white-text" style="margin-top:100px">
 	<h1>FIND_B</h1>
